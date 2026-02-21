@@ -69,7 +69,7 @@ export class Mission {
   expiresAt: Date;
 
   @Column({ nullable: true })
-  closedAt: Date | null;
+  closedAt: Date;
 
   @Column({ type: 'text', nullable: true })
   closureFeedback: string | null;

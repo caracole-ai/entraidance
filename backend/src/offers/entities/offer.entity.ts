@@ -64,7 +64,7 @@ export class Offer {
   expiresAt: Date;
 
   @Column({ nullable: true })
-  closedAt: Date | null;
+  closedAt: Date;
 
   @ManyToOne(() => User, (user) => user.offers)
   @JoinColumn({ name: 'creatorId' })
