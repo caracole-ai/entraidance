@@ -17,6 +17,7 @@ interface AuthContextValue {
   isLoading: boolean;
   login: (data: ILoginRequest) => Promise<void>;
   register: (data: IRegisterRequest) => Promise<void>;
+  loginWithToken: (token: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -26,6 +27,7 @@ export const AuthContext = createContext<AuthContextValue>({
   isLoading: true,
   login: async () => {},
   register: async () => {},
+  loginWithToken: async () => {},
   logout: () => {},
 });
 
@@ -60,6 +62,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(response.user);
   }, []);
 
+  const loginWithToken = useCallback(async (token: string) => {
+    setToken(token);
+    const me = await authApi.getMe();
+    setUser(me);
+  }, []);
+
   const logout = useCallback(() => {
     removeToken();
     setUser(null);
@@ -73,6 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isLoading,
         login,
         register,
+        loginWithToken,
         logout,
       }}
     >

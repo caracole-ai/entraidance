@@ -6,6 +6,7 @@ export interface IUser {
   locationLat?: number;
   locationLng?: number;
   isPremium: boolean;
+  oauthProvider?: string | null;
   createdAt: string;
   updatedAt: string;
 }

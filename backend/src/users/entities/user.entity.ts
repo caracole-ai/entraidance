@@ -19,8 +19,14 @@ export class User {
   @Column({ type: 'varchar', length: 255, unique: true })
   email: string;
 
-  @Column({ type: 'varchar', length: 255 })
-  passwordHash: string;
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  passwordHash: string | null;
+
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  oauthProvider: string | null;
+
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  oauthProviderId: string | null;
 
   @Column({ type: 'varchar', length: 100 })
   displayName: string;

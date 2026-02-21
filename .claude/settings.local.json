@@ -27,7 +27,31 @@
       "Bash(echo gh CLI not available or not authenticated:*)",
       "Bash(export PATH=\"/c/Program Files/GitHub CLI:$PATH\" && gh --version 2>&1)",
       "Bash(export PATH=\"/c/Program Files/GitHub CLI:$PATH\" && gh auth login --web --git-protocol https 2>&1)",
-      "Bash(export PATH=\"/c/Program Files/GitHub CLI:$PATH\" && gh auth status 2>&1)"
+      "Bash(export PATH=\"/c/Program Files/GitHub CLI:$PATH\" && gh auth status 2>&1)",
+      "Bash(cd /c/Users/lione/OneDrive/Bureau/CODINGSTUFFS/manolo && export PATH=\"/c/Program Files/GitHub CLI:$PATH\" && gh repo create gr-attitude --public --source=. --remote=origin --push 2>&1)",
+      "Bash(powershell.exe:*)",
+      "mcp__chrome-devtools__take_snapshot",
+      "mcp__chrome-devtools__click",
+      "mcp__chrome-devtools__wait_for",
+      "mcp__chrome-devtools__fill",
+      "mcp__chrome-devtools__evaluate_script",
+      "Bash(export PATH=\"/c/Program Files/GitHub CLI:$PATH\" && gh repo view joechipjoechip/gr-attitude --json url -q .url 2>&1)",
+      "Bash(export PATH=\"/c/Program Files/GitHub CLI:$PATH\" && gh repo view joechipjoechip/gr-attitude --json visibility -q .visibility 2>&1)",
+      "Bash(export PATH=\"/c/Program Files/GitHub CLI:$PATH\" && gh repo edit joechipjoechip/gr-attitude --visibility public 2>&1)",
+      "Bash(export PATH=\"/c/Program Files/GitHub CLI:$PATH\" && gh repo edit joechipjoechip/gr-attitude --visibility public --accept-visibility-change-consequences 2>&1)",
+      "mcp__chrome-devtools__fill_form",
+      "mcp__chrome-devtools__new_page",
+      "mcp__chrome-devtools__select_page",
+      "Bash(cd /c/Users/lione/OneDrive/Bureau/CODINGSTUFFS/manolo && git add backend/src/missions/entities/mission.entity.ts backend/src/offers/entities/offer.entity.ts && git commit -m \"$\\(cat <<'EOF'\nFix date columns: remove explicit type for cross-DB compat\n\nTypeORM auto-selects timestamp \\(postgres\\) or datetime \\(sqlite\\)\nwhen no explicit type is specified on Date columns.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\" && export PATH=\"/c/Program Files/GitHub CLI:$PATH\" && git push 2>&1)",
+      "mcp__chrome-devtools__list_pages",
+      "mcp__chrome-devtools__press_key",
+      "Bash(cd /c/Users/lione/OneDrive/Bureau/CODINGSTUFFS/manolo/backend && npm run build 2>&1)",
+      "Bash(kill %1:*)",
+      "Bash(cd /c/Users/lione/OneDrive/Bureau/CODINGSTUFFS/manolo && git push 2>&1)",
+      "Bash(cd /c/Users/lione/OneDrive/Bureau/CODINGSTUFFS/manolo/backend && bash e2e-test.sh 2>&1)",
+      "Bash(echo BUILD OK:*)",
+      "Bash(export PATH=\"/c/Program Files/GitHub CLI:$PATH\" && gh api repos/joechipjoechip/gr-attitude --jq '.html_url' 2>&1)",
+      "Bash(cd C:\\\\Users\\\\lione\\\\OneDrive\\\\Bureau\\\\CODINGSTUFFS\\\\manolo\\\\backend:*)"
     ]
   }
 }

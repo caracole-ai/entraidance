@@ -22,7 +22,7 @@ export class UsersController {
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    const { passwordHash, ...result } = user;
+    const { passwordHash, oauthProviderId, ...result } = user;
     return result;
   }
 
@@ -36,7 +36,7 @@ export class UsersController {
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    const { passwordHash, ...result } = user;
+    const { passwordHash, oauthProviderId, ...result } = user;
     return result;
   }
 

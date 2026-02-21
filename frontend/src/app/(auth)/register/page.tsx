@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/useAuth';
+import { SocialLoginButtons } from '@/components/auth/social-login-buttons';
 import { toast } from 'sonner';
 
 export default function RegisterPage() {
@@ -77,6 +78,7 @@ export default function RegisterPage() {
               />
             </div>
           </CardContent>
+          <SocialLoginButtons />
           <CardFooter className="flex flex-col gap-4">
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? 'Inscription...' : "S'inscrire"}

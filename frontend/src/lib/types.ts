@@ -78,6 +78,7 @@ export interface IUser {
   avatarUrl?: string;
   bio?: string;
   location?: string;
+  oauthProvider?: string | null;
   createdAt: string;
   updatedAt: string;
 }

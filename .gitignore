@@ -34,3 +34,6 @@ npm-debug.log*
 # Docker volumes
 pgdata/
 redisdata/
+
+# Claude
+.claude/

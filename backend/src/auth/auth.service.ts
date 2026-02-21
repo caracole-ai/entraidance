@@ -38,7 +38,7 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<User | null> {
     const user = await this.usersService.findByEmail(email);
-    if (!user) {
+    if (!user || !user.passwordHash) {
       return null;
     }
 
@@ -58,6 +58,53 @@ export class AuthService {
     };
   }
 
+  async findOrCreateOAuthUser(profile: {
+    provider: string;
+    providerId: string;
+    email: string;
+    displayName: string;
+    avatarUrl?: string;
+  }) {
+    // 1. Check if user already linked with this OAuth provider
+    let user = await this.usersService.findByOAuthProvider(profile.provider, profile.providerId);
+    if (user) {
+      return {
+        accessToken: this.signToken(user),
+        user: this.sanitizeUser(user),
+      };
+    }
+
+    // 2. Check if user exists with this email → link OAuth provider
+    user = await this.usersService.findByEmail(profile.email);
+    if (user) {
+      await this.usersService.update(user.id, {
+        oauthProvider: profile.provider,
+        oauthProviderId: profile.providerId,
+        avatarUrl: user.avatarUrl || profile.avatarUrl || null,
+      });
+      user = (await this.usersService.findOne(user.id))!;
+      return {
+        accessToken: this.signToken(user),
+        user: this.sanitizeUser(user),
+      };
+    }
+
+    // 3. Create new user (no password)
+    user = await this.usersService.create({
+      email: profile.email,
+      passwordHash: null,
+      displayName: profile.displayName,
+      avatarUrl: profile.avatarUrl || null,
+      oauthProvider: profile.provider,
+      oauthProviderId: profile.providerId,
+    });
+
+    return {
+      accessToken: this.signToken(user),
+      user: this.sanitizeUser(user),
+    };
+  }
+
   private signToken(user: User): string {
     return this.jwtService.sign({
       sub: user.id,
@@ -66,7 +113,7 @@ export class AuthService {
   }
 
   private sanitizeUser(user: User) {
-    const { passwordHash, ...result } = user;
+    const { passwordHash, oauthProviderId, ...result } = user;
     return result;
   }
 }

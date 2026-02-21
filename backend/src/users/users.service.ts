@@ -32,6 +32,10 @@ export class UsersService {
     return this.usersRepository.findOneBy({ email });
   }
 
+  async findByOAuthProvider(provider: string, providerId: string): Promise<User | null> {
+    return this.usersRepository.findOneBy({ oauthProvider: provider, oauthProviderId: providerId });
+  }
+
   create(data: Partial<User>): Promise<User> {
     const user = this.usersRepository.create(data);
     return this.usersRepository.save(user);
