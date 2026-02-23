@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Notification } from './entities/notification.entity.js';
+import { Notification } from './entities/notification.entity';
 
 @Injectable()
 export class NotificationsService {
@@ -18,7 +18,12 @@ export class NotificationsService {
     userId: string,
     page = 1,
     limit = 20,
-  ): Promise<{ data: Notification[]; total: number; page: number; limit: number }> {
+  ): Promise<{
+    data: Notification[];
+    total: number;
+    page: number;
+    limit: number;
+  }> {
     const skip = (page - 1) * limit;
 
     const [data, total] = await this.notificationsRepository.findAndCount({

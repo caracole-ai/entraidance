@@ -6,11 +6,8 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import {
-  NotificationType,
-  ReferenceType,
-} from '../../shared/enums.js';
-import { User } from '../../users/entities/user.entity.js';
+import { NotificationType, ReferenceType } from '../../shared/enums';
+import { User } from '../../users/entities/user.entity';
 
 @Entity('notifications')
 export class Notification {

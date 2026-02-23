@@ -7,9 +7,9 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { UsersService } from '../users/users.service.js';
-import { RegisterDto } from './dto/register.dto.js';
-import { User } from '../users/entities/user.entity.js';
+import { UsersService } from '../users/users.service';
+import { RegisterDto } from './dto/register.dto';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +21,10 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
   ) {
-    this.bcryptRounds = parseInt(this.configService.get('BCRYPT_ROUNDS', '12'), 10);
+    this.bcryptRounds = parseInt(
+      this.configService.get('BCRYPT_ROUNDS', '12'),
+      10,
+    );
   }
 
   async register(dto: RegisterDto) {
@@ -79,9 +82,14 @@ export class AuthService {
     emailVerified?: boolean;
   }) {
     // 1. Check if user already linked with this OAuth provider
-    let user = await this.usersService.findByOAuthProvider(profile.provider, profile.providerId);
+    let user = await this.usersService.findByOAuthProvider(
+      profile.provider,
+      profile.providerId,
+    );
     if (user) {
-      this.logger.log(`OAuth login (existing link): ${user.id} via ${profile.provider}`);
+      this.logger.log(
+        `OAuth login (existing link): ${user.id} via ${profile.provider}`,
+      );
       return {
         accessToken: this.signToken(user),
         user: this.sanitizeUser(user),
@@ -92,7 +100,9 @@ export class AuthService {
     user = await this.usersService.findByEmail(profile.email);
     if (user) {
       if (profile.emailVerified === false) {
-        this.logger.warn(`OAuth account linking blocked (unverified email): ${profile.email} via ${profile.provider}`);
+        this.logger.warn(
+          `OAuth account linking blocked (unverified email): ${profile.email} via ${profile.provider}`,
+        );
         throw new UnauthorizedException(
           'An account with this email already exists. Please log in with your password, then link your social account from your profile.',
         );
@@ -104,7 +114,9 @@ export class AuthService {
         avatarUrl: user.avatarUrl || profile.avatarUrl || null,
       });
       user = (await this.usersService.findOne(user.id))!;
-      this.logger.log(`OAuth account linked: ${user.id} via ${profile.provider}`);
+      this.logger.log(
+        `OAuth account linked: ${user.id} via ${profile.provider}`,
+      );
       return {
         accessToken: this.signToken(user),
         user: this.sanitizeUser(user),
@@ -128,7 +140,11 @@ export class AuthService {
     };
   }
 
-  async changePassword(userId: string, currentPassword: string, newPassword: string) {
+  async changePassword(
+    userId: string,
+    currentPassword: string,
+    newPassword: string,
+  ) {
     const user = await this.usersService.findOne(userId);
     if (!user) {
       throw new UnauthorizedException('User not found');
@@ -154,6 +170,7 @@ export class AuthService {
   }
 
   private sanitizeUser(user: User) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordHash, oauthProviderId, ...result } = user;
     return result;
   }

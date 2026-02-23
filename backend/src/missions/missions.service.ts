@@ -5,15 +5,20 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Mission } from './entities/mission.entity.js';
-import { Contribution } from '../contributions/entities/contribution.entity.js';
-import { Correlation } from '../correlations/entities/correlation.entity.js';
-import { Notification } from '../notifications/entities/notification.entity.js';
-import { MissionStatus, NotificationType, ReferenceType, ContributionStatus } from '../shared/enums.js';
-import { CreateMissionDto } from './dto/create-mission.dto.js';
-import { UpdateMissionDto } from './dto/update-mission.dto.js';
-import { CloseMissionDto } from './dto/close-mission.dto.js';
-import { MissionFiltersDto } from './dto/mission-filters.dto.js';
+import { Mission } from './entities/mission.entity';
+import { Contribution } from '../contributions/entities/contribution.entity';
+import { Correlation } from '../correlations/entities/correlation.entity';
+import { Notification } from '../notifications/entities/notification.entity';
+import {
+  MissionStatus,
+  NotificationType,
+  ReferenceType,
+  ContributionStatus,
+} from '../shared/enums';
+import { CreateMissionDto } from './dto/create-mission.dto';
+import { UpdateMissionDto } from './dto/update-mission.dto';
+import { CloseMissionDto } from './dto/close-mission.dto';
+import { MissionFiltersDto } from './dto/mission-filters.dto';
 
 @Injectable()
 export class MissionsService {
@@ -80,7 +85,12 @@ export class MissionsService {
     }
 
     // Geo filtering: use PostGIS when available, skip on SQLite
-    if (filters.lat && filters.lng && filters.radiusKm && process.env.DB_TYPE === 'postgres') {
+    if (
+      filters.lat &&
+      filters.lng &&
+      filters.radiusKm &&
+      process.env.DB_TYPE === 'postgres'
+    ) {
       qb.andWhere(
         `ST_DWithin(
           ST_SetSRID(ST_MakePoint(mission.locationLng, mission.locationLat), 4326)::geography,

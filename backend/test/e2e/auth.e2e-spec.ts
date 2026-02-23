@@ -20,7 +20,7 @@ describe('Auth (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    
+
     // Apply same validation as main app
     app.useGlobalPipes(
       new ValidationPipe({
@@ -44,10 +44,12 @@ describe('Auth (e2e)', () => {
         .send(testUser)
         .expect(201)
         .expect((res) => {
-          expect(res.body).toHaveProperty('id');
-          expect(res.body).toHaveProperty('email', testUser.email);
-          expect(res.body).toHaveProperty('displayName', testUser.displayName);
-          expect(res.body).not.toHaveProperty('password');
+          expect(res.body).toHaveProperty('accessToken');
+          expect(res.body).toHaveProperty('user');
+          expect(res.body.user).toHaveProperty('id');
+          expect(res.body.user).toHaveProperty('email', testUser.email);
+          expect(res.body.user).toHaveProperty('displayName', testUser.displayName);
+          expect(res.body.user).not.toHaveProperty('password');
         });
     });
 
@@ -192,7 +194,10 @@ describe('Auth (e2e)', () => {
         })
         .expect(201)
         .expect((res) => {
-          expect(res.body).toHaveProperty('message', 'Password changed successfully');
+          expect(res.body).toHaveProperty(
+            'message',
+            'Password changed successfully',
+          );
         });
     });
 
@@ -224,7 +229,7 @@ describe('Auth (e2e)', () => {
     // Note: OAuth flows are complex to test in e2e because they involve
     // external providers (Google, Facebook) and browser redirects.
     // These should be tested with integration tests or manual testing.
-    
+
     it('should redirect to Google OAuth page', () => {
       return request(app.getHttpServer())
         .get('/auth/google')

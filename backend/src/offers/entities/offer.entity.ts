@@ -12,9 +12,9 @@ import {
   OfferType,
   OfferStatus,
   Visibility,
-} from '../../shared/enums.js';
-import { User } from '../../users/entities/user.entity.js';
-import { Correlation } from '../../correlations/entities/correlation.entity.js';
+} from '../../shared/enums';
+import { User } from '../../users/entities/user.entity';
+import { Correlation } from '../../correlations/entities/correlation.entity';
 
 @Entity('offers')
 export class Offer {

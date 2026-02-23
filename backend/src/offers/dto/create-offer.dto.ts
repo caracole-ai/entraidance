@@ -6,11 +6,7 @@ import {
   IsArray,
   MaxLength,
 } from 'class-validator';
-import {
-  MissionCategory,
-  OfferType,
-  Visibility,
-} from '../../shared/enums.js';
+import { MissionCategory, OfferType, Visibility } from '../../shared/enums';
 
 export class CreateOfferDto {
   @IsString()

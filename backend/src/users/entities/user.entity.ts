@@ -6,10 +6,10 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { Mission } from '../../missions/entities/mission.entity.js';
-import { Contribution } from '../../contributions/entities/contribution.entity.js';
-import { Offer } from '../../offers/entities/offer.entity.js';
-import { Notification } from '../../notifications/entities/notification.entity.js';
+import { Mission } from '../../missions/entities/mission.entity';
+import { Contribution } from '../../contributions/entities/contribution.entity';
+import { Offer } from '../../offers/entities/offer.entity';
+import { Notification } from '../../notifications/entities/notification.entity';
 
 @Entity('users')
 export class User {

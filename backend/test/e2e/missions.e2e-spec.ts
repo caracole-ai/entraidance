@@ -23,8 +23,9 @@ describe('Missions (e2e)', () => {
   };
 
   const testMission = {
-    title: 'Besoin d\'aide pour déménagement',
-    description: 'Je cherche 2 personnes pour m\'aider à déménager ce week-end. Camion fourni.',
+    title: "Besoin d'aide pour déménagement",
+    description:
+      "Je cherche 2 personnes pour m'aider à déménager ce week-end. Camion fourni.",
     category: MissionCategory.AIDE_A_LA_PERSONNE,
     helpType: HelpType.PHYSICAL,
     urgency: Urgency.MEDIUM,
@@ -56,7 +57,7 @@ describe('Missions (e2e)', () => {
     const registerRes = await request(app.getHttpServer())
       .post('/auth/register')
       .send(testUser);
-    
+
     userId = registerRes.body.id;
 
     const loginRes = await request(app.getHttpServer())
@@ -90,7 +91,10 @@ describe('Missions (e2e)', () => {
         .expect((res) => {
           expect(res.body).toHaveProperty('id');
           expect(res.body).toHaveProperty('title', testMission.title);
-          expect(res.body).toHaveProperty('description', testMission.description);
+          expect(res.body).toHaveProperty(
+            'description',
+            testMission.description,
+          );
           expect(res.body).toHaveProperty('category', testMission.category);
           expect(res.body).toHaveProperty('helpType', testMission.helpType);
           expect(res.body).toHaveProperty('urgency', testMission.urgency);
@@ -207,7 +211,10 @@ describe('Missions (e2e)', () => {
         .expect((res) => {
           expect(res.body).toHaveProperty('id', missionId);
           expect(res.body).toHaveProperty('title', testMission.title);
-          expect(res.body).toHaveProperty('description', testMission.description);
+          expect(res.body).toHaveProperty(
+            'description',
+            testMission.description,
+          );
         });
     });
 
@@ -227,7 +234,7 @@ describe('Missions (e2e)', () => {
     });
 
     it('should update mission with valid data and JWT', () => {
-      const updatedTitle = 'Déménagement urgent - besoin d\'aide';
+      const updatedTitle = "Déménagement urgent - besoin d'aide";
       return request(app.getHttpServer())
         .patch(`/missions/${missionId}`)
         .set('Authorization', `Bearer ${accessToken}`)

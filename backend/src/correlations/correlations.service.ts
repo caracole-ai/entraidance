@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Correlation } from './entities/correlation.entity.js';
+import { Correlation } from './entities/correlation.entity';
 
 @Injectable()
 export class CorrelationsService {

@@ -5,16 +5,16 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Contribution } from './entities/contribution.entity.js';
-import { Mission } from '../missions/entities/mission.entity.js';
-import { Notification } from '../notifications/entities/notification.entity.js';
+import { Contribution } from './entities/contribution.entity';
+import { Mission } from '../missions/entities/mission.entity';
+import { Notification } from '../notifications/entities/notification.entity';
 import {
   ContributionStatus,
   NotificationType,
   ReferenceType,
-} from '../shared/enums.js';
-import { CreateContributionDto } from './dto/create-contribution.dto.js';
-import { UpdateContributionDto } from './dto/update-contribution.dto.js';
+} from '../shared/enums';
+import { CreateContributionDto } from './dto/create-contribution.dto';
+import { UpdateContributionDto } from './dto/update-contribution.dto';
 
 @Injectable()
 export class ContributionsService {
@@ -85,9 +85,7 @@ export class ContributionsService {
       throw new NotFoundException('Contribution not found');
     }
     if (contribution.userId !== userId) {
-      throw new ForbiddenException(
-        'Only the contribution owner can update it',
-      );
+      throw new ForbiddenException('Only the contribution owner can update it');
     }
 
     await this.contributionsRepository.update(id, dto);
@@ -103,9 +101,7 @@ export class ContributionsService {
       throw new NotFoundException('Contribution not found');
     }
     if (contribution.userId !== userId) {
-      throw new ForbiddenException(
-        'Only the contribution owner can remove it',
-      );
+      throw new ForbiddenException('Only the contribution owner can remove it');
     }
 
     await this.contributionsRepository.update(id, {

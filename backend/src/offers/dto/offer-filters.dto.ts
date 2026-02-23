@@ -1,9 +1,13 @@
-import { IsOptional, IsEnum, IsString, IsNumber, Min, Max } from 'class-validator';
-import { Type } from 'class-transformer';
 import {
-  MissionCategory,
-  OfferType,
-} from '../../shared/enums.js';
+  IsOptional,
+  IsEnum,
+  IsString,
+  IsNumber,
+  Min,
+  Max,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+import { MissionCategory, OfferType } from '../../shared/enums';
 
 export class OfferFiltersDto {
   @IsOptional()

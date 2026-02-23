@@ -15,7 +15,7 @@ import {
   Urgency,
   MissionStatus,
   Visibility,
-} from '../../shared/enums.js';
+} from '../../shared/enums';
 
 export class UpdateMissionDto {
   @IsOptional()

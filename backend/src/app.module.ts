@@ -3,18 +3,18 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ThrottlerModule } from '@nestjs/throttler';
-import databaseConfig from './config/database.config.js';
-import redisConfig from './config/redis.config.js';
-import { AuthModule } from './auth/auth.module.js';
-import { UsersModule } from './users/users.module.js';
-import { MissionsModule } from './missions/missions.module.js';
-import { ContributionsModule } from './contributions/contributions.module.js';
-import { OffersModule } from './offers/offers.module.js';
-import { CorrelationsModule } from './correlations/correlations.module.js';
-import { NotificationsModule } from './notifications/notifications.module.js';
-import { MatchingModule } from './matching/matching.module.js';
-import { CronsModule } from './crons/crons.module.js';
-import { AppController } from './app.controller.js';
+import databaseConfig from './config/database.config';
+import redisConfig from './config/redis.config';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { MissionsModule } from './missions/missions.module';
+import { ContributionsModule } from './contributions/contributions.module';
+import { OffersModule } from './offers/offers.module';
+import { CorrelationsModule } from './correlations/correlations.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { MatchingModule } from './matching/matching.module';
+import { CronsModule } from './crons/crons.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -22,6 +22,7 @@ import { AppController } from './app.controller.js';
       isGlobal: true,
       load: [databaseConfig, redisConfig],
     }),
+
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({

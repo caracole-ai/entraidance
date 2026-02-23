@@ -8,10 +8,10 @@ import {
   NotFoundException,
   Logger,
 } from '@nestjs/common';
-import { UsersService } from './users.service.js';
-import { JwtAuthGuard } from '../common/guards/jwt-auth.guard.js';
-import { CurrentUser } from '../common/decorators/current-user.decorator.js';
-import { UpdateUserDto } from './dto/update-user.dto.js';
+import { UsersService } from './users.service';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -26,6 +26,7 @@ export class UsersController {
     if (!user) {
       throw new NotFoundException('User not found');
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordHash, oauthProviderId, ...result } = user;
     return result;
   }
@@ -40,6 +41,7 @@ export class UsersController {
     if (!user) {
       throw new NotFoundException('User not found');
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordHash, oauthProviderId, ...result } = user;
     return result;
   }

@@ -7,17 +7,15 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { NotificationsService } from './notifications.service.js';
-import { JwtAuthGuard } from '../common/guards/jwt-auth.guard.js';
-import { CurrentUser } from '../common/decorators/current-user.decorator.js';
-import { UpdateNotificationDto } from './dto/update-notification.dto.js';
+import { NotificationsService } from './notifications.service';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
+import { UpdateNotificationDto } from './dto/update-notification.dto';
 
 @Controller('users/me/notifications')
 @UseGuards(JwtAuthGuard)
 export class NotificationsController {
-  constructor(
-    private readonly notificationsService: NotificationsService,
-  ) {}
+  constructor(private readonly notificationsService: NotificationsService) {}
 
   @Get()
   findAll(
@@ -42,7 +40,8 @@ export class NotificationsController {
   markAsRead(
     @Param('id') id: string,
     @CurrentUser() user: { id: string },
-    @Body() dto: UpdateNotificationDto,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    @Body() _dto: UpdateNotificationDto,
   ) {
     return this.notificationsService.markAsRead(id, user.id);
   }

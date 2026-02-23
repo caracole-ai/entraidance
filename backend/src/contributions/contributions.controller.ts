@@ -7,11 +7,11 @@ import {
   Body,
   UseGuards,
 } from '@nestjs/common';
-import { ContributionsService } from './contributions.service.js';
-import { JwtAuthGuard } from '../common/guards/jwt-auth.guard.js';
-import { CurrentUser } from '../common/decorators/current-user.decorator.js';
-import { CreateContributionDto } from './dto/create-contribution.dto.js';
-import { UpdateContributionDto } from './dto/update-contribution.dto.js';
+import { ContributionsService } from './contributions.service';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
+import { CreateContributionDto } from './dto/create-contribution.dto';
+import { UpdateContributionDto } from './dto/update-contribution.dto';
 
 @Controller()
 export class ContributionsController {
@@ -39,10 +39,7 @@ export class ContributionsController {
 
   @UseGuards(JwtAuthGuard)
   @Delete('contributions/:id')
-  remove(
-    @Param('id') id: string,
-    @CurrentUser() user: { id: string },
-  ) {
+  remove(@Param('id') id: string, @CurrentUser() user: { id: string }) {
     return this.contributionsService.remove(id, user.id);
   }
 }

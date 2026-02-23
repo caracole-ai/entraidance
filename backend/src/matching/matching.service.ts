@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Mission } from '../missions/entities/mission.entity.js';
-import { Offer } from '../offers/entities/offer.entity.js';
-import { Correlation } from '../correlations/entities/correlation.entity.js';
+import { Mission } from '../missions/entities/mission.entity';
+import { Offer } from '../offers/entities/offer.entity';
+import { Correlation } from '../correlations/entities/correlation.entity';
 import {
   MissionStatus,
   OfferStatus,
   HelpType,
   OfferType,
-} from '../shared/enums.js';
+} from '../shared/enums';
 
 @Injectable()
 export class MatchingService {

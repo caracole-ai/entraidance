@@ -5,12 +5,12 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Offer } from './entities/offer.entity.js';
-import { Correlation } from '../correlations/entities/correlation.entity.js';
-import { OfferStatus } from '../shared/enums.js';
-import { CreateOfferDto } from './dto/create-offer.dto.js';
-import { UpdateOfferDto } from './dto/update-offer.dto.js';
-import { OfferFiltersDto } from './dto/offer-filters.dto.js';
+import { Offer } from './entities/offer.entity';
+import { Correlation } from '../correlations/entities/correlation.entity';
+import { OfferStatus } from '../shared/enums';
+import { CreateOfferDto } from './dto/create-offer.dto';
+import { UpdateOfferDto } from './dto/update-offer.dto';
+import { OfferFiltersDto } from './dto/offer-filters.dto';
 
 @Injectable()
 export class OffersService {
@@ -65,7 +65,12 @@ export class OffersService {
     }
 
     // Geo filtering: use PostGIS when available, skip on SQLite
-    if (filters.lat && filters.lng && filters.radiusKm && process.env.DB_TYPE === 'postgres') {
+    if (
+      filters.lat &&
+      filters.lng &&
+      filters.radiusKm &&
+      process.env.DB_TYPE === 'postgres'
+    ) {
       qb.andWhere(
         `ST_DWithin(
           ST_SetSRID(ST_MakePoint(offer.locationLng, offer.locationLat), 4326)::geography,

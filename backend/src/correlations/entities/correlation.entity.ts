@@ -7,8 +7,8 @@ import {
   JoinColumn,
   Unique,
 } from 'typeorm';
-import { Mission } from '../../missions/entities/mission.entity.js';
-import { Offer } from '../../offers/entities/offer.entity.js';
+import { Mission } from '../../missions/entities/mission.entity';
+import { Offer } from '../../offers/entities/offer.entity';
 
 @Entity('correlations')
 @Unique(['missionId', 'offerId'])

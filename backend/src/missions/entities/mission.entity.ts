@@ -13,10 +13,10 @@ import {
   HelpType,
   Urgency,
   Visibility,
-} from '../../shared/enums.js';
-import { User } from '../../users/entities/user.entity.js';
-import { Contribution } from '../../contributions/entities/contribution.entity.js';
-import { Correlation } from '../../correlations/entities/correlation.entity.js';
+} from '../../shared/enums';
+import { User } from '../../users/entities/user.entity';
+import { Contribution } from '../../contributions/entities/contribution.entity';
+import { Correlation } from '../../correlations/entities/correlation.entity';
 
 @Entity('missions')
 export class Mission {

@@ -7,12 +7,9 @@ import {
   JoinColumn,
   Unique,
 } from 'typeorm';
-import {
-  ContributionType,
-  ContributionStatus,
-} from '../../shared/enums.js';
-import { User } from '../../users/entities/user.entity.js';
-import { Mission } from '../../missions/entities/mission.entity.js';
+import { ContributionType, ContributionStatus } from '../../shared/enums';
+import { User } from '../../users/entities/user.entity';
+import { Mission } from '../../missions/entities/mission.entity';
 
 @Entity('contributions')
 @Unique(['userId', 'missionId', 'type'])

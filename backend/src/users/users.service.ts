@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './entities/user.entity.js';
-import { Mission } from '../missions/entities/mission.entity.js';
-import { Contribution } from '../contributions/entities/contribution.entity.js';
-import { Offer } from '../offers/entities/offer.entity.js';
-import { Notification } from '../notifications/entities/notification.entity.js';
-import { MissionStatus } from '../shared/enums.js';
+import { User } from './entities/user.entity';
+import { Mission } from '../missions/entities/mission.entity';
+import { Contribution } from '../contributions/entities/contribution.entity';
+import { Offer } from '../offers/entities/offer.entity';
+import { Notification } from '../notifications/entities/notification.entity';
+import { MissionStatus } from '../shared/enums';
 
 @Injectable()
 export class UsersService {
@@ -35,8 +35,14 @@ export class UsersService {
     return this.usersRepository.findOneBy({ email });
   }
 
-  async findByOAuthProvider(provider: string, providerId: string): Promise<User | null> {
-    return this.usersRepository.findOneBy({ oauthProvider: provider, oauthProviderId: providerId });
+  async findByOAuthProvider(
+    provider: string,
+    providerId: string,
+  ): Promise<User | null> {
+    return this.usersRepository.findOneBy({
+      oauthProvider: provider,
+      oauthProviderId: providerId,
+    });
   }
 
   create(data: Partial<User>): Promise<User> {
@@ -69,7 +75,10 @@ export class UsersService {
     await this.notificationsRepository.delete({ userId });
     await this.contributionsRepository.delete({ userId });
     // Delete contributions on user's missions
-    const userMissions = await this.missionsRepository.find({ where: { creatorId: userId }, select: ['id'] });
+    const userMissions = await this.missionsRepository.find({
+      where: { creatorId: userId },
+      select: ['id'],
+    });
     for (const mission of userMissions) {
       await this.contributionsRepository.delete({ missionId: mission.id });
     }
@@ -80,11 +89,19 @@ export class UsersService {
 
   async exportUserData(userId: string) {
     const user = await this.usersRepository.findOneBy({ id: userId });
-    const missions = await this.missionsRepository.find({ where: { creatorId: userId } });
-    const contributions = await this.contributionsRepository.find({ where: { userId }, relations: ['mission'] });
-    const offers = await this.offersRepository.find({ where: { creatorId: userId } });
+    const missions = await this.missionsRepository.find({
+      where: { creatorId: userId },
+    });
+    const contributions = await this.contributionsRepository.find({
+      where: { userId },
+      relations: ['mission'],
+    });
+    const offers = await this.offersRepository.find({
+      where: { creatorId: userId },
+    });
 
     // Strip sensitive fields
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordHash, oauthProviderId, ...safeUser } = user || ({} as any);
 
     return {

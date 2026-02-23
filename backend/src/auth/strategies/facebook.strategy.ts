@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-facebook';
-import { AuthService } from '../auth.service.js';
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
@@ -11,9 +11,14 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
     configService: ConfigService,
   ) {
     super({
-      clientID: configService.get<string>('FACEBOOK_APP_ID') || 'not-configured',
-      clientSecret: configService.get<string>('FACEBOOK_APP_SECRET') || 'not-configured',
-      callbackURL: configService.get<string>('FACEBOOK_CALLBACK_URL', 'http://localhost:3001/auth/facebook/callback'),
+      clientID:
+        configService.get<string>('FACEBOOK_APP_ID') || 'not-configured',
+      clientSecret:
+        configService.get<string>('FACEBOOK_APP_SECRET') || 'not-configured',
+      callbackURL: configService.get<string>(
+        'FACEBOOK_CALLBACK_URL',
+        'http://localhost:3001/auth/facebook/callback',
+      ),
       scope: ['email'],
       profileFields: ['id', 'emails', 'name', 'displayName', 'photos'],
     });
@@ -23,16 +28,23 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
     accessToken: string,
     refreshToken: string,
     profile: any,
-    done: Function,
+    done: (error: any, user?: any) => void,
   ) {
     const email = profile.emails?.[0]?.value;
     if (!email) {
-      return done(new UnauthorizedException('No email provided by Facebook. Please ensure your Facebook account has a verified email.'), false);
+      return done(
+        new UnauthorizedException(
+          'No email provided by Facebook. Please ensure your Facebook account has a verified email.',
+        ),
+        false,
+      );
     }
 
     const displayName =
       profile.displayName ||
-      [profile.name?.givenName, profile.name?.familyName].filter(Boolean).join(' ') ||
+      [profile.name?.givenName, profile.name?.familyName]
+        .filter(Boolean)
+        .join(' ') ||
       email.split('@')[0];
 
     // Facebook does not reliably indicate email verification — treat as unverified for account linking safety

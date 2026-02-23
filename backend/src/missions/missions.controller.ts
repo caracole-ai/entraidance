@@ -9,13 +9,13 @@ import {
   UseGuards,
   NotFoundException,
 } from '@nestjs/common';
-import { MissionsService } from './missions.service.js';
-import { JwtAuthGuard } from '../common/guards/jwt-auth.guard.js';
-import { CurrentUser } from '../common/decorators/current-user.decorator.js';
-import { CreateMissionDto } from './dto/create-mission.dto.js';
-import { UpdateMissionDto } from './dto/update-mission.dto.js';
-import { CloseMissionDto } from './dto/close-mission.dto.js';
-import { MissionFiltersDto } from './dto/mission-filters.dto.js';
+import { MissionsService } from './missions.service';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
+import { CreateMissionDto } from './dto/create-mission.dto';
+import { UpdateMissionDto } from './dto/update-mission.dto';
+import { CloseMissionDto } from './dto/close-mission.dto';
+import { MissionFiltersDto } from './dto/mission-filters.dto';
 
 @Controller('missions')
 export class MissionsController {
@@ -28,10 +28,7 @@ export class MissionsController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  create(
-    @CurrentUser() user: { id: string },
-    @Body() dto: CreateMissionDto,
-  ) {
+  create(@CurrentUser() user: { id: string }, @Body() dto: CreateMissionDto) {
     return this.missionsService.create(user.id, dto);
   }
 

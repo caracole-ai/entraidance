@@ -11,15 +11,15 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { ThrottlerGuard, Throttle } from '@nestjs/throttler';
 import type { Response } from 'express';
-import { AuthService } from './auth.service.js';
-import { RegisterDto } from './dto/register.dto.js';
-import { ChangePasswordDto } from './dto/change-password.dto.js';
-import { LocalAuthGuard } from '../common/guards/local-auth.guard.js';
-import { JwtAuthGuard } from '../common/guards/jwt-auth.guard.js';
-import { GoogleAuthGuard } from '../common/guards/google-auth.guard.js';
-import { FacebookAuthGuard } from '../common/guards/facebook-auth.guard.js';
-import { OAuthExceptionFilter } from '../common/filters/oauth-exception.filter.js';
-import { CurrentUser } from '../common/decorators/current-user.decorator.js';
+import { AuthService } from './auth.service';
+import { RegisterDto } from './dto/register.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import { LocalAuthGuard } from '../common/guards/local-auth.guard';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { GoogleAuthGuard } from '../common/guards/google-auth.guard';
+import { FacebookAuthGuard } from '../common/guards/facebook-auth.guard';
+import { OAuthExceptionFilter } from '../common/filters/oauth-exception.filter';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
 
 @Controller('auth')
 @UseGuards(ThrottlerGuard)
@@ -48,7 +48,11 @@ export class AuthController {
     @CurrentUser() currentUser: { id: string },
     @Body() dto: ChangePasswordDto,
   ) {
-    await this.authService.changePassword(currentUser.id, dto.currentPassword || '', dto.newPassword);
+    await this.authService.changePassword(
+      currentUser.id,
+      dto.currentPassword || '',
+      dto.newPassword,
+    );
     return { message: 'Password changed successfully' };
   }
 
@@ -62,7 +66,10 @@ export class AuthController {
   @UseGuards(GoogleAuthGuard)
   @UseFilters(OAuthExceptionFilter)
   googleCallback(@Request() req: any, @Res() res: Response) {
-    const frontendUrl = this.configService.get<string>('FRONTEND_URL', 'http://localhost:3000');
+    const frontendUrl = this.configService.get<string>(
+      'FRONTEND_URL',
+      'http://localhost:3000',
+    );
     const { accessToken } = req.user;
     res.redirect(`${frontendUrl}/callback#token=${accessToken}`);
   }
@@ -77,7 +84,10 @@ export class AuthController {
   @UseGuards(FacebookAuthGuard)
   @UseFilters(OAuthExceptionFilter)
   facebookCallback(@Request() req: any, @Res() res: Response) {
-    const frontendUrl = this.configService.get<string>('FRONTEND_URL', 'http://localhost:3000');
+    const frontendUrl = this.configService.get<string>(
+      'FRONTEND_URL',
+      'http://localhost:3000',
+    );
     const { accessToken } = req.user;
     res.redirect(`${frontendUrl}/callback#token=${accessToken}`);
   }

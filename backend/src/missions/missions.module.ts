@@ -1,15 +1,20 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Mission } from './entities/mission.entity.js';
-import { Contribution } from '../contributions/entities/contribution.entity.js';
-import { Correlation } from '../correlations/entities/correlation.entity.js';
-import { Notification } from '../notifications/entities/notification.entity.js';
-import { MissionsService } from './missions.service.js';
-import { MissionsController } from './missions.controller.js';
+import { Mission } from './entities/mission.entity';
+import { Contribution } from '../contributions/entities/contribution.entity';
+import { Correlation } from '../correlations/entities/correlation.entity';
+import { Notification } from '../notifications/entities/notification.entity';
+import { MissionsService } from './missions.service';
+import { MissionsController } from './missions.controller';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Mission, Contribution, Correlation, Notification]),
+    TypeOrmModule.forFeature([
+      Mission,
+      Contribution,
+      Correlation,
+      Notification,
+    ]),
   ],
   providers: [MissionsService],
   controllers: [MissionsController],

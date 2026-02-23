@@ -1,9 +1,9 @@
 import { DataSource } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { User } from '../users/entities/user.entity.js';
-import { Mission } from '../missions/entities/mission.entity.js';
-import { Contribution } from '../contributions/entities/contribution.entity.js';
-import { Offer } from '../offers/entities/offer.entity.js';
+import { User } from '../users/entities/user.entity';
+import { Mission } from '../missions/entities/mission.entity';
+import { Contribution } from '../contributions/entities/contribution.entity';
+import { Offer } from '../offers/entities/offer.entity';
 import {
   MissionCategory,
   HelpType,
@@ -14,7 +14,7 @@ import {
   OfferStatus,
   ContributionType,
   ContributionStatus,
-} from '../shared/enums.js';
+} from '../shared/enums';
 
 const dataSource = new DataSource({
   type: 'postgres',
@@ -35,7 +35,9 @@ function daysFromNow(days: number): Date {
 
 async function seed() {
   if (process.env.NODE_ENV === 'production') {
-    console.error('Seeding is not allowed in production. Set NODE_ENV to something else.');
+    console.error(
+      'Seeding is not allowed in production. Set NODE_ENV to something else.',
+    );
     process.exit(1);
   }
 
@@ -109,7 +111,8 @@ async function seed() {
     {
       creatorId: users[0].id,
       title: 'Aide pour demenagement',
-      description: 'Je demenage le 15 mars et j\'ai besoin de bras pour porter des cartons.',
+      description:
+        "Je demenage le 15 mars et j'ai besoin de bras pour porter des cartons.",
       category: MissionCategory.DEMENAGEMENT,
       helpType: HelpType.MATERIEL,
       urgency: Urgency.URGENT,
@@ -124,7 +127,8 @@ async function seed() {
     {
       creatorId: users[0].id,
       title: 'Conseil juridique bail',
-      description: 'Mon proprietaire refuse de rendre la caution. Besoin de conseils.',
+      description:
+        'Mon proprietaire refuse de rendre la caution. Besoin de conseils.',
       category: MissionCategory.ADMINISTRATIF,
       helpType: HelpType.CONSEIL,
       urgency: Urgency.MOYEN,
@@ -137,7 +141,8 @@ async function seed() {
     {
       creatorId: users[1].id,
       title: 'Reparation velo',
-      description: 'Mon velo a un pneu creve et le derailleur est casse. Quelqu\'un peut m\'aider?',
+      description:
+        "Mon velo a un pneu creve et le derailleur est casse. Quelqu'un peut m'aider?",
       category: MissionCategory.BRICOLAGE,
       helpType: HelpType.MATERIEL,
       urgency: Urgency.FAIBLE,
@@ -150,7 +155,8 @@ async function seed() {
     {
       creatorId: users[1].id,
       title: 'Garde enfants mercredi apres-midi',
-      description: 'Cherche quelqu\'un de confiance pour garder mes 2 enfants (5 et 8 ans) le mercredi apres-midi.',
+      description:
+        "Cherche quelqu'un de confiance pour garder mes 2 enfants (5 et 8 ans) le mercredi apres-midi.",
       category: MissionCategory.GARDE_ENFANTS,
       helpType: HelpType.RELATION,
       urgency: Urgency.URGENT,
@@ -163,7 +169,8 @@ async function seed() {
     {
       creatorId: users[2].id,
       title: 'Aide installation ordinateur',
-      description: 'Je viens d\'acheter un PC et je ne sais pas configurer Windows ni installer mes logiciels.',
+      description:
+        "Je viens d'acheter un PC et je ne sais pas configurer Windows ni installer mes logiciels.",
       category: MissionCategory.NUMERIQUE,
       helpType: HelpType.CONSEIL,
       urgency: Urgency.FAIBLE,
@@ -175,8 +182,9 @@ async function seed() {
     },
     {
       creatorId: users[2].id,
-      title: 'Besoin d\'ecoute',
-      description: 'Periode difficile, j\'aurais besoin de parler a quelqu\'un de bienveillant.',
+      title: "Besoin d'ecoute",
+      description:
+        "Periode difficile, j'aurais besoin de parler a quelqu'un de bienveillant.",
       category: MissionCategory.ECOUTE,
       helpType: HelpType.RELATION,
       urgency: Urgency.URGENT,
@@ -189,7 +197,8 @@ async function seed() {
     {
       creatorId: users[3].id,
       title: 'Covoiturage Strasbourg-Paris',
-      description: 'Je cherche un covoiturage ou des conseils pour un trajet pas cher le weekend prochain.',
+      description:
+        'Je cherche un covoiturage ou des conseils pour un trajet pas cher le weekend prochain.',
       category: MissionCategory.TRANSPORT,
       helpType: HelpType.CONSEIL,
       urgency: Urgency.MOYEN,
@@ -202,7 +211,8 @@ async function seed() {
     {
       creatorId: users[3].id,
       title: 'Cours de francais pour voisin',
-      description: 'Mon voisin vient d\'arriver en France et aimerait apprendre les bases du francais.',
+      description:
+        "Mon voisin vient d'arriver en France et aimerait apprendre les bases du francais.",
       category: MissionCategory.EDUCATION,
       helpType: HelpType.RELATION,
       urgency: Urgency.FAIBLE,
@@ -215,7 +225,8 @@ async function seed() {
     {
       creatorId: users[4].id,
       title: 'Collecte alimentaire quartier',
-      description: 'On organise une collecte alimentaire pour les familles en difficulte du quartier.',
+      description:
+        'On organise une collecte alimentaire pour les familles en difficulte du quartier.',
       category: MissionCategory.ALIMENTATION,
       helpType: HelpType.MATERIEL,
       urgency: Urgency.MOYEN,
@@ -228,7 +239,7 @@ async function seed() {
     {
       creatorId: users[4].id,
       title: 'Garder mon chat pendant vacances',
-      description: 'Je pars 10 jours en aout. Quelqu\'un peut garder mon chat?',
+      description: "Je pars 10 jours en aout. Quelqu'un peut garder mon chat?",
       category: MissionCategory.ANIMAUX,
       helpType: HelpType.RELATION,
       urgency: Urgency.FAIBLE,
@@ -248,7 +259,7 @@ async function seed() {
       userId: users[1].id,
       missionId: missions[0].id,
       type: ContributionType.PARTICIPE,
-      message: 'Je suis dispo le 15 mars, j\'ai une camionnette!',
+      message: "Je suis dispo le 15 mars, j'ai une camionnette!",
       status: ContributionStatus.ACTIVE,
     },
     {
@@ -262,7 +273,7 @@ async function seed() {
       userId: users[3].id,
       missionId: missions[4].id,
       type: ContributionType.CONSEILLE,
-      message: 'Je suis informaticien, je peux t\'aider a distance.',
+      message: "Je suis informaticien, je peux t'aider a distance.",
       status: ContributionStatus.ACTIVE,
     },
     {
@@ -288,7 +299,8 @@ async function seed() {
     {
       creatorId: users[1].id,
       title: 'Pret de camionnette',
-      description: 'Je peux preter ma camionnette pour des demenagements le weekend.',
+      description:
+        'Je peux preter ma camionnette pour des demenagements le weekend.',
       category: MissionCategory.DEMENAGEMENT,
       offerType: OfferType.MATERIEL,
       visibility: Visibility.PUBLIC,
@@ -303,7 +315,8 @@ async function seed() {
     {
       creatorId: users[3].id,
       title: 'Aide informatique',
-      description: 'Developpeur de metier, je propose de l\'aide pour tout probleme informatique.',
+      description:
+        "Developpeur de metier, je propose de l'aide pour tout probleme informatique.",
       category: MissionCategory.NUMERIQUE,
       offerType: OfferType.COMPETENCE,
       visibility: Visibility.PUBLIC,
@@ -318,7 +331,8 @@ async function seed() {
     {
       creatorId: users[2].id,
       title: 'Ecoute et soutien',
-      description: 'Ancienne benevole dans une association d\'ecoute. Disponible pour discuter.',
+      description:
+        "Ancienne benevole dans une association d'ecoute. Disponible pour discuter.",
       category: MissionCategory.ECOUTE,
       offerType: OfferType.ECOUTE,
       visibility: Visibility.PUBLIC,

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Correlation } from './entities/correlation.entity.js';
-import { CorrelationsService } from './correlations.service.js';
+import { Correlation } from './entities/correlation.entity';
+import { CorrelationsService } from './correlations.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Correlation])],

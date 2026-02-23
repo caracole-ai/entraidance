@@ -12,7 +12,7 @@ import {
   HelpType,
   Urgency,
   Visibility,
-} from '../../shared/enums.js';
+} from '../../shared/enums';
 
 export class CreateMissionDto {
   @IsString()

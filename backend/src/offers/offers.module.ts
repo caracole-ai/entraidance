@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Offer } from './entities/offer.entity.js';
-import { Correlation } from '../correlations/entities/correlation.entity.js';
-import { OffersService } from './offers.service.js';
-import { OffersController } from './offers.controller.js';
+import { Offer } from './entities/offer.entity';
+import { Correlation } from '../correlations/entities/correlation.entity';
+import { OffersService } from './offers.service';
+import { OffersController } from './offers.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Offer, Correlation])],

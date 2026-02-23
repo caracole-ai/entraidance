@@ -2,13 +2,13 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, LessThan, Between } from 'typeorm';
-import { Mission } from '../missions/entities/mission.entity.js';
-import { Notification } from '../notifications/entities/notification.entity.js';
+import { Mission } from '../missions/entities/mission.entity';
+import { Notification } from '../notifications/entities/notification.entity';
 import {
   MissionStatus,
   NotificationType,
   ReferenceType,
-} from '../shared/enums.js';
+} from '../shared/enums';
 
 @Injectable()
 export class MissionExpirationCron {
