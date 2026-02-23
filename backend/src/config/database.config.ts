@@ -14,8 +14,8 @@ export default registerAs('database', (): TypeOrmModuleOptions => {
         type: 'postgres',
         url: process.env.DATABASE_URL,
         ssl: isProduction
-          ? { rejectUnauthorized: true }
-          : { rejectUnauthorized: false },
+          ? { rejectUnauthorized: false }
+          : false,
         autoLoadEntities: true,
         synchronize: !isProduction,
       };
