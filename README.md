@@ -1,5 +1,7 @@
 # GR attitude 🤝
 
+[![CI/CD](https://github.com/joechipjoechip/gr-attitude/actions/workflows/ci.yml/badge.svg)](https://github.com/joechipjoechip/gr-attitude/actions/workflows/ci.yml)
+
 **Plateforme sociale d'entraide structurée** — Un réseau social orienté action pour organiser les demandes d'aide (Missions) et les offres d'aide (Offres).
 
 > *« Trouvez des solutions, Soyez la solution. Tout simplement. »*
