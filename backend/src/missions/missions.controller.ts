@@ -9,6 +9,7 @@ import {
   UseGuards,
   NotFoundException,
 } from '@nestjs/common';
+import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 import { MissionsService } from './missions.service';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
@@ -18,14 +19,17 @@ import { CloseMissionDto } from './dto/close-mission.dto';
 import { MissionFiltersDto } from './dto/mission-filters.dto';
 
 @Controller('missions')
+@UseGuards(ThrottlerGuard)
 export class MissionsController {
   constructor(private readonly missionsService: MissionsService) {}
 
+  @Throttle({ short: { limit: 60, ttl: 60000 } })
   @Get()
   findAll(@Query() filters: MissionFiltersDto) {
     return this.missionsService.findAll(filters);
   }
 
+  @Throttle({ short: { limit: 10, ttl: 60000 } })
   @UseGuards(JwtAuthGuard)
   @Post()
   create(@CurrentUser() user: { id: string }, @Body() dto: CreateMissionDto) {
@@ -41,6 +45,7 @@ export class MissionsController {
     return mission;
   }
 
+  @Throttle({ short: { limit: 20, ttl: 60000 } })
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(
@@ -51,6 +56,7 @@ export class MissionsController {
     return this.missionsService.update(id, user.id, dto);
   }
 
+  @Throttle({ short: { limit: 10, ttl: 60000 } })
   @UseGuards(JwtAuthGuard)
   @Post(':id/close')
   close(

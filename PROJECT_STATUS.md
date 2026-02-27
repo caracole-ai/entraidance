@@ -110,12 +110,44 @@ _Rien en cours._
 
 ---
 
+## ✅ Recent Work
+
+#### 5. Rate Limiting & Caching (2026-02-27)
+
+**Status:** ✅ Complete
+
+**Commit:** (pending)
+
+**Implementation:**
+- ✅ NestJS Throttler configured globally (short: 20/min, long: 100/10min)
+- ✅ Endpoint-specific limits applied:
+  - Auth: 5/min (register, login)
+  - Missions: 60/min (list), 10/min (create), 20/min (update), 10/min (close)
+  - Offers: Same as missions
+  - Matching: 30/min (suggestions)
+- ✅ Frontend cache optimized (TanStack Query):
+  - staleTime: 5 minutes
+  - cacheTime: 10 minutes
+  - refetchOnWindowFocus: false (reduces API calls)
+- ✅ Documentation: `RATE_LIMITING.md` (full guide)
+- ✅ Test script: `npm run test:rate-limits` (manual verification)
+
+**Testing:**
+- Manual test confirmed: 60 requests succeed, then 429 Too Many Requests
+- Rate limit headers included in 429 responses
+- Frontend cache reduces duplicate API calls
+
+**Impact:** API protected from abuse, reduced server load, improved UX ✅
+
+---
+
 ## 📋 Backlog
 
 ### High Priority
-- [ ] Add Facebook OAuth (postponed)
+- [x] Rate limiting & caching
 - [ ] Matching algorithm V2 (scoring pondéré)
 - [ ] Real-time notifications (WebSocket)
+- [ ] Add Facebook OAuth (postponed)
 
 ### Medium Priority
 - [ ] User profile completion (skills, preferences)

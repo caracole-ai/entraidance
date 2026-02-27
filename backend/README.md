@@ -105,6 +105,32 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
+## Rate Limiting & Performance
+
+### Rate Limiting Strategy
+
+GR-attitude uses **NestJS Throttler** to protect endpoints from abuse.
+
+**Global limits:**
+- short: 20 requests / 60s
+- long: 100 requests / 600s
+
+**Endpoint-specific limits:**
+- `POST /auth/register`: 5/min
+- `POST /auth/login`: 5/min
+- `GET /missions`: 60/min
+- `POST /missions`: 10/min
+- `GET /matching/suggestions`: 30/min
+
+**Testing rate limits:**
+```bash
+npm run test:rate-limits    # Manual test script
+```
+
+**Documentation:** See [`RATE_LIMITING.md`](./RATE_LIMITING.md) for full details.
+
+---
+
 ## Authentication & Session Lifecycle
 
 ### JWT-Based Authentication

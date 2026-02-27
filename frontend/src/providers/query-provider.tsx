@@ -9,8 +9,16 @@ export function QueryProvider({ children }: { children: ReactNode }) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 60 * 1000,
-            retry: 1,
+            // Cache strategy optimized for rate limiting
+            staleTime: 5 * 60 * 1000, // 5 minutes - data stays fresh longer
+            cacheTime: 10 * 60 * 1000, // 10 minutes - keep in memory
+            retry: 2, // Retry twice on network errors
+            refetchOnWindowFocus: false, // Don't refetch on tab focus (reduces API calls)
+            refetchOnReconnect: true, // Refetch when internet reconnects
+            refetchOnMount: 'always', // Always refetch on mount for fresh data
+          },
+          mutations: {
+            retry: 1, // Retry mutations once
           },
         },
       })

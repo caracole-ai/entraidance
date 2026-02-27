@@ -9,6 +9,7 @@ import {
   UseGuards,
   NotFoundException,
 } from '@nestjs/common';
+import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 import { OffersService } from './offers.service';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
@@ -17,14 +18,17 @@ import { UpdateOfferDto } from './dto/update-offer.dto';
 import { OfferFiltersDto } from './dto/offer-filters.dto';
 
 @Controller('offers')
+@UseGuards(ThrottlerGuard)
 export class OffersController {
   constructor(private readonly offersService: OffersService) {}
 
+  @Throttle({ short: { limit: 60, ttl: 60000 } })
   @Get()
   findAll(@Query() filters: OfferFiltersDto) {
     return this.offersService.findAll(filters);
   }
 
+  @Throttle({ short: { limit: 10, ttl: 60000 } })
   @UseGuards(JwtAuthGuard)
   @Post()
   create(@CurrentUser() user: { id: string }, @Body() dto: CreateOfferDto) {
@@ -40,6 +44,7 @@ export class OffersController {
     return offer;
   }
 
+  @Throttle({ short: { limit: 20, ttl: 60000 } })
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(
@@ -50,6 +55,7 @@ export class OffersController {
     return this.offersService.update(id, user.id, dto);
   }
 
+  @Throttle({ short: { limit: 10, ttl: 60000 } })
   @UseGuards(JwtAuthGuard)
   @Post(':id/close')
   close(@Param('id') id: string, @CurrentUser() user: { id: string }) {
