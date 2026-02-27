@@ -96,3 +96,80 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+## Authentication & Session Lifecycle
+
+### JWT-Based Authentication
+
+GR-attitude uses **JWT (JSON Web Tokens)** for stateless authentication.
+
+#### Authentication Flow
+
+1. **Registration/Login**
+   - User registers (`POST /auth/register`) or logs in (`POST /auth/login`)
+   - Backend validates credentials
+   - Returns `{ accessToken, user }`
+
+2. **Token Storage (Frontend)**
+   - Frontend stores JWT in `localStorage` (key: `token`)
+   - Included in all subsequent requests: `Authorization: Bearer <token>`
+
+3. **Token Validation**
+   - JwtAuthGuard (`@UseGuards(JwtAuthGuard)`) validates token on protected routes
+   - Token decoded → user ID extracted → user fetched from DB
+   - If valid: request proceeds
+   - If invalid/expired: `401 Unauthorized`
+
+4. **Logout**
+   - Frontend clears `localStorage.removeItem('token')`
+   - No server-side logout (stateless JWT)
+
+#### Token Expiration
+
+- **Default:** 7 days (`JWT_EXPIRATION=7d`)
+- Configured via environment variable in `.env`
+- After expiration, user must re-authenticate
+
+#### Session Persistence Testing
+
+Comprehensive E2E tests cover JWT lifecycle:
+
+```bash
+npm run test:e2e -- jwt.e2e-spec
+```
+
+**Tests include:**
+- ✅ Valid token acceptance
+- ✅ Invalid/malformed token rejection
+- ✅ Expired token rejection
+- ✅ Session persistence across requests
+- ✅ Token payload structure validation
+- ✅ Concurrent request handling
+
+#### OAuth (Google, Facebook)
+
+- OAuth callbacks redirect with `#token=<jwt>` in URL hash
+- Frontend extracts token from hash → stores in localStorage
+- Session established ✅
+
+#### Security Notes
+
+- **Never log tokens** — redact in logs
+- **Use HTTPS in production** — prevent token interception
+- **Short expiration** for sensitive apps — balance UX vs security
+- **Refresh tokens** (not implemented yet) — rotate long-lived tokens
+
+#### Troubleshooting
+
+**"401 Unauthorized" on valid requests**
+
+1. Check token in localStorage: `localStorage.getItem('token')`
+2. Decode token at [jwt.io](https://jwt.io) — verify not expired
+3. Check `JWT_SECRET` matches between environments
+4. Verify `Authorization` header format: `Bearer <token>` (note the space)
+
+**Token not persisting on page refresh**
+
+1. Ensure frontend saves token immediately after login
+2. Check browser localStorage (DevTools → Application → Local Storage)
+3. Verify OAuth callback extracts token from `window.location.hash`
