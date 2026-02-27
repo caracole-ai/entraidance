@@ -21,6 +21,19 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'GR attitude',
   description: 'Trouvez des solutions, Soyez la solution. Tout simplement.',
+  manifest: '/manifest.json',
+  themeColor: '#000000',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'GR attitude',
+  },
 };
 
 export default function RootLayout({
