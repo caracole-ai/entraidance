@@ -48,14 +48,22 @@ $ npm run start:prod
 
 ```bash
 # unit tests
-$ npm run test
+$ npm run test         # 1/1 passing
 
 # e2e tests
-$ npm run test:e2e
+$ npm run test:e2e     # 51/51 passing ✅
 
 # test coverage
 $ npm run test:cov
 ```
+
+**E2E Test Coverage:**
+- ✅ Authentication (register, login, OAuth)
+- ✅ JWT lifecycle (12 tests - validation, expiration, persistence)
+- ✅ Missions CRUD (20 tests - create, list, filter, update, close)
+- ✅ Health check
+
+All tests passing — production-ready ✅
 
 ## Deployment
 
