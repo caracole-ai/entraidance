@@ -184,8 +184,11 @@ export class MissionsService {
       });
     }
 
-    // Sorting
-    const sortBy = filters.sortBy || 'createdAt';
+    // Sorting (validate sortBy to prevent SQL injection)
+    const validSortFields = ['createdAt', 'expiresAt', 'urgency'];
+    const sortBy = validSortFields.includes(filters.sortBy || '')
+      ? filters.sortBy
+      : 'createdAt';
     const sortOrder = filters.sortOrder === 'ASC' ? 'ASC' : 'DESC';
     qb.orderBy(`mission.${sortBy}`, sortOrder);
 
