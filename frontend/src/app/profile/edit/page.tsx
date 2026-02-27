@@ -110,16 +110,16 @@ export default function ProfileEditPage() {
   }
 
   return (
-    <div className="container max-w-2xl py-8">
+    <div className="container max-w-2xl py-4 px-4 sm:py-8">
       <Card>
-        <CardHeader>
-          <CardTitle>Compléter mon profil</CardTitle>
-          <CardDescription>
+        <CardHeader className="px-4 sm:px-6">
+          <CardTitle className="text-xl sm:text-2xl">Compléter mon profil</CardTitle>
+          <CardDescription className="text-sm">
             Ajoutez vos compétences et préférences pour améliorer le matching
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <CardContent className="px-4 sm:px-6">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
             {/* Bio */}
             <div className="space-y-2">
               <Label htmlFor="bio">Bio</Label>
@@ -222,14 +222,15 @@ export default function ProfileEditPage() {
               />
             </div>
 
-            <div className="flex gap-4">
-              <Button type="submit" disabled={loading}>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
+              <Button type="submit" disabled={loading} className="w-full sm:w-auto h-11 sm:h-10 text-base sm:text-sm">
                 {loading ? 'Enregistrement...' : 'Enregistrer'}
               </Button>
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => router.back()}
+                className="w-full sm:w-auto h-11 sm:h-10 text-base sm:text-sm"
               >
                 Annuler
               </Button>

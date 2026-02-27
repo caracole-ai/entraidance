@@ -39,19 +39,19 @@ export default function MissionsPage() {
   };
 
   return (
-    <div className="container mx-auto max-w-6xl px-4 py-8">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Missions</h1>
-        <Button asChild>
+    <div className="container mx-auto max-w-6xl px-4 py-4 sm:py-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold">Missions</h1>
+        <Button asChild className="w-full sm:w-auto h-11 sm:h-10">
           <Link href="/missions/new">
             <Plus className="mr-2 h-4 w-4" />
-            Creer une Mission
+            <span className="sm:inline">Créer une Mission</span>
           </Link>
         </Button>
       </div>
 
       {/* Filters */}
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+      <div className="grid gap-2 sm:gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-6 sm:mb-8">
         <Input
           placeholder="Rechercher..."
           value={filters.search || ''}
@@ -114,7 +114,7 @@ export default function MissionsPage() {
         </div>
       ) : data?.data && data.data.length > 0 ? (
         <>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {data.data.map((mission) => (
               <MissionCard key={mission.id} mission={mission} />
             ))}

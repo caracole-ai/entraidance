@@ -57,13 +57,13 @@ export function SearchFilters({ onSearch, onReset }: SearchFiltersProps) {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="text-lg flex items-center gap-2">
-          <Search className="h-5 w-5" />
+      <CardHeader className="px-4 sm:px-6">
+        <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+          <Search className="h-4 w-4 sm:h-5 sm:w-5" />
           Recherche & Filtres
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="px-4 sm:px-6 space-y-3 sm:space-y-4">
         {/* Search input */}
         <div className="space-y-2">
           <Label htmlFor="search-q">Recherche</Label>
@@ -162,12 +162,12 @@ export function SearchFilters({ onSearch, onReset }: SearchFiltersProps) {
 
         {/* Actions */}
         <div className="flex gap-2 pt-2">
-          <Button onClick={handleSearch} className="flex-1">
+          <Button onClick={handleSearch} className="flex-1 h-11 sm:h-10 text-base sm:text-sm">
             <Search className="h-4 w-4 mr-2" />
             Rechercher
           </Button>
-          <Button onClick={handleReset} variant="outline">
-            <X className="h-4 w-4" />
+          <Button onClick={handleReset} variant="outline" size="icon" className="h-11 w-11 sm:h-10 sm:w-10">
+            <X className="h-5 w-5 sm:h-4 sm:w-4" />
           </Button>
         </div>
       </CardContent>
