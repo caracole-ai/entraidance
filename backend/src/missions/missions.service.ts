@@ -21,6 +21,7 @@ import { CreateMissionDto } from './dto/create-mission.dto';
 import { UpdateMissionDto } from './dto/update-mission.dto';
 import { CloseMissionDto } from './dto/close-mission.dto';
 import { MissionFiltersDto } from './dto/mission-filters.dto';
+import { SearchMissionsDto } from './dto/search-missions.dto';
 import { EventsGateway } from '../events/events.gateway';
 
 @Injectable()
@@ -111,6 +112,83 @@ export class MissionsService {
     }
 
     qb.orderBy('mission.createdAt', 'DESC');
+    qb.skip(skip).take(limit);
+
+    const [data, total] = await qb.getManyAndCount();
+
+    return { data, total, page, limit, totalPages: Math.ceil(total / limit) };
+  }
+
+  /**
+   * Advanced search with full-text query + filters
+   */
+  async search(filters: SearchMissionsDto) {
+    const page = Math.max(filters.page || 1, 1);
+    const limit = Math.min(Math.max(filters.limit || 20, 1), 100);
+    const skip = (page - 1) * limit;
+
+    const qb = this.missionsRepository
+      .createQueryBuilder('mission')
+      .leftJoinAndSelect('mission.creator', 'creator')
+      .select([
+        'mission',
+        'creator.id',
+        'creator.displayName',
+        'creator.avatarUrl',
+      ]);
+
+    // Full-text search (title + description)
+    if (filters.q && filters.q.trim()) {
+      qb.andWhere(
+        '(LOWER(mission.title) LIKE LOWER(:q) OR LOWER(mission.description) LIKE LOWER(:q))',
+        { q: `%${filters.q.trim()}%` },
+      );
+    }
+
+    // Filters
+    if (filters.category) {
+      qb.andWhere('mission.category = :category', {
+        category: filters.category,
+      });
+    }
+
+    if (filters.urgency) {
+      qb.andWhere('mission.urgency = :urgency', { urgency: filters.urgency });
+    }
+
+    if (filters.status) {
+      qb.andWhere('mission.status = :status', { status: filters.status });
+    }
+
+    if (filters.visibility) {
+      qb.andWhere('mission.visibility = :visibility', {
+        visibility: filters.visibility,
+      });
+    }
+
+    // Geographic filtering (simple SQLite-compatible approach)
+    if (filters.lat && filters.lng && filters.radius) {
+      // Use bounding box approximation for SQLite (fast but less accurate)
+      const latDelta = filters.radius / 111; // 1 degree ≈ 111 km
+      const lngDelta = filters.radius / (111 * Math.cos(filters.lat * (Math.PI / 180)));
+
+      qb.andWhere('mission.locationLat IS NOT NULL');
+      qb.andWhere('mission.locationLng IS NOT NULL');
+      qb.andWhere('mission.locationLat BETWEEN :latMin AND :latMax', {
+        latMin: filters.lat - latDelta,
+        latMax: filters.lat + latDelta,
+      });
+      qb.andWhere('mission.locationLng BETWEEN :lngMin AND :lngMax', {
+        lngMin: filters.lng - lngDelta,
+        lngMax: filters.lng + lngDelta,
+      });
+    }
+
+    // Sorting
+    const sortBy = filters.sortBy || 'createdAt';
+    const sortOrder = filters.sortOrder === 'ASC' ? 'ASC' : 'DESC';
+    qb.orderBy(`mission.${sortBy}`, sortOrder);
+
     qb.skip(skip).take(limit);
 
     const [data, total] = await qb.getManyAndCount();

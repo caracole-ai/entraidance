@@ -17,11 +17,18 @@ import { CreateMissionDto } from './dto/create-mission.dto';
 import { UpdateMissionDto } from './dto/update-mission.dto';
 import { CloseMissionDto } from './dto/close-mission.dto';
 import { MissionFiltersDto } from './dto/mission-filters.dto';
+import { SearchMissionsDto } from './dto/search-missions.dto';
 
 @Controller('missions')
 @UseGuards(ThrottlerGuard)
 export class MissionsController {
   constructor(private readonly missionsService: MissionsService) {}
+
+  @Throttle({ short: { limit: 60, ttl: 60000 } })
+  @Get('search')
+  search(@Query() filters: SearchMissionsDto) {
+    return this.missionsService.search(filters);
+  }
 
   @Throttle({ short: { limit: 60, ttl: 60000 } })
   @Get()
