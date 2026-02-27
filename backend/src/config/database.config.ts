@@ -17,7 +17,9 @@ export default registerAs('database', (): TypeOrmModuleOptions => {
           ? { rejectUnauthorized: false }
           : false,
         autoLoadEntities: true,
-        synchronize: true, // Force synchronize for POC
+        synchronize: !isProduction, // Dev: auto-sync | Prod: migrations
+        migrationsRun: isProduction, // Auto-run migrations in production
+        migrations: [join(__dirname, '../migrations/*{.ts,.js}')],
       };
     }
 
@@ -29,7 +31,9 @@ export default registerAs('database', (): TypeOrmModuleOptions => {
       password: process.env.DB_PASSWORD || 'gr_password',
       database: process.env.DB_DATABASE || 'gr_attitude',
       autoLoadEntities: true,
-      synchronize: true, // Force synchronize for POC
+      synchronize: !isProduction, // Dev: auto-sync | Prod: migrations
+      migrationsRun: isProduction, // Auto-run migrations in production
+      migrations: [join(__dirname, '../migrations/*{.ts,.js}')],
     };
   }
 
@@ -37,6 +41,8 @@ export default registerAs('database', (): TypeOrmModuleOptions => {
     type: 'better-sqlite3',
     database: join(process.cwd(), 'gr_attitude.sqlite'),
     autoLoadEntities: true,
-    synchronize: true, // Force synchronize for POC
+    synchronize: !isProduction, // Dev: auto-sync | Prod: migrations
+    migrationsRun: isProduction, // Auto-run migrations in production
+    migrations: [join(__dirname, '../migrations/*{.ts,.js}')],
   };
 });
