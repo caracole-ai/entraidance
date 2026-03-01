@@ -261,4 +261,15 @@ export class SeedService {
       message: 'Demo data cleared successfully',
     };
   }
+
+  async syncSchema() {
+    console.log('🔧 Forcing schema synchronization...');
+    await this.dataSource.synchronize(false);
+    console.log('✅ Schema synchronized successfully');
+
+    return {
+      success: true,
+      message: 'Schema synchronized (columns added/updated)',
+    };
+  }
 }

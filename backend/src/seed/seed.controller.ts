@@ -22,4 +22,10 @@ export class SeedController {
   async clear() {
     return this.seedService.clear();
   }
+
+  @Post('sync-schema')
+  @HttpCode(HttpStatus.OK)
+  async syncSchema() {
+    return this.seedService.syncSchema();
+  }
 }
