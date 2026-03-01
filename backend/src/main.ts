@@ -5,6 +5,7 @@ import { ValidationPipe, Logger } from '@nestjs/common';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { SeedService } from './seed/seed.service';
 
 async function bootstrap() {
   // Initialize Sentry (optional, only if DSN is configured)
@@ -60,15 +61,12 @@ async function bootstrap() {
 
   // Auto-seed demo data if DB is empty (resilient to ephemeral disk resets)
   try {
-    const { SeedService } = await import('./seed/seed.service');
-    const seedService = app.get(SeedService, { strict: false });
-    if (seedService) {
-      const status = await seedService.status();
-      if (status.users === 0 && status.missions === 0) {
-        logger.log('Empty database detected — auto-seeding demo data...');
-        const result = await seedService.seed();
-        logger.log(`Auto-seed complete: ${JSON.stringify(result.stats)}`);
-      }
+    const seedService = app.get(SeedService);
+    const status = await seedService.status();
+    if (status.users === 0 && status.missions === 0) {
+      logger.log('Empty database detected — auto-seeding demo data...');
+      const result = await seedService.seed();
+      logger.log(`Auto-seed complete: ${JSON.stringify(result.stats)}`);
     }
   } catch (err) {
     logger.warn(`Auto-seed skipped: ${err.message}`);
