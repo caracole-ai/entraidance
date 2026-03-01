@@ -109,6 +109,9 @@ export const missionsApi = {
       body: JSON.stringify(data),
     }),
 
+  delete: (id: string) =>
+    fetchApi<void>(`/missions/${id}`, { method: 'DELETE' }),
+
   close: (id: string, data?: ICloseMissionData) =>
     fetchApi<IMission>(`/missions/${id}/close`, {
       method: 'POST',
@@ -185,6 +188,12 @@ export const offersApi = {
       method: 'POST',
       body: JSON.stringify(data),
     }),
+
+  update: (id: string, data: Partial<ICreateOffer>) =>
+    fetchApi<IOffer>(`/offers/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
+
+  delete: (id: string) =>
+    fetchApi<void>(`/offers/${id}`, { method: 'DELETE' }),
 
   close: (id: string) =>
     fetchApi<IOffer>(`/offers/${id}/close`, {

@@ -1,343 +1,352 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# GR-attitude Backend API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+[![NestJS](https://img.shields.io/badge/NestJS-11.0.1-ea2845)](https://nestjs.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](https://www.typescriptlang.org/)
+[![SQLite](https://img.shields.io/badge/SQLite-Production-003b57)](https://www.sqlite.org/)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
-```bash
-$ npm install
-```
-
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test         # 1/1 passing
-
-# e2e tests
-$ npm run test:e2e     # 51/51 passing ✅
-
-# test coverage
-$ npm run test:cov
-```
-
-**E2E Test Coverage:**
-- ✅ Authentication (register, login, OAuth)
-- ✅ JWT lifecycle (12 tests - validation, expiration, persistence)
-- ✅ Missions CRUD (20 tests - create, list, filter, update, close)
-- ✅ Health check
-
-All tests passing — production-ready ✅
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
-
-## Rate Limiting & Performance
-
-### Rate Limiting Strategy
-
-GR-attitude uses **NestJS Throttler** to protect endpoints from abuse.
-
-**Global limits:**
-- short: 20 requests / 60s
-- long: 100 requests / 600s
-
-**Endpoint-specific limits:**
-- `POST /auth/register`: 5/min
-- `POST /auth/login`: 5/min
-- `GET /missions`: 60/min
-- `POST /missions`: 10/min
-- `GET /matching/suggestions`: 30/min
-
-**Testing rate limits:**
-```bash
-npm run test:rate-limits    # Manual test script
-```
-
-**Documentation:** See [`RATE_LIMITING.md`](./RATE_LIMITING.md) for full details.
+Backend API REST de la plateforme GR-attitude — Gestion des missions, offres, contributions et matching intelligent.
 
 ---
 
-## Matching Algorithm V2
+## 🚀 Démarrage Rapide
 
-### Weighted Scoring System
+### Prérequis
+- Node.js 18+
+- npm ou yarn
 
-GR-attitude uses a **multi-factor scoring algorithm** to match missions with offers.
+### Installation
 
-**Scoring factors (100 points max):**
-- Tag overlap: 25 points
-- Category match: 20 points
-- Help type mapping: 20 points
-- Geographic proximity: 20 points
-- Urgency bonus: 10 points (NEW in V2)
-- Timing match: 5 points (NEW in V2)
-
-**Minimum threshold**: 10 points (lower scores filtered out)
-
-**Example**:
-- Urgent déménagement mission expiring in 5 days
-- Matching offer in same city with shared tags
-- **Score**: ~85/100 ✅
-
-**API**: `GET /matching/suggestions` (30 req/min limit)
-
-**Testing**:
 ```bash
-npm test -- matching.service.spec.ts    # 8 unit tests
+npm install
 ```
 
-**Documentation:** See [`MATCHING.md`](./MATCHING.md) for full algorithm details.
+### Configuration Environnement
+
+Copier le fichier d'exemple :
+```bash
+cp .env.example .env
+```
+
+**Variables obligatoires** :
+```env
+# JWT
+JWT_SECRET=your-secret-key-min-32-chars
+
+# Google OAuth
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+GOOGLE_CALLBACK_URL=http://localhost:3001/auth/google/callback
+
+# Facebook OAuth (optionnel)
+FACEBOOK_APP_ID=your-facebook-app-id
+FACEBOOK_APP_SECRET=your-facebook-app-secret
+FACEBOOK_CALLBACK_URL=http://localhost:3001/auth/facebook/callback
+
+# Frontend URL
+FRONTEND_URL=http://localhost:3000
+
+# Database
+DATABASE_PATH=./gr_attitude.sqlite
+DB_TYPE=better-sqlite3
+
+# Sentry (optionnel)
+SENTRY_DSN=your-sentry-dsn
+```
+
+Voir [docs/auth.md](../docs/auth.md) pour configurer OAuth Google/Facebook.
 
 ---
 
-## Real-time Notifications (WebSocket)
+## 🏃 Lancer le Serveur
 
-### Socket.io Integration
-
-GR-attitude uses **Socket.io** for real-time bidirectional communication.
-
-**Events**:
-- `match:new` — New mission-offer match found
-- `mission:created` — Mission published
-- `mission:closed` — Mission resolved
-- `contribution:new` — New contribution on user's mission
-- `thanks:received` — Thanks message from mission creator
-
-**Authentication**: JWT token in handshake (`auth.token`)
-
-**Connection tracking**: `userId → Set<socketId>` (multi-device support)
-
-**Example** (send to user):
-```typescript
-this.eventsGateway.sendToUser(userId, 'match:new', {
-  missionId: mission.id,
-  score: 85,
-});
+### Mode développement
+```bash
+npm run start:dev
 ```
+API disponible sur http://localhost:3001
 
-**Documentation:** See [`WEBSOCKET.md`](./WEBSOCKET.md) for full WebSocket guide.
+### Mode production
+```bash
+npm run build
+npm run start:prod
+```
 
 ---
 
-## Analytics & Monitoring
+## 🧪 Tests
 
-### Sentry Integration
-
-GR-attitude uses **Sentry** for error tracking and performance monitoring.
-
-**Features**:
-- Error tracking (automatic exception capture)
-- Performance monitoring (API response times)
-- User context tracking
-- Session replay (frontend - privacy-safe)
-- Custom event tracking (AnalyticsService)
-
-**Setup**:
+### Tests E2E
 ```bash
-# Backend .env
-SENTRY_DSN=https://your-dsn@sentry.io/project-id
-
-# Frontend .env.local
-NEXT_PUBLIC_SENTRY_DSN=https://your-dsn@sentry.io/project-id
+npm run test:e2e
 ```
 
-**Sample rates** (production):
-- Transactions: 10%
-- Errors: 100%
-- Session replays: 10% (100% on errors)
+**73/73 tests passants** ✅
+- Authentication (register, login, OAuth)
+- JWT lifecycle (validation, expiration, persistence)
+- Missions CRUD (create, list, filter, update, delete, close)
+- Offers CRUD
+- Contributions CRUD
+- Matching algorithm
+- Health check
 
-**Documentation:** See [`ANALYTICS.md`](./ANALYTICS.md) for full setup guide.
+### Tests Unitaires
+```bash
+npm run test
+```
+
+**8/8 tests passants** ✅
+- Matching service (7 tests)
+- App controller (1 test)
+
+### Coverage
+```bash
+npm run test:cov
+```
 
 ---
 
-## Authentication & Session Lifecycle
+## 📊 Seeding de Données Démo
 
-### JWT-Based Authentication
-
-GR-attitude uses **JWT (JSON Web Tokens)** for stateless authentication.
-
-#### Authentication Flow
-
-1. **Registration/Login**
-   - User registers (`POST /auth/register`) or logs in (`POST /auth/login`)
-   - Backend validates credentials
-   - Returns `{ accessToken, user }`
-
-2. **Token Storage (Frontend)**
-   - Frontend stores JWT in `localStorage` (key: `token`)
-   - Included in all subsequent requests: `Authorization: Bearer <token>`
-
-3. **Token Validation**
-   - JwtAuthGuard (`@UseGuards(JwtAuthGuard)`) validates token on protected routes
-   - Token decoded → user ID extracted → user fetched from DB
-   - If valid: request proceeds
-   - If invalid/expired: `401 Unauthorized`
-
-4. **Logout**
-   - Frontend clears `localStorage.removeItem('token')`
-   - No server-side logout (stateless JWT)
-
-#### Token Expiration
-
-- **Default:** 7 days (`JWT_EXPIRATION=7d`)
-- Configured via environment variable in `.env`
-- After expiration, user must re-authenticate
-
-#### Session Persistence Testing
-
-Comprehensive E2E tests cover JWT lifecycle:
-
+### Générer des données de test
 ```bash
-npm run test:e2e -- jwt.e2e-spec
+curl -X POST http://localhost:3001/seed
 ```
 
-**Tests include:**
-- ✅ Valid token acceptance
-- ✅ Invalid/malformed token rejection
-- ✅ Expired token rejection
-- ✅ Session persistence across requests
-- ✅ Token payload structure validation
-- ✅ Concurrent request handling
+Crée :
+- 5 utilisateurs démo
+- 6 missions variées
+- 4 offres de services
+- 4 contributions
 
-#### OAuth (Google, Facebook)
-
-- OAuth callbacks redirect with `#token=<jwt>` in URL hash
-- Frontend extracts token from hash → stores in localStorage
-- Session established ✅
-
-#### Security Notes
-
-- **Never log tokens** — redact in logs
-- **Use HTTPS in production** — prevent token interception
-- **Short expiration** for sensitive apps — balance UX vs security
-- **Refresh tokens** (not implemented yet) — rotate long-lived tokens
-
-#### Troubleshooting
-
-**"401 Unauthorized" on valid requests**
-
-1. Check token in localStorage: `localStorage.getItem('token')`
-2. Decode token at [jwt.io](https://jwt.io) — verify not expired
-3. Check `JWT_SECRET` matches between environments
-4. Verify `Authorization` header format: `Bearer <token>` (note the space)
-
-**Token not persisting on page refresh**
-
-1. Ensure frontend saves token immediately after login
-2. Check browser localStorage (DevTools → Application → Local Storage)
-3. Verify OAuth callback extracts token from `window.location.hash`
-
-## Database Migrations
-
-GR-attitude uses **TypeORM migrations** for production-safe schema management.
-
-### Quick Commands
-
+### Supprimer les données démo
 ```bash
-# Generate a migration after modifying entities
-npm run migration:generate -- src/migrations/YourMigrationName
+curl -X POST http://localhost:3001/seed/clear
+```
 
-# Run pending migrations (auto-run in production)
+Voir [SEEDING.md](./SEEDING.md) pour plus de détails.
+
+---
+
+## 📁 Structure du Projet
+
+```
+backend/
+├── src/
+│   ├── auth/                # Authentication (JWT + OAuth)
+│   ├── users/               # User management & profile
+│   ├── missions/            # Missions CRUD & filters
+│   ├── offers/              # Offers CRUD & filters
+│   ├── contributions/       # Contributions on missions
+│   ├── matching/            # Matching algorithm V2.1
+│   ├── notifications/       # Notifications system
+│   ├── seed/                # Seeding API
+│   ├── common/              # Shared entities, DTOs, guards
+│   ├── database/            # TypeORM config & migrations
+│   └── main.ts              # App entry point
+├── test/                    # E2E tests
+├── SEEDING.md               # Seeding guide
+├── RATE_LIMITING.md         # Rate limiting strategy
+├── MATCHING.md              # Matching algorithm doc
+├── WEBSOCKET.md             # WebSocket real-time doc
+├── ANALYTICS.md             # Sentry monitoring
+└── MIGRATIONS.md            # TypeORM migrations guide
+```
+
+---
+
+## 🔑 Fonctionnalités Principales
+
+### Authentication
+- Email/password (bcrypt)
+- OAuth Google
+- OAuth Facebook
+- JWT tokens (7 days expiration)
+
+### Missions
+- CRUD complet (create, read, update, delete, close)
+- Filtres avancés (category, urgency, status, tags, search, geo)
+- Pagination
+- Contributions tracking
+- Auto-expiration (30 jours)
+
+### Offers
+- CRUD complet (create, read, update, delete, close)
+- Filtres (category, offerType, tags, search, geo)
+- Corrélations avec missions (matching)
+
+### Matching V2.1
+Algorithme de matching intelligent (7 facteurs + skills bonus) :
+- Category match (30 pts)
+- Help type match (15 pts)
+- Geographic distance (20 pts)
+- Skills match (15 pts)
+- Tag overlap (10 pts)
+- Urgency priority (5 pts)
+- Creator premium status (5 pts)
+- **Bonus skills** : +10 pts si compétences exactes
+
+Score total : 0-100
+
+Voir [MATCHING.md](./MATCHING.md) pour détails complets.
+
+### Notifications
+- Real-time via WebSocket (Socket.io)
+- Stockage en DB
+- Types : contribution, match, mission update
+- Mark as read
+
+Voir [WEBSOCKET.md](./WEBSOCKET.md) pour configuration WebSocket.
+
+### Rate Limiting
+Protection anti-abuse via `@nestjs/throttler` :
+- Global : 60 req/min
+- Auth endpoints : 5 req/min
+- Seeding : 3 req/min
+
+Voir [RATE_LIMITING.md](./RATE_LIMITING.md) pour stratégie complète.
+
+### Monitoring
+- Sentry error tracking
+- Performance monitoring
+- Session replay
+
+Voir [ANALYTICS.md](./ANALYTICS.md) pour configuration Sentry.
+
+---
+
+## 🗄️ Base de Données
+
+### Production
+- **SQLite** (fichier `gr_attitude.sqlite`)
+- TypeORM avec migrations (`synchronize: false`, `migrationsRun: true`)
+
+### Développement
+- SQLite local
+- `synchronize: true` (auto-sync schema)
+
+### Schéma
+Voir [docs/database.md](../docs/database.md) pour le schéma complet des tables.
+
+### Migrations
+```bash
+# Générer une migration
+npm run migration:generate -- src/database/migrations/MigrationName
+
+# Exécuter les migrations
 npm run migration:run
 
-# Revert last migration (dev/staging only)
+# Annuler la dernière migration
 npm run migration:revert
 ```
 
-### Configuration
+Voir [MIGRATIONS.md](./MIGRATIONS.md) pour guide complet.
 
-- **Development:** `synchronize: true` → auto-sync entities to DB (fast iteration)
-- **Production:** `synchronize: false` + `migrationsRun: true` → controlled, versioned changes
+---
 
-**Files:**
-- `src/data-source.ts` — DataSource CLI config
-- `src/migrations/` — Migration files (timestamped)
-- `MIGRATIONS.md` — Complete workflow guide
+## 🔐 Sécurité
 
-**Initial migration:** `1772190361842-InitialSchema.ts` (6 entities: users, missions, offers, contributions, correlations, notifications)
+- **Helmet** : Headers HTTP sécurisés
+- **bcrypt** : Hash des mots de passe (10 rounds)
+- **JWT** : Tokens signés (7 jours)
+- **Rate Limiting** : Protection anti-spam
+- **CORS** : Restriction au frontend uniquement
+- **Validation** : class-validator sur tous les DTOs
+- **Guards** : JwtAuthGuard sur routes protégées
 
-### Migration Workflow
+---
 
-1. Modify an entity file (e.g., add a field)
-2. Generate migration: `npm run migration:generate -- src/migrations/AddUserBio`
-3. Review generated SQL in `src/migrations/`
-4. Test locally: `npm run migration:run`
-5. Commit migration file
-6. Deploy → migrations auto-run on startup ✅
+## 📦 Déploiement
 
-**Important:** All schema changes in production MUST go through migrations (no manual DB edits).
+### Render.com (Production)
+Le backend est auto-déployé sur Render à chaque push sur `master`.
 
-See `MIGRATIONS.md` for detailed guide.
+**URL** : https://gr-attitude-api.onrender.com
+
+**Configuration** :
+- Auto-deploy depuis GitHub (fork `caracole-ai/gr-attitude`)
+- Build command : `cd backend && npm install && npm run build`
+- Start command : `cd backend && npm run start:prod`
+- Health check : `GET /health`
+
+**Variables d'environnement** :
+Toutes les variables `.env` doivent être configurées dans Render Dashboard.
+
+---
+
+## 📚 Documentation Complémentaire
+
+### Backend
+- [SEEDING.md](./SEEDING.md) — Guide de seeding
+- [RATE_LIMITING.md](./RATE_LIMITING.md) — Stratégie rate limiting
+- [MATCHING.md](./MATCHING.md) — Algorithme matching
+- [WEBSOCKET.md](./WEBSOCKET.md) — WebSocket real-time
+- [ANALYTICS.md](./ANALYTICS.md) — Monitoring Sentry
+- [MIGRATIONS.md](./MIGRATIONS.md) — TypeORM migrations
+- [PERFORMANCE.md](./PERFORMANCE.md) — Optimisations performance
+
+### Architecture Globale
+- [docs/api-endpoints.md](../docs/api-endpoints.md) — Liste des endpoints
+- [docs/database.md](../docs/database.md) — Schéma BDD
+- [docs/auth.md](../docs/auth.md) — Configuration OAuth
+- [docs/architecture.md](../docs/architecture.md) — Architecture système
+
+---
+
+## 🐛 Debugging
+
+### Logs
+```bash
+# Mode dev (verbose)
+npm run start:dev
+
+# Mode prod (minimal)
+npm run start:prod
+```
+
+### Sentry
+Les erreurs sont automatiquement trackées dans Sentry (si `SENTRY_DSN` configuré).
+
+### SQLite
+```bash
+# Inspecter la DB
+sqlite3 gr_attitude.sqlite
+
+# Lister les tables
+.tables
+
+# Compter les users
+SELECT COUNT(*) FROM users;
+```
+
+---
+
+## 🤝 Contribution
+
+Ce backend suit les principes NestJS :
+- **Modules** : Organisation par feature (auth, users, missions, etc.)
+- **Controllers** : Routes API
+- **Services** : Logique métier
+- **Entities** : Modèles TypeORM
+- **DTOs** : Validation des inputs (class-validator)
+- **Guards** : Authentification JWT
+- **Decorators** : `@CurrentUser()` pour extraire le user du JWT
+
+**Conventions** :
+- `snake_case` pour les noms de colonnes DB
+- `camelCase` pour les propriétés TypeScript
+- `PascalCase` pour les classes/interfaces
+- Toujours valider les inputs avec DTOs
+- Toujours utiliser `@CurrentUser()` pour les routes protégées
+- Toujours retourner 204 pour les DELETE
+
+---
+
+## 📄 License
+
+Projet privé — Tous droits réservés.
+
+---
+
+**Dernière mise à jour** : 2026-03-01  
+**Version** : Production-Ready (SQLite + Migrations + Tests E2E)  
+**Auteur** : Équipe GR-attitude

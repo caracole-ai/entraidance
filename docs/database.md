@@ -28,6 +28,7 @@ File: `backend/src/users/entities/user.entity.ts`
 | locationLat | FLOAT | nullable |
 | locationLng | FLOAT | nullable |
 | isPremium | BOOLEAN | default: false |
+| isDemo | BOOLEAN | default: false |
 | createdAt | TIMESTAMP | auto |
 | updatedAt | TIMESTAMP | auto-updated |
 
@@ -58,6 +59,7 @@ File: `backend/src/missions/entities/mission.entity.ts`
 | closedAt | TIMESTAMP | nullable, set on close |
 | closureFeedback | TEXT | nullable |
 | closureThanks | TEXT | nullable |
+| isDemo | BOOLEAN | default: false |
 
 Relations: creator (User), contributions[], correlations[]
 
@@ -73,6 +75,7 @@ File: `backend/src/contributions/entities/contribution.entity.ts`
 | type | VARCHAR | ContributionType enum |
 | message | TEXT | nullable |
 | status | VARCHAR | default: 'active' |
+| isDemo | BOOLEAN | default: false |
 | createdAt | TIMESTAMP | auto |
 
 **UNIQUE constraint**: (userId, missionId, type)
@@ -100,6 +103,7 @@ File: `backend/src/offers/entities/offer.entity.ts`
 | createdAt | TIMESTAMP | auto |
 | expiresAt | TIMESTAMP | set to now+30d on create |
 | closedAt | TIMESTAMP | nullable |
+| isDemo | BOOLEAN | default: false |
 
 Relations: creator (User), correlations[]
 
@@ -138,7 +142,8 @@ Relations: user (User)
 
 ## Notes
 
-- TypeORM `synchronize: true` en dev → schema auto-cree
-- Tags stockes en `simple-array` (virgule-separated dans SQLite, array natif en Postgres)
-- Geo queries: PostGIS `ST_DWithin` uniquement quand `DB_TYPE=postgres`
-- SQLite: fichier `gr_attitude.sqlite` a la racine de `backend/`
+- **Production DB**: SQLite (fichier `gr_attitude.sqlite` à la racine de `backend/`)
+- TypeORM `synchronize: false` en prod, `migrationsRun: true`
+- Tags stockes en `simple-array` (virgule-separated)
+- Geo queries: PostGIS `ST_DWithin` disponible uniquement si PostgreSQL (dev uniquement)
+- **isDemo field**: Toutes les entités peuvent être marquées comme données de démo (seeding)

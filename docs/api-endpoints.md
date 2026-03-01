@@ -33,6 +33,7 @@ Base URL: `http://localhost:3001` (dev) / `https://gr-attitude-api.onrender.com`
 | POST | `/missions` | JWT | CreateMissionDto | Mission |
 | GET | `/missions/:id` | - | - | Mission (with creator, contributions) |
 | PATCH | `/missions/:id` | JWT | UpdateMissionDto | Mission (creator only) |
+| DELETE | `/missions/:id` | JWT | - | 204 No Content (creator only) |
 | POST | `/missions/:id/close` | JWT | `{ closureFeedback?, closureThanks? }` | Mission (creator only) |
 | GET | `/missions/:id/contributions` | - | - | Contribution[] |
 | GET | `/missions/:id/correlations` | - | - | Correlation[] (score DESC) |
@@ -53,6 +54,7 @@ Base URL: `http://localhost:3001` (dev) / `https://gr-attitude-api.onrender.com`
 | POST | `/offers` | JWT | CreateOfferDto | Offer |
 | GET | `/offers/:id` | - | - | Offer (with creator) |
 | PATCH | `/offers/:id` | JWT | UpdateOfferDto | Offer (creator only) |
+| DELETE | `/offers/:id` | JWT | - | 204 No Content (creator only) |
 | POST | `/offers/:id/close` | JWT | - | Offer (creator only) |
 | GET | `/offers/:id/correlations` | - | - | Correlation[] (score DESC) |
 
@@ -69,6 +71,14 @@ Base URL: `http://localhost:3001` (dev) / `https://gr-attitude-api.onrender.com`
 | Method | Path | Auth | Response |
 |--------|------|------|----------|
 | GET | `/matching/suggestions` | JWT | `Array<{ mission, offer?, score }>` (top 20) |
+
+## Seeding
+
+| Method | Path | Auth | Body | Response |
+|--------|------|------|------|----------|
+| POST | `/seed` | - | - | `{ message, counts: { users, missions, offers, contributions } }` |
+| POST | `/seed/clear` | - | - | `{ message, deletedCounts }` |
+| POST | `/seed/sync-schema` | - | - | `{ message }` |
 
 ## Error Response Format
 
