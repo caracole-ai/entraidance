@@ -37,15 +37,16 @@ export class SeedService {
 
   private async ensureTables() {
     // Check if tables exist
-    const tables = await this.dataSource.query(
-      "SELECT name FROM sqlite_master WHERE type='table' AND name='user'"
-    ).catch(() => []);
-
-    if (tables.length === 0) {
-      // Tables don't exist, sync schema
-      console.log('[Seed] No tables found, synchronizing schema...');
-      await this.dataSource.synchronize(false);
-      console.log('[Seed] Schema synchronized successfully');
+    const queryRunner = this.dataSource.createQueryRunner();
+    try {
+      await queryRunner.query('SELECT 1 FROM user LIMIT 1');
+    } catch (error) {
+      // Tables don't exist, force synchronize
+      console.log('🔧 Tables not found, creating schema...');
+      await this.dataSource.synchronize();
+      console.log('✅ Schema created successfully');
+    } finally {
+      await queryRunner.release();
     }
   }
 
