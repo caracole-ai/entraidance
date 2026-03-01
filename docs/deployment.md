@@ -9,6 +9,7 @@ Guide complet pour déployer GR attitude sur Render (Free tier), incluant toutes
 - [Déploiement Frontend](#déploiement-frontend)
 - [OAuth Google Setup](#oauth-google-setup)
 - [Problèmes Rencontrés](#problèmes-rencontrés)
+- [Seeding de Données Démo](#seeding-de-données-démo)
 - [Checklist de Déploiement](#checklist-de-déploiement)
 
 ---
@@ -434,6 +435,105 @@ buildCommand: cd backend && npm ci && npx nest build  # ✅ npx obligatoire
 ```
 
 **Commit** : `87e9d40` (ancien projet, même leçon)
+
+---
+
+## Seeding de Données Démo
+
+Pour tester la plateforme avec des données réalistes, le backend inclut un système de seeding de données factices.
+
+### Fonctionnalités
+
+Le seeder génère automatiquement :
+- **5 utilisateurs démo** (profils variés : développeuse, bricoleur, prof, graphiste, étudiante)
+- **6 missions démo** (diverses catégories, urgences, statuts)
+- **4 offres démo** (compétences, temps, matériel)
+- **4 contributions démo** (intérêts et volontariats)
+
+**Toutes les données sont flaguées `isDemo: true`** pour faciliter leur suppression ultérieure.
+
+### Utilisation
+
+#### En local
+
+```bash
+# Ajouter les données démo
+cd backend
+npm run seed
+
+# Supprimer toutes les données démo
+npm run seed:clear
+```
+
+#### Sur Render
+
+**Après déploiement du backend**, se connecter au Shell du service :
+
+1. Render Dashboard > `gr-attitude-api` > **Shell**
+2. Exécuter :
+
+```bash
+# Ajouter les données démo
+npm run seed
+
+# Supprimer les données démo
+npm run seed:clear
+```
+
+### Détails des données générées
+
+**Utilisateurs** :
+- `demo.alice@gr-attitude.test` — Développeuse web (Paris)
+- `demo.bob@gr-attitude.test` — Bricoleur chevronné (Paris, Premium)
+- `demo.claire@gr-attitude.test` — Professeure de français (Lyon)
+- `demo.david@gr-attitude.test` — Graphiste freelance (Marseille, Premium)
+- `demo.emma@gr-attitude.test` — Étudiante en médecine (Paris)
+
+**Missions** :
+- Aide déménagement (Transport, Urgent)
+- Accompagnement médical (Santé, Moyen)
+- Réparation plomberie (Bricolage, Moyen)
+- Soutien scolaire maths (Éducation, Pas urgent)
+- Création site web (Numérique, En cours 30%)
+- Promenade quotidienne (Social, Moyen)
+
+**Offres** :
+- Cours de français gratuits (Éducation, Compétence)
+- Aide bricolage (Bricolage, Temps)
+- Design graphique (Numérique, Compétence)
+- Prêt outils jardinage (Autre, Matériel)
+
+### Structure technique
+
+#### Migration
+
+`backend/src/database/migrations/1709294400000-AddIsDemoFlag.ts`
+
+Ajoute le champ `isDemo: boolean` aux tables :
+- `users`
+- `missions`
+- `offers`
+- `contributions`
+
+#### Seeder
+
+`backend/src/database/seeders/demo-data.seeder.ts`
+
+Fonctions exportées :
+- `seedDemoData(dataSource)` — Insère les données
+- `clearDemoData(dataSource)` — Supprime toutes les entités avec `isDemo: true`
+
+#### Script d'exécution
+
+`backend/src/database/seed.ts`
+
+CLI standalone utilisant TypeORM DataSource directement.
+
+### ⚠️ Important
+
+- Les données démo utilisent des **emails `.test`** (invalides pour OAuth)
+- En production, **toujours supprimer les données démo** avant la mise en ligne publique
+- La suppression est **safe** : seules les entités avec `isDemo: true` sont affectées
 
 ---
 

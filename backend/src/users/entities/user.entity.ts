@@ -43,6 +43,9 @@ export class User {
   @Column({ type: 'boolean', default: false })
   isPremium: boolean;
 
+  @Column({ type: 'boolean', default: false })
+  isDemo: boolean;
+
   // Profile completion fields
   @Column({ type: 'simple-array', nullable: true })
   skills: string[] | null;

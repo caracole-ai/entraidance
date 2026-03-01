@@ -35,6 +35,9 @@ export class Contribution {
   })
   status: ContributionStatus;
 
+  @Column({ type: 'boolean', default: false })
+  isDemo: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 

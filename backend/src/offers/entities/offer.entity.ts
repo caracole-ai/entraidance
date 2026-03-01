@@ -57,6 +57,9 @@ export class Offer {
   @Column({ type: 'text', nullable: true })
   availability: string | null;
 
+  @Column({ type: 'boolean', default: false })
+  isDemo: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 

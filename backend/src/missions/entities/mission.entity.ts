@@ -62,6 +62,9 @@ export class Mission {
   @Column('simple-array')
   tags: string[];
 
+  @Column({ type: 'boolean', default: false })
+  isDemo: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 

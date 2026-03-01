@@ -19,9 +19,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "test:rate-limits": "bash scripts/test-rate-limits.sh",
-    "seed:demo": "sqlite3 gr_attitude.sqlite < seed-demo.sql",
-    "seed:reset": "sqlite3 gr_attitude.sqlite \"DELETE FROM correlations; DELETE FROM contributions; DELETE FROM offers; DELETE FROM missions; DELETE FROM users;\"",
-    "seed:full": "npm run seed:reset && npm run seed:demo",
+    "seed": "ts-node -r tsconfig-paths/register src/database/seed.ts seed",
+    "seed:clear": "ts-node -r tsconfig-paths/register src/database/seed.ts clear",
     "migration:generate": "typeorm-ts-node-commonjs migration:generate -d src/data-source.ts",
     "migration:run": "typeorm-ts-node-commonjs migration:run -d src/data-source.ts",
     "migration:revert": "typeorm-ts-node-commonjs migration:revert -d src/data-source.ts"
