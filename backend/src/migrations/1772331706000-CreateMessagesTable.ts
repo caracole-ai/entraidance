@@ -1,10 +1,7 @@
 import { MigrationInterface, QueryRunner, Table, TableIndex, TableForeignKey } from 'typeorm';
 
 /**
- * DRAFT Migration - Chat Temps Réel (Phase 1)
- * 
- * À renommer après validation Lio :
- * DRAFT-CreateMessagesTable.ts → YYYYMMDDHHMMSS-CreateMessagesTable.ts
+ * Migration - Chat Temps Réel (Phase 1)
  * 
  * Architecture : Compromis Winston + Manolo
  * - 1 table messages (MVP rapide)
@@ -17,7 +14,7 @@ import { MigrationInterface, QueryRunner, Table, TableIndex, TableForeignKey } f
  * - Tracking lecture (isRead)
  * - Performance optimisée (3 index)
  */
-export class DRAFTCreateMessagesTable implements MigrationInterface {
+export class CreateMessagesTable1772331706000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     // Créer table messages avec conversationKey
     await queryRunner.createTable(
