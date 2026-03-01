@@ -1,7 +1,7 @@
 # GR-Attitude — Project Status
 
-> **Last updated:** 2026-02-27 20:55 GMT+1  
-> **Last commit:** En cours - feat: database indexing + data seeding
+> **Last updated:** 2026-03-02 00:52 GMT+1  
+> **Last commit:** docs: final audit — align all documentation with codebase
 
 ---
 

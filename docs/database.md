@@ -22,13 +22,22 @@ File: `backend/src/users/entities/user.entity.ts`
 |--------|------|-------------|
 | id | UUID | PK, auto-generated |
 | email | VARCHAR(255) | UNIQUE, NOT NULL |
-| passwordHash | VARCHAR(255) | NOT NULL |
+| passwordHash | VARCHAR(255) | nullable (null for OAuth users) |
+| oauthProvider | VARCHAR(50) | nullable (google, facebook) |
+| oauthProviderId | VARCHAR(255) | nullable |
 | displayName | VARCHAR(100) | NOT NULL |
 | avatarUrl | TEXT | nullable |
 | locationLat | FLOAT | nullable |
 | locationLng | FLOAT | nullable |
 | isPremium | BOOLEAN | default: false |
 | isDemo | BOOLEAN | default: false |
+| bio | TEXT | nullable (profile completion) |
+| skills | simple-array | nullable (profile completion) |
+| interests | simple-array | nullable (profile completion) |
+| availabilityHours | INT | nullable (hours/week) |
+| maxDistanceKm | INT | nullable, default: 50 (matching preference) |
+| preferredCategories | simple-array | nullable (matching preference) |
+| preferredUrgencies | simple-array | nullable (matching preference) |
 | createdAt | TIMESTAMP | auto |
 | updatedAt | TIMESTAMP | auto-updated |
 

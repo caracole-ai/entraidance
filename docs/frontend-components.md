@@ -82,6 +82,15 @@ Dir: `frontend/src/components/missions/`
   4. Success (checkmark emerald + "Mission resolue!")
 - Trigger: bouton "Marquer comme resolue" (outline, full width)
 
+### EditMissionDialog
+- File: `EditMissionDialog.tsx`
+- Props: `{ mission: IMission }`
+- Hook: `useUpdateMission()` mutation → `missionsApi.update()`
+- Fields: title, description, category, helpType, urgency, visibility, location, tags
+- Validation: title + description required
+- On success: invalidate queries + toast + close dialog
+- Trigger: button "Modifier" (outline, Pencil icon)
+
 ## Offer Components
 
 Dir: `frontend/src/components/offers/`
@@ -92,6 +101,15 @@ Dir: `frontend/src/components/offers/`
 - Lien vers `/offers/[id]`
 - Badge offerType (colore) + badge category + title + description + creator + timeAgo
 - OfferType colors: don=blue, competence=purple, materiel=orange, service=green, ecoute=pink
+
+### EditOfferDialog
+- File: `EditOfferDialog.tsx`
+- Props: `{ offer: IOffer }`
+- Hook: `useUpdateOffer()` mutation → `offersApi.update()`
+- Fields: title, description, offerType, category (optional), availability, visibility, location, tags
+- Validation: title + description required
+- On success: invalidate queries + toast + close dialog
+- Trigger: button "Modifier" (outline, Pencil icon)
 
 ## UI Components (shadcn/ui)
 

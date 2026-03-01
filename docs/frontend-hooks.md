@@ -32,7 +32,15 @@ Tous les hooks sont dans `frontend/src/hooks/`. Tous utilisent TanStack React Qu
 
 | Hook | Source | Returns |
 |------|--------|---------|
-| `useAuth()` | AuthContext | `{ user, isAuthenticated, isLoading, login, register, logout }` |
+| `useAuth()` | AuthContext | `{ user, isAuthenticated, isLoading, login, register, logout, loginWithToken }` |
+
+## WebSocket Hooks
+
+| Hook | File | Purpose |
+|------|------|---------|
+| `useSocket()` | useSocket.ts | Returns `{ socket, connected, on, off, emit }` |
+| `useSocketEvent(event, callback, deps)` | useSocket.ts | Listen to a specific socket event (auto cleanup on unmount) |
+| `useSocketAuth(token)` | useSocket.ts | Connect/disconnect socket based on auth token |
 
 ## API Client Namespaces
 
@@ -41,9 +49,9 @@ File: `frontend/src/lib/api.ts`
 | Namespace | Methods |
 |-----------|---------|
 | `authApi` | login, register, getMe |
-| `missionsApi` | list, get, create, update, close, getContributions, getCorrelations |
+| `missionsApi` | list, get, create, update, delete, close, getContributions, getCorrelations |
 | `contributionsApi` | create, update, delete |
-| `offersApi` | list, get, create, close, getCorrelations |
+| `offersApi` | list, get, create, update, delete, close, getCorrelations |
 | `notificationsApi` | list, getUnreadCount, markRead |
 | `matchingApi` | getSuggestions |
 | `profileApi` | getMe, updateMe |

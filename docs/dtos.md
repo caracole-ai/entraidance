@@ -19,6 +19,12 @@ Global ValidationPipe: `whitelist: true` (proprietes inconnues supprimees), `tra
 | email | string | @IsEmail() |
 | password | string | @IsString() |
 
+### ChangePasswordDto
+| Field | Type | Validators |
+|-------|------|-----------|
+| currentPassword? | string | @IsOptional(), @IsString() |
+| newPassword | string | @IsString(), @MinLength(8), @Matches(/(?=.*[a-z])/), @Matches(/(?=.*[A-Z])/), @Matches(/(?=.*\d)/) |
+
 ## Users
 
 ### UpdateUserDto
@@ -26,6 +32,17 @@ Global ValidationPipe: `whitelist: true` (proprietes inconnues supprimees), `tra
 |-------|------|-----------|
 | displayName? | string | @IsOptional(), @IsString(), @MinLength(2), @MaxLength(100) |
 | avatarUrl? | string | @IsOptional(), @IsString() |
+
+### UpdateProfileDto
+| Field | Type | Validators |
+|-------|------|-----------|
+| bio? | string | @IsOptional(), @IsString(), @MaxLength(500) |
+| skills? | string[] | @IsOptional(), @IsArray(), @IsString({ each: true }), @ArrayMaxSize(20) |
+| interests? | string[] | @IsOptional(), @IsArray(), @IsString({ each: true }), @ArrayMaxSize(20) |
+| availabilityHours? | number | @IsOptional(), @IsInt(), @Min(1), @Max(168) |
+| maxDistanceKm? | number | @IsOptional(), @IsInt(), @Min(1), @Max(1000) |
+| preferredCategories? | string[] | @IsOptional(), @IsArray(), @IsString({ each: true }), @ArrayMaxSize(12) |
+| preferredUrgencies? | string[] | @IsOptional(), @IsArray(), @IsString({ each: true }), @ArrayMaxSize(3) |
 
 ## Missions
 
@@ -79,6 +96,22 @@ Global ValidationPipe: `whitelist: true` (proprietes inconnues supprimees), `tra
 | radiusKm? | number | @IsOptional(), @Type(() => Number) |
 | page? | number | @IsOptional(), @Type(() => Number) |
 | limit? | number | @IsOptional(), @Type(() => Number) |
+
+### SearchMissionsDto (Query params for /missions/search)
+| Field | Type | Validators |
+|-------|------|-----------|
+| q? | string | @IsOptional(), @IsString() (full-text search query) |
+| category? | MissionCategory | @IsOptional(), @IsEnum() |
+| urgency? | Urgency | @IsOptional(), @IsEnum() |
+| status? | MissionStatus | @IsOptional(), @IsEnum() |
+| visibility? | Visibility | @IsOptional(), @IsEnum() |
+| lat? | number | @IsOptional(), @IsNumber(), @Type(() => Number) |
+| lng? | number | @IsOptional(), @IsNumber(), @Type(() => Number) |
+| radius? | number | @IsOptional(), @IsInt(), @Type(() => Number), @Min(1), @Max(1000) |
+| sortBy? | string | @IsOptional(), @IsString() ('createdAt', 'expiresAt', 'urgency') |
+| sortOrder? | string | @IsOptional(), @IsString() ('ASC', 'DESC') |
+| page? | number | @IsOptional(), @IsInt(), @Type(() => Number), @Min(1) |
+| limit? | number | @IsOptional(), @IsInt(), @Type(() => Number), @Min(1), @Max(100) |
 
 ## Contributions
 

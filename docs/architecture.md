@@ -39,9 +39,9 @@ manolo/
 |-------|------|---------|
 | Backend framework | NestJS | 11.0.1 |
 | ORM | TypeORM | 0.3.28 |
-| DB production | PostgreSQL + PostGIS | 16-3.4 |
+| DB production | SQLite (better-sqlite3) | 12.6.2 |
 | DB dev local | SQLite (better-sqlite3) | 12.6.2 |
-| Cache | Redis | 7 |
+| Cache | Redis (not used in prod) | 7 |
 | Auth | Passport + JWT + bcrypt | |
 | Frontend framework | Next.js (App Router) | 16.1.6 |
 | React | React | 19.2.3 |
@@ -57,14 +57,14 @@ manolo/
 | Service | Dev | Prod (Render) |
 |---------|-----|----------------|
 | Backend API | http://localhost:3001 | https://gr-attitude-api.onrender.com |
-| Frontend | http://localhost:3000 | https://gr-attitude-web.onrender.com |
-| PostgreSQL | localhost:5432 | Render managed DB |
-| Redis | localhost:6379 | N/A (not used in prod yet) |
+| Frontend | http://localhost:3000 | https://gr-attitude-frontend.onrender.com |
+| SQLite | gr_attitude.sqlite | gr_attitude.sqlite (ephemeral disk) |
+| Redis | localhost:6379 | N/A (not used in prod) |
 
 ## Data Flow
 
 ```
-Browser → Next.js (CSR) → fetch(API_URL) → NestJS → TypeORM → PostgreSQL/SQLite
+Browser → Next.js (CSR) → fetch(API_URL) → NestJS → TypeORM → SQLite
                               ↓
                         Bearer JWT token
                         (localStorage)

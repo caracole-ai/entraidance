@@ -62,16 +62,21 @@ ouverte → en_cours → resolue
 
 File: `backend/src/matching/matching.service.ts`
 
-### Score Calculation (max 100)
+### Score Calculation (max 110)
 
-4 facteurs ponderes:
+6 facteurs ponderes (V2.1 avec skills bonus):
 
 | Facteur | Poids | Calcul |
 |---------|-------|--------|
-| Tags overlap | 30 | 30 * (tags communs / total tags mission) |
-| Category match | 25 | +25 si mission.category === offer.category |
-| HelpType mapping | 25 | +25 si offerType compatible (voir mapping) |
+| Tags overlap | 25 | 25 * (tags communs / total tags mission) |
+| Category match | 20 | +20 si mission.category === offer.category |
+| HelpType mapping | 20 | +20 si offerType compatible (voir mapping) |
 | Geographic proximity | 20 | 20 * (1 - distance/maxRadius), si dans le rayon |
+| Urgency bonus | 10 | +10 si urgent, +5 si moyen, 0 si faible |
+| Timing match | 5 | +5 si expire <7j, +3 si <30j, 0 sinon |
+| **Skills bonus (V2.1)** | 10 | +10 si offer creator skills match mission tags |
+
+> Voir backend/MATCHING.md pour les détails complets de l'algorithme
 
 ### HelpType → OfferType Mapping
 

@@ -10,6 +10,7 @@ Base URL: `http://localhost:3001` (dev) / `https://gr-attitude-api.onrender.com`
 |--------|------|------|------|----------|
 | POST | `/auth/register` | - | `{ email, password, displayName }` | `{ accessToken, user }` |
 | POST | `/auth/login` | - | `{ email, password }` | `{ accessToken, user }` |
+| POST | `/auth/change-password` | JWT | `{ currentPassword?, newPassword }` | `{ message }` |
 | GET | `/auth/google` | - | - | Redirect → Google consent |
 | GET | `/auth/google/callback` | - | - | Redirect → frontend with JWT |
 | GET | `/auth/facebook` | - | - | Redirect → Facebook login |
@@ -21,6 +22,10 @@ Base URL: `http://localhost:3001` (dev) / `https://gr-attitude-api.onrender.com`
 |--------|------|------|------------|----------|
 | GET | `/users/me` | JWT | - | User (sans passwordHash) |
 | PATCH | `/users/me` | JWT | `{ displayName?, avatarUrl? }` | User |
+| DELETE | `/users/me` | JWT | - | `{ message }` (account deletion) |
+| GET | `/users/me/export` | JWT | - | User data export (GDPR) |
+| PATCH | `/users/me/profile` | JWT | UpdateProfileDto | User + profileCompletion |
+| GET | `/users/me/profile-completion` | JWT | - | `{ profileCompletion: number }` |
 | GET | `/users/me/missions` | JWT | - | Mission[] |
 | GET | `/users/me/contributions` | JWT | - | Contribution[] (with mission) |
 | GET | `/users/me/stats` | JWT | - | `{ missionsCreated, missionsResolved, contributionsGiven, offersCreated }` |
@@ -30,6 +35,7 @@ Base URL: `http://localhost:3001` (dev) / `https://gr-attitude-api.onrender.com`
 | Method | Path | Auth | Body/Query | Response |
 |--------|------|------|------------|----------|
 | GET | `/missions` | - | Query: category, helpType, urgency, status, tags, search, lat, lng, radiusKm, page, limit | `{ data: Mission[], total, page, limit, totalPages }` |
+| GET | `/missions/search` | - | Query: SearchMissionsDto | `{ data: Mission[], total, page, limit, totalPages }` |
 | POST | `/missions` | JWT | CreateMissionDto | Mission |
 | GET | `/missions/:id` | - | - | Mission (with creator, contributions) |
 | PATCH | `/missions/:id` | JWT | UpdateMissionDto | Mission (creator only) |
@@ -76,6 +82,7 @@ Base URL: `http://localhost:3001` (dev) / `https://gr-attitude-api.onrender.com`
 
 | Method | Path | Auth | Body | Response |
 |--------|------|------|------|----------|
+| GET | `/seed/status` | - | - | Seed status information |
 | POST | `/seed` | - | - | `{ message, counts: { users, missions, offers, contributions } }` |
 | POST | `/seed/clear` | - | - | `{ message, deletedCounts }` |
 | POST | `/seed/sync-schema` | - | - | `{ message }` |

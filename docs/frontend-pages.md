@@ -16,7 +16,10 @@
 | `/offers/new` | Create Offer | Oui (implicite) | Formulaire guide 3 etapes |
 | `/offers/[id]` | Offer Detail | Non (UI conditionnelle) | Detail + correlations + close |
 | `/profile` | User Profile | Oui (UI conditionnelle) | Stats + mes missions/offres |
+| `/profile/edit` | Edit Profile | Oui (implicite) | Compléter profil (bio, skills, interests, etc.) |
 | `/notifications` | Notifications | Oui (implicite) | Liste complette notifications |
+| `/callback` | OAuth Callback | Non | Redirection OAuth (Google/Facebook) |
+| `/faq` | FAQ | Non | Foire aux questions |
 
 ## Page Details
 
@@ -114,6 +117,31 @@
 - Affiche: liste de cards avec blue dot (unread), title, body, timeAgo
 - Click: mark as read si pas deja lu
 - Empty state: icone Bell + "Aucune notification"
+
+### `/profile/edit`
+- File: `app/profile/edit/page.tsx`
+- Hook: Calls `PATCH /users/me/profile` directly
+- Fields:
+  - Bio: textarea (max 500 chars)
+  - Skills: tags input (array)
+  - Interests: tags input (array)
+  - AvailabilityHours: number input (1-168)
+  - MaxDistanceKm: number input (1-1000)
+- On submit: redirect to `/profile`, toast with profileCompletion %
+
+### `/callback`
+- File: `app/(auth)/callback/page.tsx`
+- Hook: `useAuth().loginWithToken()`
+- Reads token from URL hash fragment (not query param)
+- Cleans URL immediately to remove token from history
+- On success: toast + redirect to `/missions`
+- On error: toast + redirect to `/login`
+
+### `/faq`
+- File: `app/faq/page.tsx`
+- Static page with accordion sections
+- Sections: General, Missions & Offres, IA & Matching, Compte & Securite
+- Uses shadcn Accordion component
 
 ## Layout
 
