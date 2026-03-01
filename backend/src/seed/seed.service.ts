@@ -20,6 +20,21 @@ import {
 export class SeedService {
   constructor(private dataSource: DataSource) {}
 
+  async status() {
+    const tables = await this.dataSource.query(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
+    ).catch((err) => ({ error: err.message }));
+
+    return {
+      nodeEnv: process.env.NODE_ENV,
+      dbType: this.dataSource.options.type,
+      dbPath: (this.dataSource.options as any).database,
+      synchronize: (this.dataSource.options as any).synchronize,
+      migrationsRun: (this.dataSource.options as any).migrationsRun,
+      tables: Array.isArray(tables) ? tables.map((t) => t.name) : tables,
+    };
+  }
+
   async seed() {
     // Clear existing demo data
     await this.clear();

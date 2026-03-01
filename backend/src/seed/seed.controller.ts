@@ -1,9 +1,15 @@
-import { Controller, Post, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Get, HttpCode, HttpStatus } from '@nestjs/common';
 import { SeedService } from './seed.service';
 
 @Controller('seed')
 export class SeedController {
   constructor(private readonly seedService: SeedService) {}
+
+  @Get('status')
+  @HttpCode(HttpStatus.OK)
+  async status() {
+    return this.seedService.status();
+  }
 
   @Post()
   @HttpCode(HttpStatus.OK)
