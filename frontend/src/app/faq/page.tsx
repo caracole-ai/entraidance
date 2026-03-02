@@ -87,7 +87,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
 
 export default function FaqPage() {
   return (
-    <div className="container mx-auto max-w-3xl px-4 py-12 space-y-10">
+    <div className="container mx-auto max-w-3xl px-4 mt-20 py-12 space-y-10">
       <FadeIn>
         <h1 className="text-3xl font-bold font-display gradient-text-primary">{t('faq.title')}</h1>
         <p className="mt-2 text-muted-foreground">

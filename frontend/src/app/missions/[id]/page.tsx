@@ -126,7 +126,7 @@ export default function MissionDetailPage({
 
   return (
     <div className="min-h-screen bg-gradient-stitch pb-20">
-      <div className="container mx-auto max-w-4xl px-6 space-y-8">
+      <div className="container mx-auto max-w-4xl px-6 mt-20 space-y-8">
         {/* Hero card avec icône catégorie */}
         <FadeIn>
           <div className="relative glass-hero p-8 md:p-12 rounded-[2.5rem]">

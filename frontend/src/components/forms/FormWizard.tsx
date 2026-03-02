@@ -53,7 +53,7 @@ export function FormWizard({
   const STEP_VIBES = ['✍️', '🏷️', '👁️', '✨'];
 
   return (
-    <div className="container mx-auto max-w-2xl px-4 py-8">
+    <div className="container mx-auto max-w-2xl px-4 mt-20 py-8">
       <h1 className="text-2xl font-bold mb-2">
         <span className="font-display">{title.split(' ').slice(0, -1).join(' ')} </span>
         <span className="font-elegant gradient-text-primary">{title.split(' ').pop()}</span>

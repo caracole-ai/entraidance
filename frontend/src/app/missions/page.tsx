@@ -55,7 +55,7 @@ export default function MissionsPage() {
   return (
     <div className="min-h-screen bg-gradient-stitch">
       {/* Hero Section */}
-      <section className="relative w-full pb-8 md:pb-16 px-6 overflow-hidden">
+      <section className="relative w-full pt-20 pb-8 md:pb-16 px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto relative">
           {/* Abstract Liquid Glass Shapes (background blobs) */}
           <div className="absolute -top-24 -left-20 w-[450px] h-[450px] bg-[#9333ea]/30 rounded-full blur-[140px] animate-pulse pointer-events-none" />

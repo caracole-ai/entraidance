@@ -40,7 +40,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-stitch">
       {/* Hero */}
-      <section className="relative overflow-hidden py-24 px-4 text-center">
+      <section className="relative overflow-hidden pt-20 py-24 px-4 text-center">
         {/* Decorative blobs */}
         <div
           className="absolute w-[600px] h-[600px] bg-[#9333ea]/20 rounded-full blur-[140px] -top-48 -right-32 pointer-events-none animate-pulse"

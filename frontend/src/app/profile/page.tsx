@@ -99,7 +99,7 @@ export default function ProfilePage() {
   const userInitial = user.displayName?.charAt(0).toUpperCase() ?? 'U';
 
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-8 space-y-8">
+    <div className="container mx-auto max-w-4xl px-4 mt-20 py-8 space-y-8">
       {/* User info */}
       <FadeIn>
         <div className="flex items-center gap-5">

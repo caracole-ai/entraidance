@@ -111,7 +111,7 @@ export default function ProfileEditPage() {
   }
 
   return (
-    <div className="container max-w-2xl py-4 px-4 sm:py-8">
+    <div className="container max-w-2xl mt-20 py-4 px-4 sm:py-8">
       <Card>
         <CardHeader className="px-4 sm:px-6">
           <CardTitle className="text-xl sm:text-2xl">Compléter mon profil</CardTitle>
