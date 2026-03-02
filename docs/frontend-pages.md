@@ -1,147 +1,67 @@
 # Frontend Pages
 
-> Voir aussi: [frontend-hooks.md](./frontend-hooks.md) pour les hooks, [frontend-components.md](./frontend-components.md) pour les composants
+> Voir aussi: [frontend-hooks.md](./frontend-hooks.md), [frontend-components.md](./frontend-components.md)
 
 ## Routes Map
 
 | Route | Page | Auth requise | Description |
 |-------|------|-------------|-------------|
-| `/` | Home | Non | Hero + 6 missions recentes |
+| `/` | Home | Non | Hero + comment ça marche + 6 missions récentes |
 | `/login` | Login | Non | Formulaire email/password |
 | `/register` | Register | Non | Formulaire inscription |
 | `/missions` | Missions Feed | Non | Liste filtrable + pagination |
-| `/missions/new` | Create Mission | Oui (implicite) | Formulaire guide 4 etapes |
-| `/missions/[id]` | Mission Detail | Non (UI conditionnelle) | Detail + contributions + close |
+| `/missions/new` | Create Mission | Oui (modal auth) | Formulaire wizard 4 étapes |
+| `/missions/[id]` | Mission Detail | Non (UI conditionnelle) | Détail + contributions |
 | `/offers` | Offers Feed | Non | Liste filtrable + pagination |
-| `/offers/new` | Create Offer | Oui (implicite) | Formulaire guide 3 etapes |
-| `/offers/[id]` | Offer Detail | Non (UI conditionnelle) | Detail + correlations + close |
+| `/offers/new` | Create Offer | Oui (modal auth) | Formulaire wizard 3 étapes |
+| `/offers/[id]` | Offer Detail | Non (UI conditionnelle) | Détail + corrélations |
 | `/profile` | User Profile | Oui (UI conditionnelle) | Stats + mes missions/offres |
-| `/profile/edit` | Edit Profile | Oui (implicite) | Compléter profil (bio, skills, interests, etc.) |
-| `/notifications` | Notifications | Oui (implicite) | Liste complette notifications |
-| `/callback` | OAuth Callback | Non | Redirection OAuth (Google/Facebook) |
+| `/profile/edit` | Edit Profile | Oui (implicite) | Bio, skills, interests, etc. |
+| `/notifications` | Notifications | Oui (implicite) | Liste complète notifications |
+| `/callback` | OAuth Callback | Non | Redirection OAuth |
 | `/faq` | FAQ | Non | Foire aux questions |
 
 ## Page Details
 
 ### `/` (Home)
-- File: `app/page.tsx`
-- Hook: `useMissions({ limit: 6 })`
-- Affiche: Hero section + grille 6 MissionCards recentes
-- CTAs: "Creer une Mission" → `/missions/new`, "Proposer une Offre" → `/offers/new`
-
-### `/login`
-- File: `app/(auth)/login/page.tsx`
-- Hook: `useAuth()` → `login()`
-- State local: email, password, isLoading
-- On success: redirect `/missions`, toast success
-- On error: toast error
-
-### `/register`
-- File: `app/(auth)/register/page.tsx`
-- Hook: `useAuth()` → `register()`
-- State local: displayName, email, password, isLoading
-- On success: redirect `/missions`
-
-### `/missions`
-- File: `app/missions/page.tsx`
-- Hook: `useMissions(filters)`
-- State: filters (category, helpType, urgency, search, page)
-- Filtres: 3 Select + 1 Input search
-- Pagination: Previous/Next buttons, default limit=12
-- Grille: MissionCard (responsive 1/2/3 colonnes)
-- CTA: "Creer une Mission" → `/missions/new`
+- Hero: alternance typo Nunito + Playfair italic, gradient text, blobs décoratifs violet
+- Section "Comment ça marche" : 3 étapes avec icônes SVG et numéros gradient
+- Missions récentes: grille 6 MissionCards
+- CTA footer: "Rejoignez la communauté"
 
 ### `/missions/new`
-- File: `app/missions/new/page.tsx`
-- Hook: `useCreateMission()` mutation
-- Steps (4):
-  1. Description: title + description (textareas)
-  2. Classification: category + helpType + urgency (selects)
-  3. Visibility: visibility select + tags input (comma-separated)
-  4. Confirmation: preview de tous les champs
-- Validation: step 0 requiert title + description
-- On submit: parse tags → mutate → redirect `/missions/[id]`
+- **FormWizard** 4 étapes avec stepper en pills glassmorphism
+- Step 1: Description (title + description) — ValidatedInput
+- Step 2: Classification — **BadgeSelector** (catégorie avec emoji, type d'aide, urgence avec couleurs)
+- Step 3: Visibilité — **ToggleSwitch** (🌍 Public / 👥 Groupe / 🔒 Privé) + tags
+- Step 4: Confirmation — preview avec badges
+- **AuthRequiredModal** si user non connecté au submit
+- Submit: gradient button + shimmer
 
 ### `/missions/[id]`
-- File: `app/missions/[id]/page.tsx`
-- Hooks: `useMission(id)`, `useContributions(id)`, `useAuth()`
-- Affiche:
-  - Badges: category, urgency, helpType, status (si ferme)
-  - Creator: avatar + displayName + timeAgo
-  - Description (whitespace-pre-wrap)
-  - Info: location, tags, jours avant expiration
-  - MissionProgress (barre de progression)
-  - ContributionButtons (si mission ouverte + user != creator)
-  - CloseMissionDialog (si user = creator + mission ouverte)
-  - Liste contributions: avatar + type badge + message + timeAgo
-
-### `/offers`
-- File: `app/offers/page.tsx`
-- Hook: `useOffers(filters)`
-- State: filters (category, offerType, search, page)
-- Filtres: 2 Select + 1 Input search
-- Grille: OfferCard, default limit=12
+- Header gradient coloré par catégorie avec CategoryIcon
+- Badges: catégorie, urgence (avec dot coloré), helpType
+- Sous-titre Playfair italic: "X personnes solidaires" ou "En attente de solidarité…"
+- **Pas de barre de progression** — supprimée volontairement
+- ContributionButtons: 4 boutons gradient avec glow + emoji
+- Actions créateur: Modifier, Clôturer, Supprimer
+- Liste contributions
 
 ### `/offers/new`
-- File: `app/offers/new/page.tsx`
-- Hook: `useCreateOffer()` mutation
-- Steps (3):
-  1. Description: title + description + availability
-  2. Classification: offerType + category + visibility + tags
-  3. Confirmation: preview
-- On submit: redirect `/offers/[id]`
+- **FormWizard** 3 étapes
+- Step 1: Description + disponibilité — ValidatedInput
+- Step 2: Classification — **BadgeSelector** (type d'offre, catégorie) + **ToggleSwitch** (visibilité) + tags
+- Step 3: Confirmation
+- **AuthRequiredModal** si user non connecté au submit
 
 ### `/offers/[id]`
-- File: `app/offers/[id]/page.tsx`
-- Hooks: `useOffer(id)`, `useQuery(['correlations', id])`, `useAuth()`
-- Affiche:
-  - Badges: offerType (colore), category, status
-  - Creator info
-  - Description + availability (optionnel)
-  - Info: location, tags
-  - Close button (si creator + ouverte) → appelle `offersApi.close(id)` directement
-  - Missions correlees: score badge + lien vers mission
-
-### `/profile`
-- File: `app/profile/page.tsx`
-- Hooks: `useAuth()`, `useUserStats()`, `useMissions({ limit: 50 })`, `useOffers({ limit: 50 })`
-- Affiche:
-  - Avatar (large) + displayName + email
-  - 4 stats cards: missionsCreated, missionsResolved, contributionsGiven, offersCreated
-  - Tabs: "Missions" / "Offres"
-  - Chaque tab: liste filtree par creatorId du user (cote client)
-
-### `/notifications`
-- File: `app/notifications/page.tsx`
-- Hooks: `useNotifications()`, `useMarkNotificationRead()`
-- Affiche: liste de cards avec blue dot (unread), title, body, timeAgo
-- Click: mark as read si pas deja lu
-- Empty state: icone Bell + "Aucune notification"
-
-### `/profile/edit`
-- File: `app/profile/edit/page.tsx`
-- Hook: Calls `PATCH /users/me/profile` directly
-- Fields:
-  - Bio: textarea (max 500 chars)
-  - Skills: tags input (array)
-  - Interests: tags input (array)
-  - AvailabilityHours: number input (1-168)
-  - MaxDistanceKm: number input (1-1000)
-- On submit: redirect to `/profile`, toast with profileCompletion %
-
-### `/callback`
-- File: `app/(auth)/callback/page.tsx`
-- Hook: `useAuth().loginWithToken()`
-- Reads token from URL hash fragment (not query param)
-- Cleans URL immediately to remove token from history
-- On success: toast + redirect to `/missions`
-- On error: toast + redirect to `/login`
+- Header gradient coloré par catégorie
+- Badges: offerType, category, status
+- Missions corrélées avec score
 
 ### `/faq`
-- File: `app/faq/page.tsx`
-- Static page with accordion sections
-- Sections: General, Missions & Offres, IA & Matching, Compte & Securite
-- Uses shadcn Accordion component
+- Accordion 4 sections avec emoji et fonds colorés
+- Sections: 💡 Général, 🎯 Missions & Offres, 🔮 IA & Matching, 🔐 Compte & Sécurité
 
 ## Layout
 
@@ -150,20 +70,21 @@ File: `app/layout.tsx`
 ```
 <QueryProvider>
   <AuthProvider>
-    <Header />       ← sticky top, z-50, backdrop-blur
-    <main>{page}</main>  ← flex-1
-    <Footer />        ← border-t, copyright
-    <Toaster />       ← Sonner toasts (bottom-right)
+    <SocketProvider>
+      <Header />
+      <main>{page}</main>
+      <Footer />
+      <Toaster />
+    </SocketProvider>
   </AuthProvider>
 </QueryProvider>
 ```
 
-Font: Geist (sans) + Geist Mono
-Metadata: title "GR attitude"
+Fonts: **Nunito** (display) + **Inter** (sans) + **Playfair Display** (elegant)
 
 ## Auth Protection Pattern
 
-Pas de middleware Next.js. Protection cote client:
-- Pages conditionnelles: affichent contenu different selon `useAuth().isAuthenticated`
-- Pas de redirect force (sauf login/register qui redirigent vers `/missions` apres auth)
-- Profile page: message "Connectez-vous" si pas authentifie
+- Pas de middleware Next.js — protection côté client
+- Pages création (missions/offers/new): **AuthRequiredModal** au submit si non connecté
+- Profile: message "Connectez-vous" si pas authentifié
+- Login/Register: redirect vers `/missions` après auth
