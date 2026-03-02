@@ -29,6 +29,7 @@ const CATEGORY_ACCENT: Record<MissionCategory, string> = {
   alimentation: '#f59e0b',
   animaux: '#84cc16',
   education: '#eab308',
+  handicap: '#0ea5e9',
   autre: '#6b7280',
 };
 

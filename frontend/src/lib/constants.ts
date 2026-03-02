@@ -17,5 +17,6 @@ export const CATEGORY_ICONS: Partial<Record<MissionCategory, string>> = {
   [MissionCategory.ALIMENTATION]: '🍽️',
   [MissionCategory.ANIMAUX]: '🐾',
   [MissionCategory.EDUCATION]: '📚',
+  [MissionCategory.HANDICAP]: '♿',
   [MissionCategory.AUTRE]: '✨',
 };

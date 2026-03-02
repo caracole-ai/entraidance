@@ -37,6 +37,7 @@ export enum MissionCategory {
   ALIMENTATION = 'alimentation',
   ANIMAUX = 'animaux',
   EDUCATION = 'education',
+  HANDICAP = 'handicap',
   AUTRE = 'autre',
 }
 

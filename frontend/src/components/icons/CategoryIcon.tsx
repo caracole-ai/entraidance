@@ -15,6 +15,7 @@ export const CATEGORY_COLORS: Record<MissionCategory, string> = {
   [MissionCategory.EDUCATION]: '#4f46e5',
   [MissionCategory.NUMERIQUE]: '#3b82f6',
   [MissionCategory.ANIMAUX]: '#f97316',
+  [MissionCategory.HANDICAP]: '#0ea5e9',
   [MissionCategory.AUTRE]: '#6b7280',
 };
 
@@ -106,6 +107,14 @@ const ICONS: Record<MissionCategory, ReactNode> = {
       <circle cx="4.5" cy="11" r="1.5" fill="currentColor" />
       <circle cx="19.5" cy="11" r="1.5" fill="currentColor" />
       <path d="M6 16c0-3 2.7-5 6-5s6 2 6 5c0 2.5-2.7 5-6 5s-6-2.5-6-5z" fill="none" stroke="currentColor" strokeWidth="1.5" />
+    </>
+  ),
+  [MissionCategory.HANDICAP]: (
+    <>
+      <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="12" cy="7" r="2" fill="currentColor" />
+      <path d="M12 10v4h3l1.5 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <path d="M9 20a5 5 0 018-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
     </>
   ),
   [MissionCategory.AUTRE]: (

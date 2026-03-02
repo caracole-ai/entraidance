@@ -120,7 +120,7 @@ export default function OffersPage() {
                 <div className="flex flex-col gap-4">
                   <label className="text-sm font-black flex items-center gap-2 text-slate-900 uppercase tracking-widest">
                     <Sparkles size={18} className="text-emerald-600" />
-                    Type d'offre
+                    Type de proposition
                   </label>
                   <div className="flex flex-wrap gap-2">
                     {Object.values(OfferType).map((ot) => {

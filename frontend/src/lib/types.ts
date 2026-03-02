@@ -38,6 +38,7 @@ export enum MissionCategory {
   ALIMENTATION = 'alimentation',
   ANIMAUX = 'animaux',
   EDUCATION = 'education',
+  HANDICAP = 'handicap',
   AUTRE = 'autre',
 }
 
@@ -245,6 +246,7 @@ export const CATEGORY_LABELS: Record<MissionCategory, string> = {
   [MissionCategory.ALIMENTATION]: 'Alimentation',
   [MissionCategory.ANIMAUX]: 'Animaux',
   [MissionCategory.EDUCATION]: 'Education',
+  [MissionCategory.HANDICAP]: 'Handicap',
   [MissionCategory.AUTRE]: 'Autre',
 };
 
