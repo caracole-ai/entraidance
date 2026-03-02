@@ -264,7 +264,7 @@ export default function MissionDetailPage({
 
         <Separator className="bg-gradient-to-r from-transparent via-slate-300/60 to-transparent" />
 
-        {/* Contributions */}
+        {/* Contributions — iMessage-style conversation */}
         <FadeIn delay={0.35}>
           <div>
             <h2 className="text-2xl font-black tracking-tight text-slate-900 mb-6">
@@ -276,45 +276,61 @@ export default function MissionDetailPage({
               )}
             </h2>
             {contributions && contributions.length > 0 ? (
-              <StaggerContainer className="space-y-4">
-                {contributions.map((contribution) => {
-                  const initial = contribution.user?.displayName?.charAt(0).toUpperCase() ?? 'U';
-                  return (
-                    <StaggerItem key={contribution.id}>
-                      <div className="glass-card-liquid p-6 rounded-[1.5rem]">
-                        <div className="flex items-start gap-4">
+              <div className="relative glass-hero rounded-[2rem] p-6 md:p-8">
+                {/* Chat-style conversation */}
+                <StaggerContainer className="space-y-5">
+                  {contributions.map((contribution, idx) => {
+                    const initial = contribution.user?.displayName?.charAt(0).toUpperCase() ?? 'U';
+                    const isEven = idx % 2 === 0;
+                    const bubbleColors: Record<string, string> = {
+                      participe: 'bg-gradient-to-br from-[#9333ea] to-[#7c3aed] text-white',
+                      propose: 'bg-gradient-to-br from-emerald-500 to-teal-500 text-white',
+                      finance: 'bg-gradient-to-br from-amber-500 to-orange-500 text-white',
+                      conseille: 'bg-gradient-to-br from-sky-500 to-blue-500 text-white',
+                    };
+                    const bubbleColor = bubbleColors[contribution.type] ?? bubbleColors.participe;
+                    const badgeColors: Record<string, string> = {
+                      participe: 'bg-white/20 text-white/90',
+                      propose: 'bg-white/20 text-white/90',
+                      finance: 'bg-white/20 text-white/90',
+                      conseille: 'bg-white/20 text-white/90',
+                    };
+                    const badgeColor = badgeColors[contribution.type] ?? badgeColors.participe;
+
+                    return (
+                      <StaggerItem key={contribution.id}>
+                        <div className={`flex items-end gap-2.5 ${isEven ? '' : 'flex-row-reverse'}`}>
                           {/* Avatar */}
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center text-slate-600 font-bold text-xs flex-shrink-0 shadow-sm">
                             {initial}
                           </div>
-                          {/* Content */}
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-2">
-                              <span className="font-bold text-slate-900">
-                                {contribution.user?.displayName}
-                              </span>
-                              <Badge
-                                variant="secondary"
-                                className="text-xs font-bold uppercase tracking-wider"
-                              >
-                                {CONTRIBUTION_TYPE_LABELS[contribution.type]}
-                              </Badge>
+                          {/* Bubble */}
+                          <div className={`max-w-[75%] ${isEven ? '' : 'items-end'}`}>
+                            <p className={`text-xs font-semibold mb-1 ${isEven ? 'text-left' : 'text-right'} text-slate-500`}>
+                              {contribution.user?.displayName}
+                            </p>
+                            <div className={`${bubbleColor} px-4 py-3 shadow-lg ${isEven ? 'rounded-2xl rounded-bl-md' : 'rounded-2xl rounded-br-md'}`}>
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${badgeColor}`}>
+                                  {CONTRIBUTION_TYPE_LABELS[contribution.type]}
+                                </span>
+                              </div>
+                              {contribution.message && (
+                                <p className="font-medium leading-relaxed text-[0.9375rem]">
+                                  {contribution.message}
+                                </p>
+                              )}
                             </div>
-                            {contribution.message && (
-                              <p className="text-slate-700 font-medium leading-relaxed mb-2">
-                                {contribution.message}
-                              </p>
-                            )}
-                            <p className="text-xs text-slate-500 font-semibold">
+                            <p className={`text-[10px] mt-1 text-slate-400 font-medium ${isEven ? 'text-left' : 'text-right'}`}>
                               {timeAgo(contribution.createdAt)}
                             </p>
                           </div>
                         </div>
-                      </div>
-                    </StaggerItem>
-                  );
-                })}
-              </StaggerContainer>
+                      </StaggerItem>
+                    );
+                  })}
+                </StaggerContainer>
+              </div>
             ) : (
               <div className="text-center py-12 glass-hero rounded-[2rem] p-8">
                 <p className="text-slate-600 font-medium">
