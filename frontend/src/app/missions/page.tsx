@@ -27,6 +27,7 @@ const HELP_TYPE_COLORS: Record<HelpType, { bg: string; active: string }> = {
   [HelpType.CONSEIL]: { bg: 'bg-violet-50 text-violet-700 border-violet-200', active: 'bg-violet-500 text-white border-violet-500' },
   [HelpType.MATERIEL]: { bg: 'bg-amber-50 text-amber-700 border-amber-200', active: 'bg-amber-500 text-white border-amber-500' },
   [HelpType.RELATION]: { bg: 'bg-pink-50 text-pink-700 border-pink-200', active: 'bg-pink-500 text-white border-pink-500' },
+  [HelpType.AUTRE]: { bg: 'bg-gray-50 text-gray-700 border-gray-200', active: 'bg-gray-500 text-white border-gray-500' },
 };
 
 const URGENCY_COLORS: Record<Urgency, { bg: string; active: string }> = {

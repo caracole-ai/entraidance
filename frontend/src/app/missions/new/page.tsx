@@ -32,6 +32,7 @@ const HELP_TYPE_ICONS: Partial<Record<HelpType, string>> = {
   [HelpType.CONSEIL]: '💡',
   [HelpType.MATERIEL]: '🧰',
   [HelpType.RELATION]: '🤝',
+  [HelpType.AUTRE]: '✨',
 };
 
 const URGENCY_COLORS: Partial<Record<Urgency, string>> = {

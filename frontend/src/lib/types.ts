@@ -12,6 +12,7 @@ export enum HelpType {
   CONSEIL = 'conseil',
   MATERIEL = 'materiel',
   RELATION = 'relation',
+  AUTRE = 'autre',
 }
 
 export enum Urgency {
@@ -261,6 +262,7 @@ export const HELP_TYPE_LABELS: Record<HelpType, string> = {
   [HelpType.CONSEIL]: 'Conseil',
   [HelpType.MATERIEL]: 'Materiel',
   [HelpType.RELATION]: 'Relation',
+  [HelpType.AUTRE]: 'Autre',
 };
 
 export const CONTRIBUTION_TYPE_LABELS: Record<ContributionType, string> = {

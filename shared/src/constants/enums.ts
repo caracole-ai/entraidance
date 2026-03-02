@@ -11,6 +11,7 @@ export enum HelpType {
   CONSEIL = 'conseil',
   MATERIEL = 'materiel',
   RELATION = 'relation',
+  AUTRE = 'autre',
 }
 
 export enum Urgency {
