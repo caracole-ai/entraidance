@@ -55,7 +55,7 @@ export default function MissionsPage() {
   return (
     <div className="min-h-screen bg-gradient-stitch">
       {/* Hero Section */}
-      <section className="relative w-full py-8 md:py-16 px-6 overflow-hidden">
+      <section className="relative w-full pb-8 md:pb-16 px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto relative">
           {/* Abstract Liquid Glass Shapes (background blobs) */}
           <div className="absolute -top-24 -left-20 w-[450px] h-[450px] bg-[#9333ea]/30 rounded-full blur-[140px] animate-pulse pointer-events-none" />
@@ -73,7 +73,7 @@ export default function MissionsPage() {
                 <span 
                   className="inline-block animate-float text-transparent bg-clip-text bg-gradient-to-r from-[#9333ea] via-indigo-500 to-purple-400 text-glow px-2 font-['Marck_Script'] text-[1.1em] rotate-[-2deg]"
                 >
-                  d&apos;entraide
+                  d'entraide
                 </span>{' '}
                 🤝
               </h2>

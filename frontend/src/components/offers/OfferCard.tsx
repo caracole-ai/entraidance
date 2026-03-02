@@ -79,10 +79,8 @@ export function OfferCard({ offer }: OfferCardProps) {
 
         {/* Category icon - top right floating */}
         {offer.category && (
-          <div className="absolute -top-6 -right-4 z-10">
-            <div className={`${categoryBgColor} w-24 h-24 rounded-[2.5rem] flex items-center justify-center shadow-xl border-4 border-white/60`}>
-              <CategoryIcon category={offer.category as MissionCategory} size={40} className="text-white" />
-            </div>
+          <div className="absolute top-3 right-3 z-10">
+            <CategoryIcon category={offer.category as MissionCategory} size={20} style={{ color: categoryAccent }} />
           </div>
         )}
 
