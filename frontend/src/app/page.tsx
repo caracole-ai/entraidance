@@ -111,7 +111,7 @@ export default function HomePage() {
                 size="lg"
                 asChild
                 className="shimmer shadow-lg text-white border-none px-8 font-semibold"
-                style={{ background: 'linear-gradient(135deg, oklch(0.65 0.2 25), oklch(0.7 0.2 50))' }}
+                style={{ background: 'linear-gradient(135deg, oklch(0.55 0.18 280), oklch(0.6 0.15 320))' }}
               >
                 <Link href="/missions/new">Créer une Mission</Link>
               </Button>
@@ -226,7 +226,7 @@ export default function HomePage() {
               size="lg"
               asChild
               className="shimmer shadow-lg text-white border-none px-8 font-semibold"
-              style={{ background: 'linear-gradient(135deg, oklch(0.65 0.2 25), oklch(0.7 0.2 50))' }}
+              style={{ background: 'linear-gradient(135deg, oklch(0.55 0.18 280), oklch(0.6 0.15 320))' }}
             >
               <Link href="/missions/new">Créer une Mission</Link>
             </Button>

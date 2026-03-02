@@ -5,13 +5,6 @@ import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useCreateMission } from '@/hooks/useCreateMission';
 import {
   MissionCategory,
@@ -27,9 +20,45 @@ import {
 import { toast } from 'sonner';
 import { FormWizard, type WizardStep } from '@/components/forms/FormWizard';
 import { ValidatedInput } from '@/components/forms/ValidatedInput';
+import { BadgeSelector } from '@/components/forms/BadgeSelector';
+import { ToggleSwitch } from '@/components/forms/ToggleSwitch';
 
 const MIN_TITLE_LENGTH = 5;
 const MIN_DESCRIPTION_LENGTH = 10;
+
+const CATEGORY_ICONS: Partial<Record<MissionCategory, string>> = {
+  [MissionCategory.DEMENAGEMENT]: '📦',
+  [MissionCategory.BRICOLAGE]: '🔧',
+  [MissionCategory.NUMERIQUE]: '💻',
+  [MissionCategory.ADMINISTRATIF]: '📋',
+  [MissionCategory.GARDE_ENFANTS]: '👶',
+  [MissionCategory.TRANSPORT]: '🚗',
+  [MissionCategory.ECOUTE]: '👂',
+  [MissionCategory.EMPLOI]: '💼',
+  [MissionCategory.ALIMENTATION]: '🍽️',
+  [MissionCategory.ANIMAUX]: '🐾',
+  [MissionCategory.EDUCATION]: '📚',
+  [MissionCategory.AUTRE]: '✨',
+};
+
+const HELP_TYPE_ICONS: Partial<Record<HelpType, string>> = {
+  [HelpType.FINANCIERE]: '💰',
+  [HelpType.CONSEIL]: '💡',
+  [HelpType.MATERIEL]: '🧰',
+  [HelpType.RELATION]: '🤝',
+};
+
+const URGENCY_COLORS: Partial<Record<Urgency, string>> = {
+  [Urgency.FAIBLE]: 'oklch(0.6 0.12 180)',
+  [Urgency.MOYEN]: 'oklch(0.6 0.14 80)',
+  [Urgency.URGENT]: 'oklch(0.55 0.2 15)',
+};
+
+const URGENCY_ICONS: Partial<Record<Urgency, string>> = {
+  [Urgency.FAIBLE]: '🟢',
+  [Urgency.MOYEN]: '🟡',
+  [Urgency.URGENT]: '🔴',
+};
 
 export default function NewMissionPage() {
   const router = useRouter();
@@ -64,7 +93,6 @@ export default function NewMissionPage() {
     setTouched((prev) => ({ ...prev, [field]: true }));
   };
 
-  // Validation
   const isTitleValid = () => form.title.trim().length >= MIN_TITLE_LENGTH;
   const isDescriptionValid = () => form.description.trim().length >= MIN_DESCRIPTION_LENGTH;
 
@@ -150,60 +178,34 @@ export default function NewMissionPage() {
       isValid: () => true,
       content: (
         <>
-          <div className="space-y-2">
-            <Label>Catégorie</Label>
-            <Select
-              value={form.category}
-              onValueChange={(v) => updateForm('category', v as MissionCategory)}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.values(MissionCategory).map((cat) => (
-                  <SelectItem key={cat} value={cat}>
-                    {CATEGORY_LABELS[cat]}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label>Type d&apos;aide</Label>
-            <Select
-              value={form.helpType}
-              onValueChange={(v) => updateForm('helpType', v as HelpType)}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.values(HelpType).map((ht) => (
-                  <SelectItem key={ht} value={ht}>
-                    {HELP_TYPE_LABELS[ht]}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label>Urgence</Label>
-            <Select
-              value={form.urgency}
-              onValueChange={(v) => updateForm('urgency', v as Urgency)}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.values(Urgency).map((u) => (
-                  <SelectItem key={u} value={u}>
-                    {URGENCY_LABELS[u]}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <BadgeSelector
+            label="Catégorie"
+            value={form.category}
+            onChange={(v) => updateForm('category', v)}
+            options={Object.values(MissionCategory)}
+            labels={CATEGORY_LABELS}
+            icons={CATEGORY_ICONS}
+            columns={4}
+          />
+          <BadgeSelector
+            label="Type d'aide"
+            value={form.helpType}
+            onChange={(v) => updateForm('helpType', v)}
+            options={Object.values(HelpType)}
+            labels={HELP_TYPE_LABELS}
+            icons={HELP_TYPE_ICONS}
+            columns={2}
+          />
+          <BadgeSelector
+            label="Urgence"
+            value={form.urgency}
+            onChange={(v) => updateForm('urgency', v)}
+            options={Object.values(Urgency)}
+            labels={URGENCY_LABELS}
+            icons={URGENCY_ICONS}
+            colors={URGENCY_COLORS}
+            columns={3}
+          />
         </>
       ),
     },
@@ -212,24 +214,16 @@ export default function NewMissionPage() {
       isValid: () => true,
       content: (
         <>
-          <div className="space-y-2">
-            <Label>Visibilité</Label>
-            <Select
-              value={form.visibility}
-              onValueChange={(v) => updateForm('visibility', v as Visibility)}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.values(Visibility).map((vis) => (
-                  <SelectItem key={vis} value={vis}>
-                    {VISIBILITY_LABELS[vis]}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <ToggleSwitch
+            label="Visibilité"
+            value={form.visibility}
+            onChange={(v) => updateForm('visibility', v)}
+            options={[
+              { value: Visibility.PUBLIC, label: 'Public', icon: '🌍' },
+              { value: Visibility.GROUPE, label: 'Groupe', icon: '👥' },
+              { value: Visibility.PRIVE, label: 'Privé', icon: '🔒' },
+            ]}
+          />
           <div className="space-y-2">
             <Label htmlFor="tags">Tags (séparés par des virgules)</Label>
             <Input
@@ -256,9 +250,9 @@ export default function NewMissionPage() {
             <p className="text-sm">{form.description}</p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Badge variant="outline">{CATEGORY_LABELS[form.category]}</Badge>
-            <Badge variant="outline">{HELP_TYPE_LABELS[form.helpType]}</Badge>
-            <Badge variant="outline">{URGENCY_LABELS[form.urgency]}</Badge>
+            <Badge variant="outline">{CATEGORY_ICONS[form.category]} {CATEGORY_LABELS[form.category]}</Badge>
+            <Badge variant="outline">{HELP_TYPE_ICONS[form.helpType]} {HELP_TYPE_LABELS[form.helpType]}</Badge>
+            <Badge variant="outline">{URGENCY_ICONS[form.urgency]} {URGENCY_LABELS[form.urgency]}</Badge>
             <Badge variant="outline">{VISIBILITY_LABELS[form.visibility]}</Badge>
           </div>
           {tagsInput && (

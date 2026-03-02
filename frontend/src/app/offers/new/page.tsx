@@ -5,13 +5,6 @@ import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useCreateOffer } from '@/hooks/useCreateOffer';
 import {
   MissionCategory,
@@ -25,9 +18,34 @@ import {
 import { toast } from 'sonner';
 import { FormWizard, type WizardStep } from '@/components/forms/FormWizard';
 import { ValidatedInput } from '@/components/forms/ValidatedInput';
+import { BadgeSelector } from '@/components/forms/BadgeSelector';
+import { ToggleSwitch } from '@/components/forms/ToggleSwitch';
 
 const MIN_TITLE_LENGTH = 5;
 const MIN_DESCRIPTION_LENGTH = 10;
+
+const OFFER_TYPE_ICONS: Partial<Record<OfferType, string>> = {
+  [OfferType.DON]: '🎁',
+  [OfferType.COMPETENCE]: '🧠',
+  [OfferType.MATERIEL]: '🧰',
+  [OfferType.SERVICE]: '🤲',
+  [OfferType.ECOUTE]: '👂',
+};
+
+const CATEGORY_ICONS: Partial<Record<MissionCategory, string>> = {
+  [MissionCategory.DEMENAGEMENT]: '📦',
+  [MissionCategory.BRICOLAGE]: '🔧',
+  [MissionCategory.NUMERIQUE]: '💻',
+  [MissionCategory.ADMINISTRATIF]: '📋',
+  [MissionCategory.GARDE_ENFANTS]: '👶',
+  [MissionCategory.TRANSPORT]: '🚗',
+  [MissionCategory.ECOUTE]: '👂',
+  [MissionCategory.EMPLOI]: '💼',
+  [MissionCategory.ALIMENTATION]: '🍽️',
+  [MissionCategory.ANIMAUX]: '🐾',
+  [MissionCategory.EDUCATION]: '📚',
+  [MissionCategory.AUTRE]: '✨',
+};
 
 export default function NewOfferPage() {
   const router = useRouter();
@@ -62,7 +80,6 @@ export default function NewOfferPage() {
     setTouched((prev) => ({ ...prev, [field]: true }));
   };
 
-  // Validation
   const isTitleValid = () => form.title.trim().length >= MIN_TITLE_LENGTH;
   const isDescriptionValid = () => form.description.trim().length >= MIN_DESCRIPTION_LENGTH;
 
@@ -157,60 +174,34 @@ export default function NewOfferPage() {
       isValid: () => true,
       content: (
         <>
-          <div className="space-y-2">
-            <Label>Type d&apos;offre</Label>
-            <Select
-              value={form.offerType}
-              onValueChange={(v) => updateForm('offerType', v as OfferType)}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.values(OfferType).map((ot) => (
-                  <SelectItem key={ot} value={ot}>
-                    {OFFER_TYPE_LABELS[ot]}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label>Catégorie</Label>
-            <Select
-              value={form.category || MissionCategory.AUTRE}
-              onValueChange={(v) => updateForm('category', v as MissionCategory)}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.values(MissionCategory).map((cat) => (
-                  <SelectItem key={cat} value={cat}>
-                    {CATEGORY_LABELS[cat]}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label>Visibilité</Label>
-            <Select
-              value={form.visibility || Visibility.PUBLIC}
-              onValueChange={(v) => updateForm('visibility', v as Visibility)}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.values(Visibility).map((vis) => (
-                  <SelectItem key={vis} value={vis}>
-                    {VISIBILITY_LABELS[vis]}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <BadgeSelector
+            label="Type d'offre"
+            value={form.offerType}
+            onChange={(v) => updateForm('offerType', v)}
+            options={Object.values(OfferType)}
+            labels={OFFER_TYPE_LABELS}
+            icons={OFFER_TYPE_ICONS}
+            columns={3}
+          />
+          <BadgeSelector
+            label="Catégorie"
+            value={form.category || MissionCategory.AUTRE}
+            onChange={(v) => updateForm('category', v)}
+            options={Object.values(MissionCategory)}
+            labels={CATEGORY_LABELS}
+            icons={CATEGORY_ICONS}
+            columns={4}
+          />
+          <ToggleSwitch
+            label="Visibilité"
+            value={form.visibility || Visibility.PUBLIC}
+            onChange={(v) => updateForm('visibility', v)}
+            options={[
+              { value: Visibility.PUBLIC, label: 'Public', icon: '🌍' },
+              { value: Visibility.GROUPE, label: 'Groupe', icon: '👥' },
+              { value: Visibility.PRIVE, label: 'Privé', icon: '🔒' },
+            ]}
+          />
           <div className="space-y-2">
             <Label htmlFor="tags">Tags (séparés par des virgules)</Label>
             <Input
@@ -243,9 +234,9 @@ export default function NewOfferPage() {
             </div>
           )}
           <div className="flex flex-wrap gap-2">
-            <Badge variant="outline">{OFFER_TYPE_LABELS[form.offerType]}</Badge>
+            <Badge variant="outline">{OFFER_TYPE_ICONS[form.offerType]} {OFFER_TYPE_LABELS[form.offerType]}</Badge>
             {form.category && (
-              <Badge variant="outline">{CATEGORY_LABELS[form.category]}</Badge>
+              <Badge variant="outline">{CATEGORY_ICONS[form.category]} {CATEGORY_LABELS[form.category]}</Badge>
             )}
             {form.visibility && (
               <Badge variant="outline">{VISIBILITY_LABELS[form.visibility]}</Badge>

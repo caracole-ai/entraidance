@@ -38,7 +38,7 @@ export default function LoginPage() {
       {/* Subtle background blobs */}
       <div
         className="pointer-events-none absolute -top-32 -left-32 h-72 w-72 rounded-full blur-3xl opacity-20"
-        style={{ background: 'oklch(0.65 0.2 25)' }}
+        style={{ background: 'oklch(0.55 0.18 280)' }}
         aria-hidden
       />
       <div
