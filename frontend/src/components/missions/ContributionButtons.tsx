@@ -131,7 +131,7 @@ export function ContributionButtons({ missionId }: ContributionButtonsProps) {
       </div>
 
       <Dialog open={!!openType} onOpenChange={(open) => !open && setOpenType(null)}>
-        <DialogContent className="glass-card">
+        <DialogContent className="bg-white dark:bg-card border shadow-lg">
           <DialogHeader>
             <DialogTitle className="font-display text-lg flex items-center gap-3">
               {openType && CONTRIBUTION_SVG[openType]}
