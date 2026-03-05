@@ -96,90 +96,92 @@ export function ContributionButtons({ missionId }: ContributionButtonsProps) {
   };
 
   return (
-    <div className="space-y-3">
-      <div className="grid grid-cols-2 gap-3">
-        {Object.values(ContributionType).map((type) => {
-          const borderColor = CONTRIBUTION_BORDER_COLORS[type];
-          const isHovered = hoveredType === type;
-          const isOpen = openType === type;
-          return (
-            <div key={type} className="flex flex-col gap-2">
-              <button
-                onClick={() => toggleType(type)}
-                onMouseEnter={() => setHoveredType(type)}
-                onMouseLeave={() => setHoveredType(null)}
-                className="group relative flex flex-col items-center gap-2 rounded-2xl px-4 py-4 cursor-pointer select-none transition-all duration-300 ease-out"
-                style={{
-                  background: isHovered || isOpen
-                    ? `oklch(0.98 0.005 280 / 80%)`
-                    : 'oklch(0.99 0.003 280 / 40%)',
-                  backdropFilter: 'blur(12px) saturate(1.4)',
-                  WebkitBackdropFilter: 'blur(12px) saturate(1.4)',
-                  border: `1.5px solid ${borderColor}`,
-                  borderColor: isHovered || isOpen ? borderColor : `color-mix(in oklch, ${borderColor} 50%, transparent)`,
-                  boxShadow: isHovered || isOpen
-                    ? `0 4px 20px color-mix(in oklch, ${borderColor} 15%, transparent), inset 0 1px 0 rgba(255,255,255,0.5)`
-                    : 'inset 0 1px 0 rgba(255,255,255,0.3)',
-                  color: borderColor,
-                  transform: isHovered || isOpen ? 'translateY(-2px)' : 'translateY(0)',
-                }}
-              >
-                <div className="transition-transform duration-300 group-hover:scale-110">
-                  {CONTRIBUTION_SVG[type]}
-                </div>
-                <span
-                  className="text-sm font-medium transition-colors duration-200"
-                  style={{ color: isHovered || isOpen ? borderColor : 'var(--foreground)' }}
-                >
-                  {CONTRIBUTION_TYPE_LABELS[type]}
-                </span>
-              </button>
+    <div className="grid grid-cols-2 gap-3">
+      {Object.values(ContributionType).map((type) => {
+        const borderColor = CONTRIBUTION_BORDER_COLORS[type];
+        const isHovered = hoveredType === type;
+        const isOpen = openType === type;
+        return (
+          <button
+            key={type}
+            onClick={() => !isOpen && toggleType(type)}
+            onMouseEnter={() => setHoveredType(type)}
+            onMouseLeave={() => setHoveredType(null)}
+            className="group relative flex flex-col items-center gap-2 rounded-2xl px-4 py-4 cursor-pointer select-none transition-all duration-300 ease-out"
+            style={{
+              background: isHovered || isOpen
+                ? `oklch(0.98 0.005 280 / 80%)`
+                : 'oklch(0.99 0.003 280 / 40%)',
+              backdropFilter: 'blur(12px) saturate(1.4)',
+              WebkitBackdropFilter: 'blur(12px) saturate(1.4)',
+              border: `1.5px solid ${borderColor}`,
+              borderColor: isHovered || isOpen ? borderColor : `color-mix(in oklch, ${borderColor} 50%, transparent)`,
+              boxShadow: isHovered || isOpen
+                ? `0 4px 20px color-mix(in oklch, ${borderColor} 15%, transparent), inset 0 1px 0 rgba(255,255,255,0.5)`
+                : 'inset 0 1px 0 rgba(255,255,255,0.3)',
+              color: borderColor,
+              transform: isHovered || isOpen ? 'translateY(-2px)' : 'translateY(0)',
+            }}
+          >
+            <div className="transition-transform duration-300 group-hover:scale-110">
+              {CONTRIBUTION_SVG[type]}
+            </div>
+            <span
+              className="text-sm font-medium transition-colors duration-200"
+              style={{ color: isHovered || isOpen ? borderColor : 'var(--foreground)' }}
+            >
+              {CONTRIBUTION_TYPE_LABELS[type]}
+            </span>
 
-              {/* Accordéon inline */}
-              <AnimatePresence>
-                {isOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="overflow-hidden"
-                  >
-                    <div
-                      className="rounded-xl p-3 space-y-2"
+            {/* Textarea et bouton submit dans le bouton */}
+            <AnimatePresence>
+              {isOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="w-full mt-2 space-y-2"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Textarea
+                    placeholder="Message optionnel..."
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    className="min-h-[80px] text-sm resize-none glass-sidebar-liquid border-white/60 w-full"
+                    disabled={mutation.isPending}
+                  />
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={handleSubmit}
+                      disabled={mutation.isPending}
+                      className="flex-1 text-sm font-bold"
                       style={{
-                        background: 'oklch(0.99 0.003 280 / 60%)',
-                        backdropFilter: 'blur(12px)',
-                        border: `1px solid ${borderColor}40`,
+                        background: `linear-gradient(135deg, ${borderColor}, color-mix(in oklch, ${borderColor} 80%, white))`,
+                        color: 'white',
                       }}
                     >
-                      <Textarea
-                        placeholder="Message optionnel..."
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        className="min-h-[80px] text-sm resize-none glass-sidebar-liquid border-white/60"
-                        disabled={mutation.isPending}
-                      />
-                      <Button
-                        onClick={handleSubmit}
-                        disabled={mutation.isPending}
-                        className="w-full text-sm font-bold"
-                        style={{
-                          background: `linear-gradient(135deg, ${borderColor}, color-mix(in oklch, ${borderColor} 80%, white))`,
-                          color: 'white',
-                        }}
-                      >
-                        <Send size={14} className="mr-2" />
-                        {mutation.isPending ? 'Envoi...' : 'Envoyer'}
-                      </Button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          );
-        })}
-      </div>
+                      <Send size={14} className="mr-2" />
+                      {mutation.isPending ? 'Envoi...' : 'Envoyer'}
+                    </Button>
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOpenType(null);
+                        setMessage('');
+                      }}
+                      variant="outline"
+                      className="text-sm"
+                    >
+                      Annuler
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </button>
+        );
+      })}
     </div>
   );
 }
