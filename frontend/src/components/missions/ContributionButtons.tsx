@@ -109,18 +109,20 @@ export function ContributionButtons({ missionId }: ContributionButtonsProps) {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-3">
-      {Object.values(ContributionType).map((type) => {
-        const borderColor = CONTRIBUTION_BORDER_COLORS[type];
-        const isHovered = hoveredType === type;
-        const isExpanded = expandedType === type;
-        return (
-          <div key={type} className="flex flex-col gap-2">
+    <div className="space-y-3">
+      {/* 4 boutons sur une ligne */}
+      <div className="grid grid-cols-4 gap-2">
+        {Object.values(ContributionType).map((type) => {
+          const borderColor = CONTRIBUTION_BORDER_COLORS[type];
+          const isHovered = hoveredType === type;
+          const isExpanded = expandedType === type;
+          return (
             <button
+              key={type}
               onClick={() => handleToggle(type)}
               onMouseEnter={() => setHoveredType(type)}
               onMouseLeave={() => setHoveredType(null)}
-              className="group relative flex flex-col items-center gap-2 rounded-2xl px-4 py-4 cursor-pointer select-none transition-all duration-300 ease-out"
+              className="group relative flex flex-col items-center gap-2 rounded-2xl px-3 py-3 cursor-pointer select-none transition-all duration-300 ease-out"
               style={{
                 background: isExpanded
                   ? `oklch(0.97 0.01 280 / 90%)`
@@ -142,60 +144,66 @@ export function ContributionButtons({ missionId }: ContributionButtonsProps) {
                 {CONTRIBUTION_SVG[type]}
               </div>
               <span
-                className="text-sm font-medium transition-colors duration-200"
+                className="text-xs font-medium transition-colors duration-200 text-center"
                 style={{ color: isExpanded || isHovered ? borderColor : 'var(--foreground)' }}
               >
                 {CONTRIBUTION_TYPE_LABELS[type]}
               </span>
             </button>
+          );
+        })}
+      </div>
 
-            {/* Accordéon inline */}
-            <AnimatePresence>
-              {isExpanded && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: 'easeInOut' }}
-                  className="overflow-hidden"
+      {/* Accordéon pleine largeur */}
+      <AnimatePresence>
+        {expandedType && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            <div
+              className="flex flex-col gap-2 p-3 rounded-xl backdrop-blur-sm border"
+              style={{
+                background: 'oklch(0.99 0.003 280 / 60%)',
+                borderColor: CONTRIBUTION_BORDER_COLORS[expandedType],
+              }}
+            >
+              <Textarea
+                ref={textareaRef}
+                placeholder={PLACEHOLDERS[expandedType]}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                rows={2}
+                className="text-sm resize-none bg-white/80 border-slate-200 focus:border-slate-300"
+              />
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleSubmit}
+                  disabled={mutation.isPending}
+                  size="sm"
+                  className="flex-1 text-white border-0 font-semibold"
+                  style={{
+                    background: CONTRIBUTION_BORDER_COLORS[expandedType],
+                  }}
                 >
-                  <div className="flex flex-col gap-2 p-3 rounded-xl bg-white/60 backdrop-blur-sm border border-slate-200">
-                    <Textarea
-                      ref={textareaRef}
-                      placeholder={PLACEHOLDERS[type]}
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      rows={2}
-                      className="text-sm resize-none bg-white/80 border-slate-200 focus:border-slate-300"
-                    />
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={handleSubmit}
-                        disabled={mutation.isPending}
-                        size="sm"
-                        className="flex-1 text-white border-0 font-semibold"
-                        style={{
-                          background: borderColor,
-                        }}
-                      >
-                        {mutation.isPending ? t('common.sending') : 'Envoyer'}
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleToggle(type)}
-                        className="px-3"
-                      >
-                        ✕
-                      </Button>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        );
-      })}
+                  {mutation.isPending ? t('common.sending') : 'Envoyer'}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleToggle(expandedType)}
+                  className="px-3"
+                >
+                  ✕
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
