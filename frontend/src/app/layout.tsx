@@ -34,10 +34,13 @@ const publicSans = Public_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'GR attitude',
+  title: 'Entraidance',
   description: 'Trouvez des solutions, Soyez la solution. Tout simplement.',
   manifest: '/manifest.json',
-  themeColor: '#000000',
+  themeColor: '#9333ea',
+  icons: {
+    icon: '/favicon.svg',
+  },
   viewport: {
     width: 'device-width',
     initialScale: 1,
@@ -47,7 +50,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'GR attitude',
+    title: 'Entraidance',
   },
 };
 

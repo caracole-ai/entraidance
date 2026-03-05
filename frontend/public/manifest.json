@@ -1,11 +1,11 @@
 {
-  "name": "GR attitude - Plateforme d'entraide",
-  "short_name": "GR attitude",
+  "name": "Entraidance - Plateforme d'entraide",
+  "short_name": "Entraidance",
   "description": "Trouvez des solutions, Soyez la solution. Tout simplement.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "theme_color": "#9333ea",
   "orientation": "portrait-primary",
   "icons": [
     {
