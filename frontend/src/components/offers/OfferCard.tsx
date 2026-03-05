@@ -59,8 +59,8 @@ export function OfferCard({ offer }: OfferCardProps) {
     : '#6b7280';
 
   return (
-    <Link href={`/offers/${offer.id}`} className="block group">
-      <div className="relative h-full min-h-[380px] glass-card-liquid rounded-[3rem] p-8 pt-16 flex flex-col">
+    <Link href={`/offers/${offer.id}`} className="block group h-full">
+      <div className="relative h-full glass-card-liquid rounded-[3rem] p-8 pt-16 flex flex-col">
         {/* Offer type badge - top left */}
         <div className="absolute top-3 left-3 z-10">
           <div className={`${OFFER_TYPE_COLORS[offer.offerType]} px-4 py-2 rounded-2xl text-xs font-black uppercase tracking-widest shadow-lg`}>

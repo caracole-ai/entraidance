@@ -21,10 +21,8 @@ export function StaggerContainer({ children, ...props }: { children: ReactNode }
 export function StaggerItem({ children, ...props }: { children: ReactNode } & HTMLMotionProps<'div'>) {
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
       variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} 
+      transition={{ duration: 0.3 }}
       {...props}
     >
       {children}

@@ -180,7 +180,7 @@ export default function OffersPage() {
               </div>
             ) : data?.data && data.data.length > 0 ? (
               <>
-                <StaggerContainer className="grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                <StaggerContainer className="grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 auto-rows-fr">
                   {data.data.map((offer) => (
                     <StaggerItem key={offer.id}>
                       <OfferCard offer={offer} />
