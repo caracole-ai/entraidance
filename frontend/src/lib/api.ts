@@ -55,14 +55,17 @@ async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> 
   
   if (!res.ok) {
     const error = await res.json().catch(() => ({ message: 'Erreur serveur' }));
-    console.error('[API] Erreur', res.status, endpoint, ':', error.message);
+    
+    // Pour les erreurs d'auth, dispatcher l'événement sans logger (la modale gère)
     if (res.status === 401 || res.status === 403) {
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new CustomEvent('auth:required'));
       }
-      // Ne pas throw pour les erreurs d'auth, juste dispatcher l'événement
       throw new Error('AUTH_REQUIRED');
     }
+    
+    // Logger uniquement les vraies erreurs (pas les 401/403)
+    console.error('[API] Erreur', res.status, endpoint, ':', error.message);
     throw new Error(error.message || 'Erreur serveur');
   }
   return res.json();
