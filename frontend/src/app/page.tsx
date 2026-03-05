@@ -41,16 +41,6 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-stitch">
       {/* Hero */}
       <section className="relative overflow-hidden pt-20 py-24 px-4 text-center">
-        {/* Decorative blobs */}
-        <div
-          className="absolute w-[600px] h-[600px] bg-[#9333ea]/20 rounded-full blur-[140px] -top-48 -right-32 pointer-events-none animate-pulse"
-          aria-hidden="true"
-        />
-        <div
-          className="absolute w-[450px] h-[450px] bg-indigo-500/15 rounded-full blur-[140px] -bottom-24 -left-32 pointer-events-none"
-          aria-hidden="true"
-        />
-
         <div className="relative container mx-auto max-w-4xl">
           <FadeIn>
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
@@ -91,16 +81,6 @@ export default function HomePage() {
 
       {/* Comment ça marche */}
       <section className="relative py-20 px-4 overflow-hidden">
-        {/* Blobs flottants */}
-        <div
-          className="absolute w-[500px] h-[500px] bg-purple-300/20 rounded-full blur-[120px] -top-32 -left-24 animate-pulse pointer-events-none"
-          aria-hidden="true"
-        />
-        <div
-          className="absolute w-[400px] h-[400px] bg-indigo-300/15 rounded-full blur-[100px] -bottom-32 -right-24 pointer-events-none"
-          aria-hidden="true"
-        />
-
         <div className="container mx-auto max-w-6xl relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -200,10 +180,6 @@ export default function HomePage() {
 
       {/* Footer CTA */}
       <section className="relative py-20 px-4 overflow-hidden mt-16">
-        <div
-          className="absolute inset-0 bg-gradient-to-br from-purple-100/40 to-pink-100/30"
-          aria-hidden="true"
-        />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
