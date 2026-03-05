@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "GR attitude",
+    "appName": "Entraidance",
     "tagline": "fait avec ❤️ pour l'entraide mutuelle",
     "loading": "Chargement...",
     "save": "Enregistrer",
@@ -129,19 +129,19 @@
   },
   "faq": {
     "title": "Foire Aux Questions",
-    "subtitle": "Tout ce que vous devez savoir sur GR attitude.",
+    "subtitle": "Tout ce que vous devez savoir sur Entraidance.",
     "sections": {
       "general": "Général",
       "besoinsPropositions": "Besoins & Propositions",
       "aiMatching": "IA & Matching",
       "accountSecurity": "Compte & Sécurité"
     },
-    "q1": "Qu'est-ce que GR attitude ?",
-    "a1": "GR attitude est une plateforme d'entraide structurée qui transforme les besoins en tickets d'action. Elle permet de publier des demandes d'aide (Besoins) et des propositions d'aide (Propositions), et de les mettre en relation intelligemment.",
+    "q1": "Qu'est-ce qu'Entraidance ?",
+    "a1": "Entraidance est une plateforme d'entraide structurée qui transforme les besoins en tickets d'action. Elle permet de publier des demandes d'aide (Besoins) et des propositions d'aide (Propositions), et de les mettre en relation intelligemment.",
     "q2": "Comment ça marche ?",
     "a2": "Créez un Besoin pour exprimer une demande d'aide (financière, conseil, matériel, mise en relation). D'autres membres peuvent contribuer en participant, proposant, finançant ou conseillant. Les Propositions sont automatiquement corrélées aux Besoins correspondants selon les tags, la géographie et le type d'aide.",
     "q3": "C'est gratuit ?",
-    "a3": "Oui, GR attitude est entièrement gratuit. La plateforme est construite sur des principes d'entraide mutuelle, sans monétisation des relations humaines.",
+    "a3": "Oui, Entraidance est entièrement gratuit. La plateforme est construite sur des principes d'entraide mutuelle, sans monétisation des relations humaines.",
     "q4": "Comment créer un besoin ?",
     "a4": "Connectez-vous, puis cliquez sur \"Nouveau besoin\" depuis la page Besoins. Renseignez le titre, la description, la catégorie, le type d'aide souhaité, l'urgence et optionnellement la localisation et des tags. Le besoin sera visible par la communauté dès sa publication.",
     "q5": "Qu'est-ce qu'une proposition ?",
@@ -153,7 +153,7 @@
     "q8": "Quelles données l'IA utilise-t-elle ?",
     "a8": "Le système de matching utilise uniquement les données que vous avez publiées : tags, localisation, catégorie et type d'aide. Aucune donnée personnelle privée n'est utilisée dans l'algorithme de corrélation.",
     "q9": "Mes données sont-elles en sécurité ?",
-    "a9": "Oui. GR attitude respecte le RGPD. Vous pouvez supprimer votre compte à tout moment depuis votre profil. Seules les informations que vous choisissez de rendre publiques sont visibles par les autres membres.",
+    "a9": "Oui. Entraidance respecte le RGPD. Vous pouvez supprimer votre compte à tout moment depuis votre profil. Seules les informations que vous choisissez de rendre publiques sont visibles par les autres membres.",
     "q10": "Comment créer un compte ?",
     "a10": "Cliquez sur \"Inscription\" en haut à droite. Vous pouvez vous inscrire avec une adresse email et un mot de passe, ou via votre compte Google ou Facebook pour une connexion rapide.",
     "q11": "Comment supprimer mon compte ?",
