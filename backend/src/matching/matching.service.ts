@@ -32,6 +32,7 @@ export class MatchingService {
       [HelpType.CONSEIL]: [OfferType.COMPETENCE],
       [HelpType.MATERIEL]: [OfferType.MATERIEL],
       [HelpType.RELATION]: [OfferType.SERVICE, OfferType.ECOUTE],
+      [HelpType.AUTRE]: [],
     };
     return mapping[helpType] || [];
   }
