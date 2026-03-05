@@ -129,10 +129,10 @@ export default function MissionDetailPage({
 
   return (
     <div className="min-h-screen bg-gradient-stitch pb-20">
-      <div className="container mx-auto max-w-4xl px-6 pt-20 space-y-8">
+      <div className="container mx-auto max-w-4xl px-6 pt-12 space-y-6">
         {/* Hero card avec icône catégorie */}
         <FadeIn>
-          <div className="relative glass-hero p-8 md:p-12 rounded-[2.5rem]">
+          <div className="relative glass-hero p-6 md:p-8 rounded-[2rem]">
             {/* Icône catégorie en cercle semi-transparent (top-right) */}
             <div className="absolute -top-4 -right-4 z-10">
               <div
@@ -151,9 +151,9 @@ export default function MissionDetailPage({
             </div>
 
             {/* Content */}
-            <div className="relative z-0 pt-8">
+            <div className="relative z-0 pt-6">
               {/* Badges */}
-              <div className="flex items-center gap-2 flex-wrap mb-4">
+              <div className="flex items-center gap-2 flex-wrap mb-3">
                 <span
                   className="inline-block px-3 py-1 rounded-full text-xs font-black uppercase tracking-[0.15em]"
                   style={{
@@ -174,12 +174,12 @@ export default function MissionDetailPage({
               </div>
 
               {/* Title */}
-              <h1 className="text-3xl md:text-5xl font-black tracking-tight text-slate-900 leading-tight mb-4">
+              <h1 className="text-2xl md:text-4xl font-black tracking-tight text-slate-900 leading-tight mb-3">
                 {mission.title}
               </h1>
 
               {/* Subtitle */}
-              <p className="text-lg text-slate-600 font-medium mb-6">
+              <p className="text-base text-slate-600 font-medium mb-4">
                 {mission.contributionsCount > 0
                   ? `${mission.contributionsCount} personne${mission.contributionsCount > 1 ? 's' : ''} solidaire${mission.contributionsCount > 1 ? 's' : ''} ✨`
                   : 'En attente de solidarité…'}
@@ -201,8 +201,8 @@ export default function MissionDetailPage({
 
         {/* Description */}
         <FadeIn delay={0.1}>
-          <div className="glass-card-liquid p-8 rounded-[2rem]">
-            <h2 className="text-xl font-black tracking-tight text-slate-900 mb-4">Description</h2>
+          <div className="glass-card-liquid p-6 rounded-[1.5rem]">
+            <h2 className="text-lg font-black tracking-tight text-slate-900 mb-3">Description</h2>
             <p className="whitespace-pre-wrap text-slate-700 leading-relaxed font-medium">
               {mission.description}
             </p>
@@ -211,7 +211,7 @@ export default function MissionDetailPage({
 
         {/* Info row */}
         <FadeIn delay={0.15}>
-          <div className="flex flex-wrap gap-6 text-sm font-semibold text-slate-600 px-2">
+          <div className="flex flex-wrap gap-4 text-sm font-semibold text-slate-600 px-2">
             {mission.location && (
               <div className="flex items-center gap-2">
                 <MapPin size={18} style={{ color: categoryAccent }} />
