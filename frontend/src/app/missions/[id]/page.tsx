@@ -129,10 +129,10 @@ export default function MissionDetailPage({
 
   return (
     <div className="min-h-screen bg-gradient-stitch pb-20">
-      <div className="container mx-auto max-w-4xl px-6 pt-12 space-y-6">
+      <div className="container mx-auto max-w-4xl px-6 pt-8 space-y-4">
         {/* Hero card avec icône catégorie */}
         <FadeIn>
-          <div className="relative glass-hero p-6 md:p-8 rounded-[2rem]">
+          <div className="relative glass-hero p-4 md:p-6 rounded-[2rem]">
             {/* Icône catégorie en cercle semi-transparent (top-right) */}
             <div className="absolute -top-4 -right-4 z-10">
               <div
@@ -151,9 +151,9 @@ export default function MissionDetailPage({
             </div>
 
             {/* Content */}
-            <div className="relative z-0 pt-6">
+            <div className="relative z-0 pt-4">
               {/* Badges */}
-              <div className="flex items-center gap-2 flex-wrap mb-3">
+              <div className="flex items-center gap-2 flex-wrap mb-2">
                 <span
                   className="inline-block px-3 py-1 rounded-full text-xs font-black uppercase tracking-[0.15em]"
                   style={{
@@ -174,12 +174,12 @@ export default function MissionDetailPage({
               </div>
 
               {/* Title */}
-              <h1 className="text-2xl md:text-4xl font-black tracking-tight text-slate-900 leading-tight mb-3">
+              <h1 className="text-xl md:text-3xl font-black tracking-tight text-slate-900 leading-tight mb-2">
                 {mission.title}
               </h1>
 
               {/* Subtitle */}
-              <p className="text-base text-slate-600 font-medium mb-4">
+              <p className="text-sm text-slate-600 font-medium mb-3">
                 {mission.contributionsCount > 0
                   ? `${mission.contributionsCount} personne${mission.contributionsCount > 1 ? 's' : ''} solidaire${mission.contributionsCount > 1 ? 's' : ''} ✨`
                   : 'En attente de solidarité…'}
@@ -201,8 +201,8 @@ export default function MissionDetailPage({
 
         {/* Description */}
         <FadeIn delay={0.1}>
-          <div className="glass-card-liquid p-6 rounded-[1.5rem]">
-            <h2 className="text-lg font-black tracking-tight text-slate-900 mb-3">Description</h2>
+          <div className="glass-card-liquid p-4 rounded-[1.5rem]">
+            <h2 className="text-base font-black tracking-tight text-slate-900 mb-2">Description</h2>
             <p className="whitespace-pre-wrap text-slate-700 leading-relaxed font-medium">
               {mission.description}
             </p>
@@ -211,7 +211,7 @@ export default function MissionDetailPage({
 
         {/* Info row */}
         <FadeIn delay={0.15}>
-          <div className="flex flex-wrap gap-4 text-sm font-semibold text-slate-600 px-2">
+          <div className="flex flex-wrap gap-3 text-xs font-semibold text-slate-600 px-2">
             {mission.location && (
               <div className="flex items-center gap-2">
                 <MapPin size={18} style={{ color: categoryAccent }} />
@@ -238,8 +238,8 @@ export default function MissionDetailPage({
         {/* Contribution section */}
         {isOpen && (
           <FadeIn delay={0.25}>
-            <div className="glass-card-liquid p-8 rounded-[2rem]">
-              <h2 className="text-xl font-black tracking-tight text-slate-900 mb-6">Contribuer</h2>
+            <div className="glass-card-liquid p-4 rounded-[1.5rem]">
+              <h2 className="text-base font-black tracking-tight text-slate-900 mb-3">Contribuer</h2>
               <ContributionButtons missionId={mission.id} />
             </div>
           </FadeIn>

@@ -134,10 +134,10 @@ export default function OfferDetailPage({
 
   return (
     <div className="min-h-screen bg-gradient-stitch pb-20">
-      <div className="container mx-auto max-w-4xl px-6 pt-20 space-y-8">
+      <div className="container mx-auto max-w-4xl px-6 pt-8 space-y-4">
         {/* Hero card avec icône catégorie */}
         <FadeIn>
-          <div className="relative glass-hero p-8 md:p-12 rounded-[2.5rem]">
+          <div className="relative glass-hero p-4 md:p-6 rounded-[2rem]">
             {/* Icône catégorie en cercle semi-transparent (top-right) */}
             {offer.category && (
               <div className="absolute -top-4 -right-4 z-10">
@@ -158,9 +158,9 @@ export default function OfferDetailPage({
             </div>
 
             {/* Content */}
-            <div className="relative z-0 pt-8">
+            <div className="relative z-0 pt-4">
               {/* Badges */}
-              <div className="flex items-center gap-2 flex-wrap mb-4">
+              <div className="flex items-center gap-2 flex-wrap mb-2">
                 {offer.category && (
                   <span
                     className="inline-block px-3 py-1 rounded-full text-xs font-black uppercase tracking-[0.15em]"
@@ -180,7 +180,7 @@ export default function OfferDetailPage({
               </div>
 
               {/* Title */}
-              <h1 className="text-3xl md:text-5xl font-black tracking-tight text-slate-900 leading-tight mb-6">
+              <h1 className="text-xl md:text-3xl font-black tracking-tight text-slate-900 leading-tight mb-2">
                 {offer.title}
               </h1>
 
@@ -200,8 +200,8 @@ export default function OfferDetailPage({
 
         {/* Description */}
         <FadeIn delay={0.1}>
-          <div className="glass-card-liquid p-8 rounded-[2rem]">
-            <h2 className="text-xl font-black tracking-tight text-slate-900 mb-4">Description</h2>
+          <div className="glass-card-liquid p-4 rounded-[1.5rem]">
+            <h2 className="text-base font-black tracking-tight text-slate-900 mb-2">Description</h2>
             <p className="whitespace-pre-wrap text-slate-700 leading-relaxed font-medium">
               {offer.description}
             </p>
@@ -211,10 +211,10 @@ export default function OfferDetailPage({
         {/* Availability */}
         {offer.availability && (
           <FadeIn delay={0.15}>
-            <div className="glass-card-liquid p-8 rounded-[2rem]">
-              <div className="flex items-center gap-2 mb-4">
-                <Calendar size={20} style={{ color: categoryAccent }} />
-                <h2 className="text-xl font-black tracking-tight text-slate-900">Disponibilité</h2>
+            <div className="glass-card-liquid p-4 rounded-[1.5rem]">
+              <div className="flex items-center gap-2 mb-2">
+                <Calendar size={18} style={{ color: categoryAccent }} />
+                <h2 className="text-base font-black tracking-tight text-slate-900">Disponibilité</h2>
               </div>
               <p className="text-slate-700 font-medium">{offer.availability}</p>
             </div>
@@ -223,7 +223,7 @@ export default function OfferDetailPage({
 
         {/* Info row */}
         <FadeIn delay={0.2}>
-          <div className="flex flex-wrap gap-6 text-sm font-semibold text-slate-600 px-2">
+          <div className="flex flex-wrap gap-3 text-xs font-semibold text-slate-600 px-2">
             {offer.location && (
               <div className="flex items-center gap-2">
                 <MapPin size={18} style={{ color: categoryAccent }} />
