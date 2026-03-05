@@ -22,22 +22,12 @@ File: `backend/src/users/entities/user.entity.ts`
 |--------|------|-------------|
 | id | UUID | PK, auto-generated |
 | email | VARCHAR(255) | UNIQUE, NOT NULL |
-| passwordHash | VARCHAR(255) | nullable (null for OAuth users) |
-| oauthProvider | VARCHAR(50) | nullable (google, facebook) |
-| oauthProviderId | VARCHAR(255) | nullable |
+| passwordHash | VARCHAR(255) | NOT NULL |
 | displayName | VARCHAR(100) | NOT NULL |
 | avatarUrl | TEXT | nullable |
 | locationLat | FLOAT | nullable |
 | locationLng | FLOAT | nullable |
 | isPremium | BOOLEAN | default: false |
-| isDemo | BOOLEAN | default: false |
-| bio | TEXT | nullable (profile completion) |
-| skills | simple-array | nullable (profile completion) |
-| interests | simple-array | nullable (profile completion) |
-| availabilityHours | INT | nullable (hours/week) |
-| maxDistanceKm | INT | nullable, default: 50 (matching preference) |
-| preferredCategories | simple-array | nullable (matching preference) |
-| preferredUrgencies | simple-array | nullable (matching preference) |
 | createdAt | TIMESTAMP | auto |
 | updatedAt | TIMESTAMP | auto-updated |
 
@@ -68,7 +58,6 @@ File: `backend/src/missions/entities/mission.entity.ts`
 | closedAt | TIMESTAMP | nullable, set on close |
 | closureFeedback | TEXT | nullable |
 | closureThanks | TEXT | nullable |
-| isDemo | BOOLEAN | default: false |
 
 Relations: creator (User), contributions[], correlations[]
 
@@ -84,7 +73,6 @@ File: `backend/src/contributions/entities/contribution.entity.ts`
 | type | VARCHAR | ContributionType enum |
 | message | TEXT | nullable |
 | status | VARCHAR | default: 'active' |
-| isDemo | BOOLEAN | default: false |
 | createdAt | TIMESTAMP | auto |
 
 **UNIQUE constraint**: (userId, missionId, type)
@@ -112,7 +100,6 @@ File: `backend/src/offers/entities/offer.entity.ts`
 | createdAt | TIMESTAMP | auto |
 | expiresAt | TIMESTAMP | set to now+30d on create |
 | closedAt | TIMESTAMP | nullable |
-| isDemo | BOOLEAN | default: false |
 
 Relations: creator (User), correlations[]
 
@@ -151,8 +138,9 @@ Relations: user (User)
 
 ## Notes
 
-- **Production DB**: SQLite (fichier `gr_attitude.sqlite` à la racine de `backend/`)
-- TypeORM `synchronize: false` en prod, `migrationsRun: true`
-- Tags stockes en `simple-array` (virgule-separated)
-- Geo queries: PostGIS `ST_DWithin` disponible uniquement si PostgreSQL (dev uniquement)
-- **isDemo field**: Toutes les entités peuvent être marquées comme données de démo (seeding)
+- TypeORM `synchronize: true` → schema auto-créé au démarrage
+- Tags stockés en `simple-array` (virgule-separated dans SQLite)
+- Geo queries : calcul de distance en mémoire (pas de PostGIS)
+- DB file : `backend/gr_attitude.sqlite` (dev et prod)
+- Prod path : `/opt/entraidance/backend/gr_attitude.sqlite`
+- Backup : `cp gr_attitude.sqlite gr_attitude.sqlite.bak`

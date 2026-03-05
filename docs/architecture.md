@@ -1,6 +1,6 @@
 # Architecture
 
-> Voir aussi: [deployment.md](./deployment.md) pour config prod, [database.md](./database.md) pour schema DB
+> Voir aussi: [VPS-DEPLOYMENT.md](./VPS-DEPLOYMENT.md) pour config prod, [database.md](./database.md) pour schema DB
 
 ## Monorepo Structure
 
@@ -29,8 +29,7 @@ manolo/
         ├── app/            Pages (missions, offers, profile, notifications, auth)
         ├── components/     Layout (Header, Footer, MobileNav, NotificationBell) + Metier
         ├── hooks/          React Query hooks (1 hook = 1 API call)
-        ├── i18n/           fr.json (all UI strings) + index.ts (t() function)
-        ├── lib/            api.ts (client), types.ts, constants.ts, auth.ts (token mgmt)
+        ├── lib/            api.ts (client), types.ts, auth.ts (token mgmt)
         └── providers/      AuthProvider (JWT context), QueryProvider (React Query)
 ```
 
@@ -40,9 +39,7 @@ manolo/
 |-------|------|---------|
 | Backend framework | NestJS | 11.0.1 |
 | ORM | TypeORM | 0.3.28 |
-| DB production | SQLite (better-sqlite3) | 12.6.2 |
-| DB dev local | SQLite (better-sqlite3) | 12.6.2 |
-| Cache | Redis (not used in prod) | 7 |
+| DB (dev + prod) | SQLite (better-sqlite3) | 12.6.2 |
 | Auth | Passport + JWT + bcrypt | |
 | Frontend framework | Next.js (App Router) | 16.1.6 |
 | React | React | 19.2.3 |
@@ -55,12 +52,11 @@ manolo/
 
 ## Ports & URLs
 
-| Service | Dev | Prod (Render) |
-|---------|-----|----------------|
-| Backend API | http://localhost:3001 | https://gr-attitude-api.onrender.com |
-| Frontend | http://localhost:3000 | https://gr-attitude-frontend.onrender.com |
-| SQLite | gr_attitude.sqlite | gr_attitude.sqlite (ephemeral disk) |
-| Redis | localhost:6379 | N/A (not used in prod) |
+| Service | Dev | Prod (VPS Hostinger) |
+|---------|-----|----------------------|
+| Backend API | http://localhost:3001 | https://entraidance.com/api (Nginx → port 3000) |
+| Frontend | http://localhost:3000 | https://entraidance.com (Nginx → port 3001) |
+| DB | ./gr_attitude.sqlite | /opt/entraidance/backend/gr_attitude.sqlite |
 
 ## Data Flow
 
@@ -76,28 +72,12 @@ Browser → Next.js (CSR) → fetch(API_URL) → NestJS → TypeORM → SQLite
 - Auth = JWT in localStorage, sent via Authorization header
 - Notifications = polling every 30s (no WebSocket)
 
-## Design System — Stitch "Liquid Glass"
-
-- **Background**: `bg-gradient-stitch` (warm gradient #fdfcfb → #e2d1c3)
-- **Cards**: `glass-card-liquid` (glassmorphism: backdrop-blur, white/opacity, border)
-- **Hero sections**: `glass-hero` (larger blur, gradient overlay)
-- **Header**: `glass-header-liquid` (sticky, transparent, blur)
-- **Typography**: Public Sans (body) + Marck Script (decorative headings)
-- **Primary color**: `#9333ea` (purple) with emerald/teal variants for offers
-- **Category icons**: Colored circles with semi-transparent background (`categoryAccent + 25` opacity)
-- **Animations**: `animate-float`, `text-glow`, Framer Motion for page transitions
-- **Layout**: Header is `sticky top-0`, pages use `pt-20` on first element for spacing
-- **Solidarity thread**: iMessage/Messenger-style chat bubbles on mission detail pages (alternating left/right, gradient colors per contribution type)
-- **Categories**: demenagement, bricolage, numerique, administratif, garde_enfants, transport, ecoute, emploi, alimentation, animaux, education, handicap, autre
-- **HelpType**: financiere, conseil, materiel, relation, autre
-- **OfferType**: don, competence, materiel, service, ecoute, autre
-
 ## Key Design Decisions
 
-- `synchronize: true` en dev (auto-schema, no migrations for MVP)
-- PostGIS queries only when `DB_TYPE=postgres` (SQLite fallback skips geo)
+- `synchronize: true` (auto-schema, no migrations for MVP)
+- Geo queries: distance calculation in-app (no PostGIS, SQLite only)
 - Global ValidationPipe: `whitelist: true, transform: true`
 - Global HttpExceptionFilter: consistent `{ statusCode, message, timestamp }`
-- UI in French, i18n via `frontend/src/i18n/fr.json` + `t()` function (custom, no external lib)
+- UI in French, no i18n
 - Private stats only (no public leaderboards)
 - Missions expire at J+30 with J+25 reminder (cron daily midnight)

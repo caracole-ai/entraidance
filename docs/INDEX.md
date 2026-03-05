@@ -8,7 +8,7 @@
 | Fichier | Contenu | Quand le lire |
 |---------|---------|---------------|
 | [architecture.md](./architecture.md) | Monorepo structure, tech stack, ports, data flow | Vision globale, onboarding |
-| [deployment.md](./deployment.md) | Render config, docker-compose, env vars | Deploiement, debug prod |
+| [VPS-DEPLOYMENT.md](./VPS-DEPLOYMENT.md) | VPS Hostinger, Nginx, PM2, SSL, env vars | Deploiement, debug prod |
 | [database.md](./database.md) | Entities, colonnes, relations, contraintes, indexes | Schema DB, requetes, migrations |
 
 ## Backend
@@ -43,7 +43,7 @@ api-endpoints.md ──consumed by──> frontend-hooks.md
 frontend-hooks.md ──used in──> frontend-pages.md, frontend-components.md
 auth.md ──protects──> api-endpoints.md (routes avec JwtAuthGuard)
 business-logic.md ──implemented in──> api-endpoints.md (services layer)
-deployment.md ──configures──> architecture.md (ports, env vars)
+VPS-DEPLOYMENT.md ──configures──> architecture.md (ports, env vars)
 ```
 
 ## Fichiers cle du code source
