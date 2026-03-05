@@ -11,7 +11,6 @@ import {
 } from '@/lib/types';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send } from 'lucide-react';
 
 /* Illustrative SVGs — soft, hand-drawn feel */
 const CONTRIBUTION_SVG: Record<ContributionType, React.ReactNode> = {
@@ -55,28 +54,44 @@ const CONTRIBUTION_BORDER_COLORS: Record<ContributionType, string> = {
   [ContributionType.CONSEILLE]: 'oklch(0.6 0.14 80)',
 };
 
+const PLACEHOLDERS: Record<ContributionType, string> = {
+  [ContributionType.PARTICIPE]: 'Ex: Je suis disponible samedi matin pour aider !',
+  [ContributionType.PROPOSE]: 'Ex: J\'ai une idée : pourquoi ne pas...',
+  [ContributionType.FINANCE]: 'Ex: Je peux contribuer 20€ pour les fournitures.',
+  [ContributionType.CONSEILLE]: 'Ex: À ta place, je commencerais par...',
+};
+
 interface ContributionButtonsProps {
   missionId: string;
 }
 
 export function ContributionButtons({ missionId }: ContributionButtonsProps) {
-  const [openType, setOpenType] = useState<ContributionType | null>(null);
+  const [expandedType, setExpandedType] = useState<ContributionType | null>(null);
   const [message, setMessage] = useState('');
   const [hoveredType, setHoveredType] = useState<ContributionType | null>(null);
   const mutation = useCreateContribution();
 
+  const handleToggle = (type: ContributionType) => {
+    if (expandedType === type) {
+      setExpandedType(null);
+      setMessage('');
+    } else {
+      setExpandedType(type);
+      setMessage('');
+    }
+  };
+
   const handleSubmit = () => {
-    if (!openType) return;
+    if (!expandedType) return;
     mutation.mutate(
-      { type: openType, missionId, message: message || undefined },
+      { type: expandedType, missionId, message: message || undefined },
       {
         onSuccess: () => {
           toast.success(t('contributions.added'));
-          setOpenType(null);
+          setExpandedType(null);
           setMessage('');
         },
         onError: (error) => {
-          // Ne pas afficher de toast pour les erreurs d'auth (la modale s'ouvre déjà)
           if (error.message !== 'AUTH_REQUIRED') {
             toast.error(error.message);
           }
@@ -85,101 +100,91 @@ export function ContributionButtons({ missionId }: ContributionButtonsProps) {
     );
   };
 
-  const toggleType = (type: ContributionType) => {
-    if (openType === type) {
-      setOpenType(null);
-      setMessage('');
-    } else {
-      setOpenType(type);
-      setMessage('');
-    }
-  };
-
   return (
     <div className="grid grid-cols-2 gap-3">
       {Object.values(ContributionType).map((type) => {
         const borderColor = CONTRIBUTION_BORDER_COLORS[type];
         const isHovered = hoveredType === type;
-        const isOpen = openType === type;
+        const isExpanded = expandedType === type;
         return (
-          <button
-            key={type}
-            onClick={() => !isOpen && toggleType(type)}
-            onMouseEnter={() => setHoveredType(type)}
-            onMouseLeave={() => setHoveredType(null)}
-            className="group relative flex flex-col items-center gap-2 rounded-2xl px-4 py-4 cursor-pointer select-none transition-all duration-300 ease-out"
-            style={{
-              background: isHovered || isOpen
-                ? `oklch(0.98 0.005 280 / 80%)`
-                : 'oklch(0.99 0.003 280 / 40%)',
-              backdropFilter: 'blur(12px) saturate(1.4)',
-              WebkitBackdropFilter: 'blur(12px) saturate(1.4)',
-              border: `1.5px solid ${borderColor}`,
-              borderColor: isHovered || isOpen ? borderColor : `color-mix(in oklch, ${borderColor} 50%, transparent)`,
-              boxShadow: isHovered || isOpen
-                ? `0 4px 20px color-mix(in oklch, ${borderColor} 15%, transparent), inset 0 1px 0 rgba(255,255,255,0.5)`
-                : 'inset 0 1px 0 rgba(255,255,255,0.3)',
-              color: borderColor,
-              transform: isHovered || isOpen ? 'translateY(-2px)' : 'translateY(0)',
-            }}
-          >
-            <div className="transition-transform duration-300 group-hover:scale-110">
-              {CONTRIBUTION_SVG[type]}
-            </div>
-            <span
-              className="text-sm font-medium transition-colors duration-200"
-              style={{ color: isHovered || isOpen ? borderColor : 'var(--foreground)' }}
+          <div key={type} className="flex flex-col gap-2">
+            <button
+              onClick={() => handleToggle(type)}
+              onMouseEnter={() => setHoveredType(type)}
+              onMouseLeave={() => setHoveredType(null)}
+              className="group relative flex flex-col items-center gap-2 rounded-2xl px-4 py-4 cursor-pointer select-none transition-all duration-300 ease-out"
+              style={{
+                background: isExpanded
+                  ? `oklch(0.97 0.01 280 / 90%)`
+                  : isHovered
+                  ? `oklch(0.98 0.005 280 / 80%)`
+                  : 'oklch(0.99 0.003 280 / 40%)',
+                backdropFilter: 'blur(12px) saturate(1.4)',
+                WebkitBackdropFilter: 'blur(12px) saturate(1.4)',
+                border: `1.5px solid ${borderColor}`,
+                borderColor: isExpanded || isHovered ? borderColor : `color-mix(in oklch, ${borderColor} 50%, transparent)`,
+                boxShadow: isExpanded || isHovered
+                  ? `0 4px 20px color-mix(in oklch, ${borderColor} 15%, transparent), inset 0 1px 0 rgba(255,255,255,0.5)`
+                  : 'inset 0 1px 0 rgba(255,255,255,0.3)',
+                color: borderColor,
+                transform: isExpanded ? 'scale(1.02)' : isHovered ? 'translateY(-2px)' : 'translateY(0)',
+              }}
             >
-              {CONTRIBUTION_TYPE_LABELS[type]}
-            </span>
+              <div className="transition-transform duration-300 group-hover:scale-110">
+                {CONTRIBUTION_SVG[type]}
+              </div>
+              <span
+                className="text-sm font-medium transition-colors duration-200"
+                style={{ color: isExpanded || isHovered ? borderColor : 'var(--foreground)' }}
+              >
+                {CONTRIBUTION_TYPE_LABELS[type]}
+              </span>
+            </button>
 
-            {/* Textarea et bouton submit dans le bouton */}
+            {/* Accordéon inline */}
             <AnimatePresence>
-              {isOpen && (
+              {isExpanded && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="w-full mt-2 space-y-2"
-                  onClick={(e) => e.stopPropagation()}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  className="overflow-hidden"
                 >
-                  <Textarea
-                    placeholder="Message optionnel..."
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    className="min-h-[80px] text-sm resize-none glass-sidebar-liquid border-white/60 w-full"
-                    disabled={mutation.isPending}
-                  />
-                  <div className="flex gap-2">
-                    <Button
-                      onClick={handleSubmit}
-                      disabled={mutation.isPending}
-                      className="flex-1 text-sm font-bold"
-                      style={{
-                        background: `linear-gradient(135deg, ${borderColor}, color-mix(in oklch, ${borderColor} 80%, white))`,
-                        color: 'white',
-                      }}
-                    >
-                      <Send size={14} className="mr-2" />
-                      {mutation.isPending ? 'Envoi...' : 'Envoyer'}
-                    </Button>
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setOpenType(null);
-                        setMessage('');
-                      }}
-                      variant="outline"
-                      className="text-sm"
-                    >
-                      Annuler
-                    </Button>
+                  <div className="flex flex-col gap-2 p-3 rounded-xl bg-white/60 backdrop-blur-sm border border-slate-200">
+                    <Textarea
+                      placeholder={PLACEHOLDERS[type]}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      rows={2}
+                      className="text-sm resize-none bg-white/80 border-slate-200 focus:border-slate-300"
+                    />
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={handleSubmit}
+                        disabled={mutation.isPending}
+                        size="sm"
+                        className="flex-1 text-white border-0 font-semibold"
+                        style={{
+                          background: `linear-gradient(135deg, ${borderColor}, color-mix(in oklch, ${borderColor} 80%, black))`,
+                        }}
+                      >
+                        {mutation.isPending ? t('common.sending') : 'Envoyer'}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleToggle(type)}
+                        className="px-3"
+                      >
+                        ✕
+                      </Button>
+                    </div>
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
-          </button>
+          </div>
         );
       })}
     </div>
