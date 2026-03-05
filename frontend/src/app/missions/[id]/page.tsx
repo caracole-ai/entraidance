@@ -130,69 +130,69 @@ export default function MissionDetailPage({
   return (
     <div className="min-h-screen bg-gradient-stitch pb-20">
       <div className="container mx-auto max-w-4xl px-6 pt-8 space-y-4">
-        {/* Hero card avec icône catégorie */}
+        {/* Hero - Bento Grid */}
         <FadeIn>
-          <div className="relative glass-hero p-4 md:p-6 rounded-[2rem]">
-            {/* Icône catégorie en cercle semi-transparent (top-right) */}
-            <div className="absolute -top-4 -right-4 z-10">
-              <div
-                className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
-                style={{ backgroundColor: `${categoryAccent}25` }}
-              >
-                <CategoryIcon category={mission.category} size={28} style={{ color: categoryAccent }} />
-              </div>
-            </div>
-
-            {/* Badge urgence (top-left) */}
-            <div className="absolute top-3 left-3 z-10">
-              <div className={`${URGENCY_COLORS[mission.urgency]} px-4 py-2 rounded-2xl text-xs font-black uppercase tracking-widest shadow-lg`}>
-                {URGENCY_LABELS[mission.urgency]}
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="relative z-0 pt-4">
-              {/* Badges */}
-              <div className="flex items-center gap-2 flex-wrap mb-2">
-                <span
-                  className="inline-block px-3 py-1 rounded-full text-xs font-black uppercase tracking-[0.15em]"
-                  style={{
-                    backgroundColor: `${categoryAccent}20`,
-                    color: categoryAccent,
-                  }}
-                >
-                  {CATEGORY_LABELS[mission.category]}
-                </span>
-                <Badge variant="outline" className="text-xs font-bold uppercase tracking-wider">
-                  {HELP_TYPE_LABELS[mission.helpType]}
-                </Badge>
-                {!isOpen && (
-                  <Badge variant="secondary" className="text-xs font-bold uppercase tracking-wider">
-                    {mission.status === MissionStatus.RESOLUE ? t('besoins.status.resolue') : t('besoins.status.expiree')}
+          <div className="glass-hero rounded-[2rem] p-4 md:p-6">
+            {/* Bento Grid Layout */}
+            <div className="grid grid-cols-12 gap-3">
+              {/* Left Column - Main Content (col-span-8) */}
+              <div className="col-span-12 md:col-span-8 space-y-3">
+                {/* Badges row */}
+                <div className="flex items-center gap-2 flex-wrap">
+                  <div className={`${URGENCY_COLORS[mission.urgency]} px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider shadow-sm`}>
+                    {URGENCY_LABELS[mission.urgency]}
+                  </div>
+                  <span
+                    className="inline-block px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider"
+                    style={{
+                      backgroundColor: `${categoryAccent}20`,
+                      color: categoryAccent,
+                    }}
+                  >
+                    {CATEGORY_LABELS[mission.category]}
+                  </span>
+                  <Badge variant="outline" className="text-xs font-bold uppercase tracking-wider rounded-xl">
+                    {HELP_TYPE_LABELS[mission.helpType]}
                   </Badge>
-                )}
+                  {!isOpen && (
+                    <Badge variant="secondary" className="text-xs font-bold uppercase tracking-wider rounded-xl">
+                      {mission.status === MissionStatus.RESOLUE ? t('besoins.status.resolue') : t('besoins.status.expiree')}
+                    </Badge>
+                  )}
+                </div>
+
+                {/* Title */}
+                <h1 className="text-xl md:text-3xl font-black tracking-tight text-slate-900 leading-tight">
+                  {mission.title}
+                </h1>
+
+                {/* Subtitle */}
+                <p className="text-sm text-slate-600 font-medium">
+                  {mission.contributionsCount > 0
+                    ? `${mission.contributionsCount} personne${mission.contributionsCount > 1 ? 's' : ''} solidaire${mission.contributionsCount > 1 ? 's' : ''} ✨`
+                    : 'En attente de solidarité…'}
+                </p>
               </div>
 
-              {/* Title */}
-              <h1 className="text-xl md:text-3xl font-black tracking-tight text-slate-900 leading-tight mb-2">
-                {mission.title}
-              </h1>
-
-              {/* Subtitle */}
-              <p className="text-sm text-slate-600 font-medium mb-3">
-                {mission.contributionsCount > 0
-                  ? `${mission.contributionsCount} personne${mission.contributionsCount > 1 ? 's' : ''} solidaire${mission.contributionsCount > 1 ? 's' : ''} ✨`
-                  : 'En attente de solidarité…'}
-              </p>
-
-              {/* Creator */}
-              <div className="flex items-center gap-3 text-sm">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-indigo-500 flex items-center justify-center text-white font-bold text-sm">
-                  {creatorInitial}
+              {/* Right Column - Sidebar (col-span-4) */}
+              <div className="col-span-12 md:col-span-4 flex flex-col gap-3">
+                {/* Category Icon Card */}
+                <div
+                  className="flex items-center justify-center p-4 rounded-xl"
+                  style={{ backgroundColor: `${categoryAccent}15` }}
+                >
+                  <CategoryIcon category={mission.category} size={48} style={{ color: categoryAccent }} />
                 </div>
-                <div>
-                  <div className="font-bold text-slate-900">{mission.creator?.displayName}</div>
-                  <div className="text-slate-500 text-xs">{timeAgo(mission.createdAt)}</div>
+
+                {/* Creator Card */}
+                <div className="glass-card-liquid p-3 rounded-xl flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-indigo-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                    {creatorInitial}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="font-bold text-slate-900 text-sm truncate">{mission.creator?.displayName}</div>
+                    <div className="text-slate-500 text-xs">{timeAgo(mission.createdAt)}</div>
+                  </div>
                 </div>
               </div>
             </div>
