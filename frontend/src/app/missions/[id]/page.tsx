@@ -26,7 +26,7 @@ import {
   type Urgency,
   type MissionCategory,
 } from '@/lib/types';
-import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/motion';
+import { FadeIn, StaggerItem } from '@/components/ui/motion';
 import { CategoryIcon, CATEGORY_COLORS } from '@/components/icons/CategoryIcon';
 
 const URGENCY_COLORS: Record<Urgency, string> = {
@@ -281,7 +281,7 @@ export default function MissionDetailPage({
             {contributions && contributions.length > 0 ? (
               <div className="relative glass-hero rounded-[2rem] p-6 md:p-8">
                 {/* Chat-style conversation */}
-                <StaggerContainer className="space-y-5">
+                <div className="space-y-5">
                   {contributions.map((contribution, idx) => {
                     const initial = contribution.user?.displayName?.charAt(0).toUpperCase() ?? 'U';
                     const isEven = idx % 2 === 0;
@@ -332,7 +332,7 @@ export default function MissionDetailPage({
                       </StaggerItem>
                     );
                   })}
-                </StaggerContainer>
+                </div>
               </div>
             ) : (
               <div className="text-center py-12 glass-hero rounded-[2rem] p-8">
