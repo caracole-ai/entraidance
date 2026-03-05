@@ -83,7 +83,10 @@ export default function OfferDetailPage({
       toast.success(t('propositions.confirmClose'));
       router.refresh();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Erreur');
+      const message = error instanceof Error ? error.message : 'Erreur';
+      if (message !== 'AUTH_REQUIRED') {
+        toast.error(message);
+      }
     }
   };
 
@@ -95,7 +98,10 @@ export default function OfferDetailPage({
       router.push('/offers');
     },
     onError: (error) => {
-      toast.error(error instanceof Error ? error.message : 'Erreur');
+      const message = error instanceof Error ? error.message : 'Erreur';
+      if (message !== 'AUTH_REQUIRED') {
+        toast.error(message);
+      }
     },
   });
 

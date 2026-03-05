@@ -124,7 +124,9 @@ export default function NewMissionPage() {
           router.push(`/missions/${mission.id}`);
         },
         onError: (error) => {
-          toast.error(error.message);
+          if (error.message !== 'AUTH_REQUIRED') {
+            toast.error(error.message);
+          }
         },
       }
     );

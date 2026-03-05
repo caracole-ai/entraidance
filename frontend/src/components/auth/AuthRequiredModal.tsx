@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   Dialog,
   DialogContent,
@@ -15,7 +15,12 @@ interface AuthRequiredModalProps {
 }
 
 export function AuthRequiredModal({ open, onOpenChange }: AuthRequiredModalProps) {
-  const handleClose = () => onOpenChange(false);
+  const router = useRouter();
+  
+  const handleNavigate = (path: string) => {
+    onOpenChange(false); // Close modal first
+    router.push(path);   // Then navigate
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -55,19 +60,19 @@ export function AuthRequiredModal({ open, onOpenChange }: AuthRequiredModalProps
         {/* Actions */}
         <div className="px-8 pb-8 pt-2 space-y-3">
           <Button
-            asChild
             size="lg"
             className="w-full gradient-primary text-white border-0 font-semibold shimmer h-12 text-base"
+            onClick={() => handleNavigate('/register')}
           >
-            <Link href="/register" onClick={handleClose}>Créer un compte</Link>
+            Créer un compte
           </Button>
           <Button
-            asChild
             size="lg"
             variant="outline"
             className="w-full h-12 text-base"
+            onClick={() => handleNavigate('/login')}
           >
-            <Link href="/login" onClick={handleClose}>J&apos;ai déjà un compte</Link>
+            J&apos;ai déjà un compte
           </Button>
           <p className="text-center text-xs text-muted-foreground pt-1">
             Gratuit, sans engagement, pour toujours ✨
