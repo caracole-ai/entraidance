@@ -19,7 +19,10 @@ export function AuthRequiredModal({ open, onOpenChange }: AuthRequiredModalProps
   
   const handleNavigate = (path: string) => {
     onOpenChange(false); // Close modal first
-    router.push(path);   // Then navigate
+    // Wait for close animation before navigating
+    setTimeout(() => {
+      router.push(path);
+    }, 150);
   };
 
   return (
