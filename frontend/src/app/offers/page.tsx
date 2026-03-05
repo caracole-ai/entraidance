@@ -2,48 +2,35 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Plus, Search, Sparkles } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { OfferCard } from '@/components/offers/OfferCard';
+import { FilterAccordion } from '@/components/filters/FilterAccordion';
 import { useOffers } from '@/hooks/useOffers';
 import { StaggerContainer, StaggerItem } from '@/components/ui/motion';
 import { type IOfferFilters } from '@/lib/api';
 import {
   MissionCategory,
   OfferType,
-  CATEGORY_LABELS,
-  OFFER_TYPE_LABELS,
 } from '@/lib/types';
 import { t } from '@/i18n';
 
-const ALL_VALUE = '__all__';
-
-const OFFER_TYPE_COLORS: Record<OfferType, { bg: string; active: string }> = {
-  [OfferType.DON]: { bg: 'bg-blue-50 text-blue-700 border-blue-200', active: 'bg-blue-500 text-white border-blue-500' },
-  [OfferType.COMPETENCE]: { bg: 'bg-purple-50 text-purple-700 border-purple-200', active: 'bg-purple-500 text-white border-purple-500' },
-  [OfferType.MATERIEL]: { bg: 'bg-orange-50 text-orange-700 border-orange-200', active: 'bg-orange-500 text-white border-orange-500' },
-  [OfferType.SERVICE]: { bg: 'bg-emerald-50 text-emerald-700 border-emerald-200', active: 'bg-emerald-500 text-white border-emerald-500' },
-  [OfferType.ECOUTE]: { bg: 'bg-pink-50 text-pink-700 border-pink-200', active: 'bg-pink-500 text-white border-pink-500' },
-  [OfferType.AUTRE]: { bg: 'bg-gray-50 text-gray-700 border-gray-200', active: 'bg-gray-500 text-white border-gray-500' },
-};
-
 export default function OffersPage() {
-  const [filters, setFilters] = useState<IOfferFilters>({ page: 1, limit: 12 });
+  const [search, setSearch] = useState('');
+  const [offerTypes, setOfferTypes] = useState<OfferType[]>([]);
+  const [categories, setCategories] = useState<MissionCategory[]>([]);
+  const [page, setPage] = useState(1);
+
+  // Build filters from state
+  const filters: IOfferFilters = {
+    search: search || undefined,
+    offerType: offerTypes.length === 1 ? offerTypes[0] : undefined,
+    category: categories.length === 1 ? categories[0] : undefined,
+    page,
+    limit: 12,
+  };
+
   const { data, isLoading } = useOffers(filters);
-
-  const updateFilter = (key: keyof IOfferFilters, value: string) => {
-    setFilters((prev) => ({
-      ...prev,
-      [key]: value === ALL_VALUE ? undefined : value,
-      page: 1,
-    }));
-  };
-
-  const toggleFilter = (key: keyof IOfferFilters, value: string) => {
-    const current = filters[key] as string | undefined;
-    updateFilter(key, current === value ? ALL_VALUE : value);
-  };
 
   return (
     <div className="min-h-screen bg-gradient-stitch">
@@ -93,86 +80,28 @@ export default function OffersPage() {
       </section>
 
       {/* Filters & Content */}
-      <main className="max-w-7xl mx-auto px-6 pb-20 w-full">
-        <div className="flex flex-col lg:flex-row gap-10">
-          {/* Sidebar Filters */}
-          <aside className="w-full lg:w-72 flex flex-col gap-8 shrink-0">
-            <div>
-              <h3 className="text-xs font-black uppercase tracking-[0.3em] text-emerald-600 mb-6">
-                Filtres de recherche
-              </h3>
+      <main className="max-w-7xl mx-auto px-6 pb-20 w-full space-y-8">
+        {/* Horizontal Filter Accordion */}
+        <FilterAccordion
+          search={search}
+          onSearchChange={(val) => {
+            setSearch(val);
+            setPage(1);
+          }}
+          offerTypes={offerTypes}
+          onOfferTypesChange={(types) => {
+            setOfferTypes(types);
+            setPage(1);
+          }}
+          categories={categories}
+          onCategoriesChange={(cats) => {
+            setCategories(cats);
+            setPage(1);
+          }}
+        />
 
-              <div className="space-y-6">
-                {/* Search */}
-                <div className="flex flex-col gap-3">
-                  <label className="text-sm font-black flex items-center gap-2 text-slate-900 uppercase tracking-widest">
-                    <Search size={18} className="text-emerald-600" />
-                    Recherche
-                  </label>
-                  <Input
-                    placeholder="Mots-clés..."
-                    value={filters.search || ''}
-                    onChange={(e) => updateFilter('search', e.target.value)}
-                    className="glass-sidebar-liquid border-white/60 rounded-xl"
-                  />
-                </div>
-
-                {/* Offer Type */}
-                <div className="flex flex-col gap-4">
-                  <label className="text-sm font-black flex items-center gap-2 text-slate-900 uppercase tracking-widest">
-                    <Sparkles size={18} className="text-emerald-600" />
-                    Type de proposition
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {Object.values(OfferType).map((ot) => {
-                      const isActive = filters.offerType === ot;
-                      const colors = OFFER_TYPE_COLORS[ot];
-                      return (
-                        <button
-                          key={ot}
-                          onClick={() => toggleFilter('offerType', ot)}
-                          className={`px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all ${
-                            isActive ? colors.active : colors.bg
-                          }`}
-                        >
-                          {OFFER_TYPE_LABELS[ot]}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Category */}
-                <div className="flex flex-col gap-4">
-                  <label className="text-sm font-black flex items-center gap-2 text-slate-900 uppercase tracking-widest">
-                    <span className="text-emerald-600">📂</span>
-                    Catégorie
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {Object.values(MissionCategory).map((cat) => {
-                      const isActive = filters.category === cat;
-                      return (
-                        <button
-                          key={cat}
-                          onClick={() => toggleFilter('category', cat)}
-                          className={`px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all ${
-                            isActive
-                              ? 'bg-slate-700 text-white border-slate-700'
-                              : 'bg-slate-50 text-slate-600 border-slate-200'
-                          }`}
-                        >
-                          {CATEGORY_LABELS[cat]}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </aside>
-
-          {/* Offers Cards Grid */}
-          <div className="flex-1">
+        {/* Offers Cards Grid */}
+        <div>
             {isLoading ? (
               <div className="text-center py-16 text-slate-600">
                 <div className="text-4xl mb-3">⏳</div>
@@ -195,9 +124,7 @@ export default function OffersPage() {
                       variant="outline"
                       size="lg"
                       disabled={data.page <= 1}
-                      onClick={() =>
-                        setFilters((prev) => ({ ...prev, page: (prev.page || 1) - 1 }))
-                      }
+                      onClick={() => setPage((prev) => prev - 1)}
                       className="glass-sidebar-liquid border-white/60 rounded-xl font-bold"
                     >
                       Précédent
@@ -209,9 +136,7 @@ export default function OffersPage() {
                       variant="outline"
                       size="lg"
                       disabled={data.page >= data.totalPages}
-                      onClick={() =>
-                        setFilters((prev) => ({ ...prev, page: (prev.page || 1) + 1 }))
-                      }
+                      onClick={() => setPage((prev) => prev + 1)}
                       className="glass-sidebar-liquid border-white/60 rounded-xl font-bold"
                     >
                       Suivant
@@ -234,7 +159,6 @@ export default function OffersPage() {
                 </Button>
               </div>
             )}
-          </div>
         </div>
       </main>
     </div>
