@@ -5,14 +5,12 @@ import {
   CreateDateColumn,
   ManyToOne,
   JoinColumn,
-  Unique,
 } from 'typeorm';
 import { ContributionType, ContributionStatus } from '../../shared/enums';
 import { User } from '../../users/entities/user.entity';
 import { Mission } from '../../missions/entities/mission.entity';
 
 @Entity('contributions')
-@Unique(['userId', 'missionId', 'type'])
 export class Contribution {
   @PrimaryGeneratedColumn('uuid')
   id: string;
