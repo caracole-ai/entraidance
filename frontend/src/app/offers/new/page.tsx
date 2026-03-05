@@ -111,7 +111,9 @@ export default function NewOfferPage() {
           router.push(`/offers/${offer.id}`);
         },
         onError: (error) => {
-          toast.error(error.message);
+          if (error.message !== 'AUTH_REQUIRED') {
+            toast.error(error.message);
+          }
         },
       }
     );

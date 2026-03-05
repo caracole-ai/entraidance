@@ -37,7 +37,9 @@ export function CloseMissionDialog({ missionId }: CloseMissionDialogProps) {
           setStep(3);
         },
         onError: (error) => {
-          toast.error(error.message);
+          if (error.message !== 'AUTH_REQUIRED') {
+            toast.error(error.message);
+          }
         },
       }
     );

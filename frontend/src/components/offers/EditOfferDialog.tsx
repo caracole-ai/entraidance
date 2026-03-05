@@ -61,7 +61,10 @@ export function EditOfferDialog({ offer }: EditOfferDialogProps) {
       setOpen(false);
     },
     onError: (error) => {
-      toast.error(error instanceof Error ? error.message : 'Erreur');
+      const message = error instanceof Error ? error.message : 'Erreur';
+      if (message !== 'AUTH_REQUIRED') {
+        toast.error(message);
+      }
     },
   });
 

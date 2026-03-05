@@ -83,7 +83,10 @@ export function ContributionButtons({ missionId }: ContributionButtonsProps) {
           setMessage('');
         },
         onError: (error) => {
-          toast.error(error.message);
+          // Ne pas afficher de toast pour les erreurs d'auth (la modale s'ouvre déjà)
+          if (error.message !== 'AUTH_REQUIRED') {
+            toast.error(error.message);
+          }
         },
       }
     );
