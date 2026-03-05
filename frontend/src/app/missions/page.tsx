@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Plus, Search, Sparkles } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { MissionCard } from '@/components/missions/MissionCard';
 import { useMissions } from '@/hooks/useMissions';
 import { StaggerContainer, StaggerItem } from '@/components/ui/motion';
+import { FilterAccordion } from '@/components/ui/FilterAccordion';
 import {
   MissionCategory,
   HelpType,
@@ -18,39 +18,38 @@ import {
   type IMissionFilters,
 } from '@/lib/types';
 import { t } from '@/i18n';
-import { CategoryIcon } from '@/components/icons/CategoryIcon';
-
-const ALL_VALUE = '__all__';
-
-const HELP_TYPE_COLORS: Record<HelpType, { bg: string; active: string }> = {
-  [HelpType.FINANCIERE]: { bg: 'bg-emerald-50 text-emerald-700 border-emerald-200', active: 'bg-emerald-500 text-white border-emerald-500' },
-  [HelpType.CONSEIL]: { bg: 'bg-violet-50 text-violet-700 border-violet-200', active: 'bg-violet-500 text-white border-violet-500' },
-  [HelpType.MATERIEL]: { bg: 'bg-amber-50 text-amber-700 border-amber-200', active: 'bg-amber-500 text-white border-amber-500' },
-  [HelpType.RELATION]: { bg: 'bg-pink-50 text-pink-700 border-pink-200', active: 'bg-pink-500 text-white border-pink-500' },
-  [HelpType.AUTRE]: { bg: 'bg-gray-50 text-gray-700 border-gray-200', active: 'bg-gray-500 text-white border-gray-500' },
-};
-
-const URGENCY_COLORS: Record<Urgency, { bg: string; active: string }> = {
-  [Urgency.FAIBLE]: { bg: 'bg-sky-50 text-sky-700 border-sky-200', active: 'bg-sky-500 text-white border-sky-500' },
-  [Urgency.MOYEN]: { bg: 'bg-orange-50 text-orange-700 border-orange-200', active: 'bg-orange-500 text-white border-orange-500' },
-  [Urgency.URGENT]: { bg: 'bg-red-50 text-red-700 border-red-200', active: 'bg-red-500 text-white border-red-500' },
-};
 
 export default function MissionsPage() {
-  const [filters, setFilters] = useState<IMissionFilters>({ page: 1, limit: 12 });
+  const [searchText, setSearchText] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedHelpTypes, setSelectedHelpTypes] = useState<string[]>([]);
+  const [selectedUrgencies, setSelectedUrgencies] = useState<string[]>([]);
+
+  // Build filters for API - send first selected value to maintain backend compatibility
+  const filters = useMemo<IMissionFilters>(() => ({
+    page: 1,
+    limit: 12,
+    search: searchText || undefined,
+    category: selectedCategories[0] as MissionCategory | undefined,
+    helpType: selectedHelpTypes[0] as HelpType | undefined,
+    urgency: selectedUrgencies[0] as Urgency | undefined,
+  }), [searchText, selectedCategories, selectedHelpTypes, selectedUrgencies]);
+
   const { data, isLoading } = useMissions(filters);
 
-  const updateFilter = (key: keyof IMissionFilters, value: string) => {
-    setFilters((prev) => ({
-      ...prev,
-      [key]: value === ALL_VALUE ? undefined : value,
-      page: 1,
-    }));
+  const toggleMultiSelect = (value: string, selected: string[], setter: (val: string[]) => void) => {
+    if (selected.includes(value)) {
+      setter(selected.filter((v) => v !== value));
+    } else {
+      setter([...selected, value]);
+    }
   };
 
-  const toggleFilter = (key: keyof IMissionFilters, value: string) => {
-    const current = filters[key] as string | undefined;
-    updateFilter(key, current === value ? ALL_VALUE : value);
+  const resetFilters = () => {
+    setSearchText('');
+    setSelectedCategories([]);
+    setSelectedHelpTypes([]);
+    setSelectedUrgencies([]);
   };
 
   return (
@@ -102,110 +101,61 @@ export default function MissionsPage() {
 
       {/* Filters & Content */}
       <main className="max-w-7xl mx-auto px-6 pb-20 w-full">
-        <div className="flex flex-col lg:flex-row gap-10">
-          {/* Sidebar Filters */}
-          <aside className="w-full lg:w-72 flex flex-col gap-8 shrink-0">
-            <div>
-              <h3 className="text-xs font-black uppercase tracking-[0.3em] text-[#9333ea] mb-6">
-                Filtres de recherche
-              </h3>
+        {/* Horizontal Filter Accordion */}
+        <FilterAccordion
+          searchValue={searchText}
+          onSearchChange={setSearchText}
+          searchPlaceholder="Rechercher par titre ou description..."
+          groups={[
+            {
+              label: 'Type de besoin',
+              icon: <span className="text-[#9333ea]">✨</span>,
+              badges: Object.values(HelpType).map((ht) => ({
+                value: ht,
+                label: HELP_TYPE_LABELS[ht],
+                color: {
+                  [HelpType.FINANCIERE]: 'from-emerald-400 to-teal-500',
+                  [HelpType.CONSEIL]: 'from-violet-400 to-purple-500',
+                  [HelpType.MATERIEL]: 'from-amber-400 to-orange-500',
+                  [HelpType.RELATION]: 'from-pink-400 to-rose-500',
+                  [HelpType.AUTRE]: 'from-slate-400 to-gray-500',
+                }[ht],
+              })),
+              selected: selectedHelpTypes,
+              onToggle: (v) => toggleMultiSelect(v, selectedHelpTypes, setSelectedHelpTypes),
+            },
+            {
+              label: 'Urgence',
+              icon: <span className="text-[#9333ea]">⏱️</span>,
+              badges: Object.values(Urgency).map((u) => ({
+                value: u,
+                label: URGENCY_LABELS[u],
+                color: {
+                  [Urgency.FAIBLE]: 'from-sky-400 to-blue-400',
+                  [Urgency.MOYEN]: 'from-orange-400 to-amber-500',
+                  [Urgency.URGENT]: 'from-red-500 to-pink-500',
+                }[u],
+              })),
+              selected: selectedUrgencies,
+              onToggle: (v) => toggleMultiSelect(v, selectedUrgencies, setSelectedUrgencies),
+            },
+            {
+              label: 'Catégorie',
+              icon: <span className="text-[#9333ea]">📂</span>,
+              badges: Object.values(MissionCategory).map((cat) => ({
+                value: cat,
+                label: CATEGORY_LABELS[cat],
+                color: 'from-slate-500 to-gray-600',
+              })),
+              selected: selectedCategories,
+              onToggle: (v) => toggleMultiSelect(v, selectedCategories, setSelectedCategories),
+            },
+          ]}
+          onReset={resetFilters}
+        />
 
-              <div className="space-y-6">
-                {/* Search */}
-                <div className="flex flex-col gap-3">
-                  <label className="text-sm font-black flex items-center gap-2 text-slate-900 uppercase tracking-widest">
-                    <Search size={18} className="text-[#9333ea]" />
-                    Recherche
-                  </label>
-                  <Input
-                    placeholder="Mots-clés..."
-                    value={filters.search || ''}
-                    onChange={(e) => updateFilter('search', e.target.value)}
-                    className="glass-sidebar-liquid border-white/60 rounded-xl"
-                  />
-                </div>
-
-                {/* Help Type */}
-                <div className="flex flex-col gap-4">
-                  <label className="text-sm font-black flex items-center gap-2 text-slate-900 uppercase tracking-widest">
-                    <Sparkles size={18} className="text-[#9333ea]" />
-                    Type de besoin
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {Object.values(HelpType).map((ht) => {
-                      const isActive = filters.helpType === ht;
-                      const colors = HELP_TYPE_COLORS[ht];
-                      return (
-                        <button
-                          key={ht}
-                          onClick={() => toggleFilter('helpType', ht)}
-                          className={`px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all ${
-                            isActive ? colors.active : colors.bg
-                          }`}
-                        >
-                          {HELP_TYPE_LABELS[ht]}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Urgency */}
-                <div className="flex flex-col gap-4">
-                  <label className="text-sm font-black flex items-center gap-2 text-slate-900 uppercase tracking-widest">
-                    <span className="text-[#9333ea]">⏱️</span>
-                    Urgence
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {Object.values(Urgency).map((u) => {
-                      const isActive = filters.urgency === u;
-                      const colors = URGENCY_COLORS[u];
-                      return (
-                        <button
-                          key={u}
-                          onClick={() => toggleFilter('urgency', u)}
-                          className={`px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all ${
-                            isActive ? colors.active : colors.bg
-                          }`}
-                        >
-                          {URGENCY_LABELS[u]}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Category */}
-                <div className="flex flex-col gap-4">
-                  <label className="text-sm font-black flex items-center gap-2 text-slate-900 uppercase tracking-widest">
-                    <span className="text-[#9333ea]">📂</span>
-                    Catégorie
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {Object.values(MissionCategory).map((cat) => {
-                      const isActive = filters.category === cat;
-                      return (
-                        <button
-                          key={cat}
-                          onClick={() => toggleFilter('category', cat)}
-                          className={`px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all ${
-                            isActive
-                              ? 'bg-slate-700 text-white border-slate-700'
-                              : 'bg-slate-50 text-slate-600 border-slate-200'
-                          }`}
-                        >
-                          {CATEGORY_LABELS[cat]}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </aside>
-
-          {/* Mission Cards Grid */}
-          <div className="flex-1">
+        {/* Mission Cards Grid */}
+        <div className="w-full">
             {isLoading ? (
               <div className="text-center py-16 text-slate-600">
                 <div className="text-4xl mb-3">⏳</div>
@@ -268,7 +218,6 @@ export default function MissionsPage() {
               </div>
             )}
           </div>
-        </div>
       </main>
     </div>
   );

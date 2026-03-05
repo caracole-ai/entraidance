@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { OfferCard } from '@/components/offers/OfferCard';
-import { FilterAccordion } from '@/components/filters/FilterAccordion';
+import { FilterAccordion } from '@/components/ui/FilterAccordion';
 import { useOffers } from '@/hooks/useOffers';
 import { StaggerContainer, StaggerItem } from '@/components/ui/motion';
 import { type IOfferFilters } from '@/lib/api';
@@ -15,22 +15,63 @@ import {
 } from '@/lib/types';
 import { t } from '@/i18n';
 
+const OFFER_TYPE_BADGES = [
+  { value: OfferType.DON, label: 'Don', color: 'from-blue-400 to-cyan-500' },
+  { value: OfferType.COMPETENCE, label: 'Compétence', color: 'from-purple-400 to-violet-500' },
+  { value: OfferType.MATERIEL, label: 'Matériel', color: 'from-orange-400 to-amber-500' },
+  { value: OfferType.SERVICE, label: 'Service', color: 'from-emerald-400 to-teal-500' },
+  { value: OfferType.ECOUTE, label: 'Écoute', color: 'from-pink-400 to-rose-500' },
+  { value: OfferType.AUTRE, label: 'Autre', color: 'from-slate-400 to-gray-500' },
+];
+
+const CATEGORY_BADGES = [
+  { value: 'demenagement', label: 'Déménagement', color: 'from-purple-400 to-violet-500' },
+  { value: 'bricolage', label: 'Bricolage', color: 'from-orange-400 to-amber-500' },
+  { value: 'numerique', label: 'Numérique', color: 'from-blue-400 to-cyan-500' },
+  { value: 'administratif', label: 'Administratif', color: 'from-sky-400 to-blue-500' },
+  { value: 'garde_enfants', label: "Garde d'enfants", color: 'from-pink-400 to-rose-500' },
+  { value: 'transport', label: 'Transport', color: 'from-violet-400 to-purple-500' },
+  { value: 'ecoute', label: 'Écoute', color: 'from-red-400 to-pink-500' },
+  { value: 'emploi', label: 'Emploi', color: 'from-emerald-400 to-teal-500' },
+  { value: 'alimentation', label: 'Alimentation', color: 'from-amber-400 to-orange-500' },
+  { value: 'animaux', label: 'Animaux', color: 'from-lime-400 to-green-500' },
+  { value: 'education', label: 'Éducation', color: 'from-yellow-400 to-amber-500' },
+  { value: 'handicap', label: 'Handicap', color: 'from-cyan-400 to-blue-500' },
+  { value: 'autre', label: 'Autre', color: 'from-slate-400 to-gray-500' },
+];
+
 export default function OffersPage() {
-  const [search, setSearch] = useState('');
-  const [offerTypes, setOfferTypes] = useState<OfferType[]>([]);
-  const [categories, setCategories] = useState<MissionCategory[]>([]);
+  const [searchText, setSearchText] = useState('');
+  const [selectedOfferTypes, setSelectedOfferTypes] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [page, setPage] = useState(1);
 
-  // Build filters from state
-  const filters: IOfferFilters = {
-    search: search || undefined,
-    offerType: offerTypes.length === 1 ? offerTypes[0] : undefined,
-    category: categories.length === 1 ? categories[0] : undefined,
+  // Build filters from state - send first selected value for backend compatibility
+  const filters: IOfferFilters = useMemo(() => ({
+    search: searchText || undefined,
+    offerType: selectedOfferTypes[0] || undefined,
+    category: selectedCategories[0] || undefined,
     page,
     limit: 12,
-  };
+  }), [searchText, selectedOfferTypes, selectedCategories, page]);
 
   const { data, isLoading } = useOffers(filters);
+
+  const toggleMultiSelect = (value: string, selected: string[], setter: (val: string[]) => void) => {
+    if (selected.includes(value)) {
+      setter(selected.filter((v) => v !== value));
+    } else {
+      setter([...selected, value]);
+    }
+    setPage(1);
+  };
+
+  const resetFilters = () => {
+    setSearchText('');
+    setSelectedOfferTypes([]);
+    setSelectedCategories([]);
+    setPage(1);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-stitch">
@@ -83,21 +124,26 @@ export default function OffersPage() {
       <main className="max-w-7xl mx-auto px-6 pb-20 w-full space-y-8">
         {/* Horizontal Filter Accordion */}
         <FilterAccordion
-          search={search}
-          onSearchChange={(val) => {
-            setSearch(val);
-            setPage(1);
-          }}
-          offerTypes={offerTypes}
-          onOfferTypesChange={(types) => {
-            setOfferTypes(types);
-            setPage(1);
-          }}
-          categories={categories}
-          onCategoriesChange={(cats) => {
-            setCategories(cats);
-            setPage(1);
-          }}
+          searchValue={searchText}
+          onSearchChange={setSearchText}
+          searchPlaceholder="Rechercher une proposition..."
+          groups={[
+            {
+              label: 'Type de proposition',
+              icon: <span className="text-emerald-600">✨</span>,
+              badges: OFFER_TYPE_BADGES,
+              selected: selectedOfferTypes,
+              onToggle: (v) => toggleMultiSelect(v, selectedOfferTypes, setSelectedOfferTypes),
+            },
+            {
+              label: 'Catégorie',
+              icon: <span className="text-emerald-600">📂</span>,
+              badges: CATEGORY_BADGES,
+              selected: selectedCategories,
+              onToggle: (v) => toggleMultiSelect(v, selectedCategories, setSelectedCategories),
+            },
+          ]}
+          onReset={resetFilters}
         />
 
         {/* Offers Cards Grid */}
