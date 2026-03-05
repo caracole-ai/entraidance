@@ -11,6 +11,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { SocialLoginButtons } from '@/components/auth/social-login-buttons';
 import { toast } from 'sonner';
 import { FadeIn } from '@/components/ui/motion';
+import { Heart } from 'lucide-react';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -53,13 +54,13 @@ export default function RegisterPage() {
           <CardHeader className="text-center pb-2 pt-8">
             {/* Brand mark */}
             <div className="mx-auto mb-4 h-12 w-12 rounded-2xl gradient-primary flex items-center justify-center shadow-md">
-              <span className="text-white font-bold text-lg font-display">G</span>
+              <Heart size={24} fill="white" className="text-white" />
             </div>
             <h1 className="text-2xl font-bold font-display tracking-tight">
               Inscription
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
-              Creez votre compte GR attitude
+              Créez votre compte Entraidance
             </p>
           </CardHeader>
 

@@ -1,6 +1,6 @@
 # WebSocket Real-time Notifications
 
-GR-attitude uses **Socket.io** for real-time bidirectional communication between backend and frontend.
+Entraidance uses **Socket.io** for real-time bidirectional communication between backend and frontend.
 
 ---
 

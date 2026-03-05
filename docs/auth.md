@@ -198,7 +198,7 @@ FRONTEND_URL=http://localhost:3000
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Click **Select a project** → **New Project**
-3. Enter project name (e.g., "GR-attitude") → **Create**
+3. Enter project name (e.g., "Entraidance") → **Create**
 4. Wait for project creation, then select it
 
 #### Step 2: Enable Google+ API
@@ -212,7 +212,7 @@ FRONTEND_URL=http://localhost:3000
 1. Go to **APIs & Services** → **OAuth consent screen**
 2. Select **External** user type → **Create**
 3. Fill in required fields:
-   - **App name**: `GR-attitude`
+   - **App name**: `Entraidance`
    - **User support email**: Your email
    - **Developer contact**: Your email
 4. Click **Save and Continue**
@@ -227,7 +227,7 @@ FRONTEND_URL=http://localhost:3000
 1. Go to **APIs & Services** → **Credentials**
 2. Click **Create Credentials** → **OAuth client ID**
 3. Application type: **Web application**
-4. Name: `GR-attitude Web Client`
+4. Name: `Entraidance Web Client`
 5. **Authorized redirect URIs** → Add:
    - Development: `http://localhost:3001/auth/google/callback`
    - Production: `https://your-backend.onrender.com/auth/google/callback`
@@ -256,7 +256,7 @@ In production (Render):
 1. Go to [Facebook Developers](https://developers.facebook.com/)
 2. Click **My Apps** → **Create App**
 3. Select **Consumer** use case → **Next**
-4. Enter app name (e.g., "GR-attitude") → **Create App**
+4. Enter app name (e.g., "Entraidance") → **Create App**
 5. You may need to verify your account with security check
 
 #### Step 2: Add Facebook Login Product

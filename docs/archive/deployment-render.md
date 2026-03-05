@@ -1,6 +1,6 @@
-# GR attitude — Guide de Déploiement Render
+# Entraidance — Guide de Déploiement Render
 
-Guide complet pour déployer GR attitude sur Render (Free tier), incluant toutes les solutions aux problèmes rencontrés.
+Guide complet pour déployer Entraidance sur Render (Free tier), incluant toutes les solutions aux problèmes rencontrés.
 
 ## 📋 Table des matières
 
@@ -20,17 +20,17 @@ Guide complet pour déployer GR attitude sur Render (Free tier), incluant toutes
 
 **Environnement** : `My project` > `Production`
 
-**Backend** : `gr-attitude-api`
+**Backend** : `entraidance-api`
 - Service ID : `srv-d6f4cshr0fns73f2vvsg`
-- URL : https://gr-attitude-api-ihn9.onrender.com
+- URL : https://entraidance-api-ihn9.onrender.com
 - Type : Web Service
 - Runtime : Node
 - Region : Frankfurt
 - Plan : Free
 
-**Frontend** : `gr-attitude-frontend`
+**Frontend** : `entraidance-frontend`
 - Service ID : `srv-d6f4ebk1hm7c73b0b510`
-- URL : https://gr-attitude-frontend.onrender.com
+- URL : https://entraidance-frontend.onrender.com
 - Type : Web Service
 - Runtime : Node
 - Region : Frankfurt
@@ -45,7 +45,7 @@ Guide complet pour déployer GR attitude sur Render (Free tier), incluant toutes
 ```yaml
 services:
   - type: web
-    name: gr-attitude-api
+    name: entraidance-api
     runtime: node
     region: frankfurt
     plan: free
@@ -78,15 +78,15 @@ JWT_SECRET=<générer via openssl rand -base64 32>
 JWT_EXPIRES_IN=7d
 
 # Frontend URL
-FRONTEND_URL=https://gr-attitude-frontend.onrender.com
+FRONTEND_URL=https://entraidance-frontend.onrender.com
 
 # CORS
-CORS_ORIGIN=https://gr-attitude-frontend.onrender.com
+CORS_ORIGIN=https://entraidance-frontend.onrender.com
 
 # OAuth Google
 GOOGLE_CLIENT_ID=<voir section OAuth Google>
 GOOGLE_CLIENT_SECRET=<voir section OAuth Google>
-GOOGLE_CALLBACK_URL=https://gr-attitude-api-ihn9.onrender.com/auth/google/callback
+GOOGLE_CALLBACK_URL=https://entraidance-api-ihn9.onrender.com/auth/google/callback
 
 # Sentry (optionnel)
 SENTRY_DSN=<si analytics activé>
@@ -96,7 +96,7 @@ SENTRY_DSN=<si analytics activé>
 
 1. **Service name** : Le `name:` dans `render.yaml` DOIT matcher exactement le nom du service dans Render
 2. **`npx` obligatoire** : Toujours utiliser `npx nest build` (pas juste `nest build`)
-3. **Callback URL** : Utiliser l'URL réelle du service backend (`gr-attitude-api-ihn9.onrender.com`), PAS l'URL custom
+3. **Callback URL** : Utiliser l'URL réelle du service backend (`entraidance-api-ihn9.onrender.com`), PAS l'URL custom
 
 ---
 
@@ -107,7 +107,7 @@ SENTRY_DSN=<si analytics activé>
 ```yaml
 services:
   - type: web
-    name: gr-attitude-frontend
+    name: entraidance-frontend
     runtime: node
     region: frankfurt
     plan: free
@@ -218,8 +218,8 @@ const queryClient = new QueryClient({
 
 ```bash
 # API Backend
-NEXT_PUBLIC_API_URL=https://gr-attitude-api-ihn9.onrender.com
-NEXT_PUBLIC_WS_URL=wss://gr-attitude-api-ihn9.onrender.com
+NEXT_PUBLIC_API_URL=https://entraidance-api-ihn9.onrender.com
+NEXT_PUBLIC_WS_URL=wss://entraidance-api-ihn9.onrender.com
 
 # Sentry (optionnel)
 NEXT_PUBLIC_SENTRY_DSN=<si analytics activé>
@@ -239,10 +239,10 @@ URL : https://console.cloud.google.com/apis/credentials
 2. **APIs & Services** > **Credentials**
 3. **+ CREATE CREDENTIALS** > **OAuth client ID**
 4. **Application type** : Web application
-5. **Name** : `gr-attitude-prod` (ou autre)
+5. **Name** : `entraidance-prod` (ou autre)
 6. **Authorized redirect URIs** :
    ```
-   https://gr-attitude-api-ihn9.onrender.com/auth/google/callback
+   https://entraidance-api-ihn9.onrender.com/auth/google/callback
    http://localhost:3001/auth/google/callback
    ```
 7. **CREATE**
@@ -255,19 +255,19 @@ Après création, noter :
 
 ### 2. Configuration Render Backend
 
-Dans Render Dashboard > `gr-attitude-api` > **Environment** :
+Dans Render Dashboard > `entraidance-api` > **Environment** :
 
 ```bash
 GOOGLE_CLIENT_ID=<your-client-id>.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=GOCSPX-<your-client-secret>
-GOOGLE_CALLBACK_URL=https://gr-attitude-api-ihn9.onrender.com/auth/google/callback
+GOOGLE_CALLBACK_URL=https://entraidance-api-ihn9.onrender.com/auth/google/callback
 ```
 
 ⚠️ **Redeploy obligatoire** après changement de variables d'environnement
 
 ### 3. Test du flow OAuth
 
-1. Naviguer vers https://gr-attitude-frontend.onrender.com/register
+1. Naviguer vers https://entraidance-frontend.onrender.com/register
 2. Cliquer **"Sign in with Google"**
 3. Sélectionner un compte Google
 4. Vérifier la redirection vers `/dashboard` avec session établie
@@ -403,15 +403,15 @@ const queryClient = new QueryClient({
 **Symptôme** : Render ne pouvait pas mapper `render.yaml` au service
 
 **Cause** :
-- `render.yaml` avait `name: gr-attitude-backend`
-- Service Render s'appelait `gr-attitude-api`
+- `render.yaml` avait `name: entraidance-backend`
+- Service Render s'appelait `entraidance-api`
 
 **Solution** : Aligner le nom dans `render.yaml`
 
 ```yaml
 services:
   - type: web
-    name: gr-attitude-api  # ← Doit matcher le nom du service
+    name: entraidance-api  # ← Doit matcher le nom du service
 ```
 
 **Commit** : `da5dbb1` (ancien projet, même leçon)
@@ -469,7 +469,7 @@ npm run seed:clear
 
 **Après déploiement du backend**, se connecter au Shell du service :
 
-1. Render Dashboard > `gr-attitude-api` > **Shell**
+1. Render Dashboard > `entraidance-api` > **Shell**
 2. Exécuter :
 
 ```bash
@@ -483,11 +483,11 @@ npm run seed:clear
 ### Détails des données générées
 
 **Utilisateurs** :
-- `demo.alice@gr-attitude.test` — Développeuse web (Paris)
-- `demo.bob@gr-attitude.test` — Bricoleur chevronné (Paris, Premium)
-- `demo.claire@gr-attitude.test` — Professeure de français (Lyon)
-- `demo.david@gr-attitude.test` — Graphiste freelance (Marseille, Premium)
-- `demo.emma@gr-attitude.test` — Étudiante en médecine (Paris)
+- `demo.alice@entraidance.test` — Développeuse web (Paris)
+- `demo.bob@entraidance.test` — Bricoleur chevronné (Paris, Premium)
+- `demo.claire@entraidance.test` — Professeure de français (Lyon)
+- `demo.david@entraidance.test` — Graphiste freelance (Marseille, Premium)
+- `demo.emma@entraidance.test` — Étudiante en médecine (Paris)
 
 **Missions** :
 - Aide déménagement (Transport, Urgent)
@@ -586,8 +586,8 @@ Définis dans `backend/package.json` :
 
 ### Post-déploiement
 
-- [ ] Backend : https://gr-attitude-api-ihn9.onrender.com/health renvoie 200
-- [ ] Frontend : https://gr-attitude-frontend.onrender.com accessible
+- [ ] Backend : https://entraidance-api-ihn9.onrender.com/health renvoie 200
+- [ ] Frontend : https://entraidance-frontend.onrender.com accessible
 - [ ] OAuth : Flow complet fonctionne sans erreur
 - [ ] Console navigateur : Pas d'erreurs critiques
 - [ ] Render Logs : Pas d'erreurs dans les logs backend

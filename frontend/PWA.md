@@ -1,6 +1,6 @@
 # Progressive Web App (PWA) Setup
 
-GR-attitude is configured as a Progressive Web App for improved mobile experience.
+Entraidance is configured as a Progressive Web App for improved mobile experience.
 
 ---
 
@@ -24,7 +24,7 @@ GR-attitude is configured as a Progressive Web App for improved mobile experienc
 
 ### iOS (Safari)
 
-1. Open https://gr-attitude-frontend.onrender.com in Safari
+1. Open https://entraidance-frontend.onrender.com in Safari
 2. Tap the **Share** button (bottom center)
 3. Scroll down and tap **Add to Home Screen**
 4. Tap **Add** (top right)
@@ -33,7 +33,7 @@ GR-attitude is configured as a Progressive Web App for improved mobile experienc
 
 ### Android (Chrome)
 
-1. Open https://gr-attitude-frontend.onrender.com in Chrome
+1. Open https://entraidance-frontend.onrender.com in Chrome
 2. Tap the **three-dot menu** (top right)
 3. Tap **Add to Home screen** or **Install app**
 4. Tap **Install**
@@ -49,8 +49,8 @@ GR-attitude is configured as a Progressive Web App for improved mobile experienc
 **Key fields**:
 ```json
 {
-  "name": "GR attitude - Plateforme d'entraide",
-  "short_name": "GR attitude",
+  "name": "Entraidance - Plateforme d'entraide",
+  "short_name": "Entraidance",
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#000000",
@@ -344,7 +344,7 @@ navigator.serviceWorker.ready.then(reg => {
 
 ### Share Target
 
-**Use case**: Share links/text to GR-attitude from other apps
+**Use case**: Share links/text to Entraidance from other apps
 
 **Manifest**:
 ```json

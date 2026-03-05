@@ -1,6 +1,6 @@
 # Matching Algorithm V2
 
-GR-attitude uses a **weighted scoring algorithm** to match missions with offers, helping users find the most relevant opportunities to help.
+Entraidance uses a **weighted scoring algorithm** to match missions with offers, helping users find the most relevant opportunities to help.
 
 ---
 

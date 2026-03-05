@@ -248,13 +248,13 @@ done
 
 ### Configuration actuelle
 
-- **Project** : `gr-attitude-457111`
-- **Client** : `GR-attitude Web Client`
+- **Project** : `entraidance-457111`
+- **Client** : `Entraidance Web Client`
 - **Client ID** : `719616477303-aq78j8gvrn6jpj1c5ts90eh9a6sohc4d.apps.googleusercontent.com`
 
 ### Redirect URIs requises
 
-Dans Google Cloud Console → APIs → Credentials → GR-attitude Web Client :
+Dans Google Cloud Console → APIs → Credentials → Entraidance Web Client :
 
 ```
 https://entraidance.com/api/auth/google/callback

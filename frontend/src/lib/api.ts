@@ -60,6 +60,8 @@ async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> 
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new CustomEvent('auth:required'));
       }
+      // Ne pas throw pour les erreurs d'auth, juste dispatcher l'événement
+      throw new Error('AUTH_REQUIRED');
     }
     throw new Error(error.message || 'Erreur serveur');
   }

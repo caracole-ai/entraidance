@@ -17,7 +17,7 @@ import {
 
 const demoUsers = [
   {
-    email: 'demo.alice@gr-attitude.test',
+    email: 'demo.alice@entraidance.test',
     displayName: 'Alice Martin',
     bio: 'Developpeuse web passionnee par l\'entraide locale. Competences en React, Node.js.',
     skills: ['developpement web', 'react', 'javascript', 'design'],
@@ -28,7 +28,7 @@ const demoUsers = [
     isDemo: true,
   },
   {
-    email: 'demo.bob@gr-attitude.test',
+    email: 'demo.bob@entraidance.test',
     displayName: 'Bob Durand',
     bio: 'Bricoleur chevronne et retraite disponible pour depanner.',
     skills: ['bricolage', 'electricite', 'plomberie'],
@@ -39,7 +39,7 @@ const demoUsers = [
     isDemo: true,
   },
   {
-    email: 'demo.claire@gr-attitude.test',
+    email: 'demo.claire@entraidance.test',
     displayName: 'Claire Dubois',
     bio: 'Professeure de francais, j\'aime aider les jeunes a progresser.',
     skills: ['francais', 'soutien scolaire', 'redaction'],
@@ -50,7 +50,7 @@ const demoUsers = [
     isDemo: true,
   },
   {
-    email: 'demo.david@gr-attitude.test',
+    email: 'demo.david@entraidance.test',
     displayName: 'David Petit',
     bio: 'Graphiste freelance, disponible pour des conseils creatifs.',
     skills: ['design graphique', 'photoshop', 'illustration'],
@@ -61,7 +61,7 @@ const demoUsers = [
     isDemo: true,
   },
   {
-    email: 'demo.emma@gr-attitude.test',
+    email: 'demo.emma@entraidance.test',
     displayName: 'Emma Rousseau',
     bio: 'Etudiante en medecine, j\'adore cuisiner et partager mes recettes.',
     skills: ['cuisine', 'nutrition', 'organisation'],

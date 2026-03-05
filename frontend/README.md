@@ -1,11 +1,11 @@
-# GR-attitude Frontend
+# Entraidance Frontend
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.1.6-000000)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.2.3-61dafb)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](https://www.typescriptlang.org/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-38bdf8)](https://tailwindcss.com/)
 
-Interface utilisateur de la plateforme GR-attitude — Application web responsive et PWA.
+Interface utilisateur de la plateforme Entraidance — Application web responsive et PWA.
 
 ---
 
@@ -31,7 +31,7 @@ NEXT_PUBLIC_API_URL=http://localhost:3001
 
 **Production (Render) :**
 ```env
-NEXT_PUBLIC_API_URL=https://gr-attitude-api.onrender.com
+NEXT_PUBLIC_API_URL=https://entraidance-api.onrender.com
 ```
 
 ---
@@ -288,13 +288,13 @@ Voir [ERROR_HANDLING.md](./ERROR_HANDLING.md) pour détails complets.
 ### Render.com (Production)
 Le frontend est auto-déployé sur Render à chaque push sur `master`.
 
-**URL** : https://gr-attitude-frontend.onrender.com
+**URL** : https://entraidance-frontend.onrender.com
 
 **Configuration** :
-- Auto-deploy depuis GitHub (fork `caracole-ai/gr-attitude`)
+- Auto-deploy depuis GitHub (fork `caracole-ai/entraidance`)
 - Build command : `cd frontend && npm install && npm run build`
 - Start command : `cd frontend && npm run start`
-- Environment : `NEXT_PUBLIC_API_URL=https://gr-attitude-api.onrender.com`
+- Environment : `NEXT_PUBLIC_API_URL=https://entraidance-api.onrender.com`
 
 ---
 
@@ -365,4 +365,4 @@ Projet privé — Tous droits réservés.
 
 **Dernière mise à jour** : 2026-03-01  
 **Version** : Production-Ready & PWA-Enabled (Next.js 16)  
-**Auteur** : Équipe GR-attitude
+**Auteur** : Équipe Entraidance

@@ -1,6 +1,6 @@
 # Mobile Optimization Guide
 
-GR-attitude is optimized for mobile devices with touch-friendly UI and responsive layouts.
+Entraidance is optimized for mobile devices with touch-friendly UI and responsive layouts.
 
 ---
 
@@ -17,7 +17,7 @@ GR-attitude is optimized for mobile devices with touch-friendly UI and responsiv
 
 ## Responsive Breakpoints
 
-GR-attitude uses **Tailwind CSS** default breakpoints:
+Entraidance uses **Tailwind CSS** default breakpoints:
 
 | Breakpoint | Min Width | Target Devices |
 |------------|-----------|----------------|

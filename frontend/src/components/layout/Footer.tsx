@@ -94,8 +94,8 @@ export function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-sm text-slate-700 font-semibold">
                 <Mail size={16} className="text-[#9333ea]" />
-                <a href="mailto:contact@gr-attitude.fr" className="hover:text-[#9333ea] transition-colors">
-                  contact@gr-attitude.fr
+                <a href="mailto:contact@entraidance.fr" className="hover:text-[#9333ea] transition-colors">
+                  contact@entraidance.fr
                 </a>
               </li>
               <li className="flex items-center gap-2 text-sm text-slate-700 font-semibold">

@@ -15,6 +15,8 @@ interface AuthRequiredModalProps {
 }
 
 export function AuthRequiredModal({ open, onOpenChange }: AuthRequiredModalProps) {
+  const handleClose = () => onOpenChange(false);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md border-0 overflow-hidden p-0">
@@ -57,7 +59,7 @@ export function AuthRequiredModal({ open, onOpenChange }: AuthRequiredModalProps
             size="lg"
             className="w-full gradient-primary text-white border-0 font-semibold shimmer h-12 text-base"
           >
-            <Link href="/register">Créer un compte</Link>
+            <Link href="/register" onClick={handleClose}>Créer un compte</Link>
           </Button>
           <Button
             asChild
@@ -65,7 +67,7 @@ export function AuthRequiredModal({ open, onOpenChange }: AuthRequiredModalProps
             variant="outline"
             className="w-full h-12 text-base"
           >
-            <Link href="/login">J&apos;ai déjà un compte</Link>
+            <Link href="/login" onClick={handleClose}>J&apos;ai déjà un compte</Link>
           </Button>
           <p className="text-center text-xs text-muted-foreground pt-1">
             Gratuit, sans engagement, pour toujours ✨

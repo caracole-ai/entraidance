@@ -14,11 +14,11 @@ Peupler la base de données de production avec des utilisateurs, missions, offre
 
 | Email | Nom | Profil | Localisation | Premium |
 |-------|-----|--------|--------------|---------|
-| `demo.alice@gr-attitude.test` | Alice Martin | Développeuse web (React, Node.js) | Paris | Non |
-| `demo.bob@gr-attitude.test` | Bob Durand | Bricoleur chevronné | Paris | **Oui** |
-| `demo.claire@gr-attitude.test` | Claire Dubois | Professeure de français | Lyon | Non |
-| `demo.david@gr-attitude.test` | David Petit | Graphiste freelance | Marseille | **Oui** |
-| `demo.emma@gr-attitude.test` | Emma Rousseau | Étudiante en médecine, cuisinière | Paris | Non |
+| `demo.alice@entraidance.test` | Alice Martin | Développeuse web (React, Node.js) | Paris | Non |
+| `demo.bob@entraidance.test` | Bob Durand | Bricoleur chevronné | Paris | **Oui** |
+| `demo.claire@entraidance.test` | Claire Dubois | Professeure de français | Lyon | Non |
+| `demo.david@entraidance.test` | David Petit | Graphiste freelance | Marseille | **Oui** |
+| `demo.emma@entraidance.test` | Emma Rousseau | Étudiante en médecine, cuisinière | Paris | Non |
 
 ### **6 Missions démo**
 
@@ -56,7 +56,7 @@ Render détecte automatiquement le push Git et lance le build.
 
 ### Étape 2 : Ouvrir le Shell Render
 
-1. Render Dashboard → `gr-attitude-api` → **Shell** (onglet du haut)
+1. Render Dashboard → `entraidance-api` → **Shell** (onglet du haut)
 2. Attendre que le terminal se connecte
 
 ### Étape 3 : Exécuter le seeding
@@ -85,7 +85,7 @@ npm run seed
 
 ### Étape 4 : Vérifier sur le frontend
 
-1. Aller sur https://gr-attitude-frontend.onrender.com
+1. Aller sur https://entraidance-frontend.onrender.com
 2. **Se connecter avec Google OAuth**
 3. Naviguer vers `/missions` → **6 missions doivent apparaître**
 4. Naviguer vers `/offers` (si page existe) → **4 offres doivent apparaître**
@@ -96,7 +96,7 @@ npm run seed
 
 **Quand tu veux nettoyer la base (avant lancement public) :**
 
-1. Render Dashboard → `gr-attitude-api` → **Shell**
+1. Render Dashboard → `entraidance-api` → **Shell**
 2. Exécuter :
 
 ```bash

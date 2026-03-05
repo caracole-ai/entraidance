@@ -1,6 +1,6 @@
 # Analytics & Monitoring
 
-GR-attitude uses **Sentry** for error tracking, performance monitoring, and user analytics.
+Entraidance uses **Sentry** for error tracking, performance monitoring, and user analytics.
 
 ---
 

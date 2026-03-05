@@ -2,7 +2,7 @@
 
 > Voir aussi: [auth.md](./auth.md) pour le flow JWT, [dtos.md](./dtos.md) pour les bodies detailles, [business-logic.md](./business-logic.md) pour les regles metier
 
-Base URL: `http://localhost:3001` (dev) / `https://gr-attitude-api.onrender.com` (prod)
+Base URL: `http://localhost:3001` (dev) / `https://entraidance-api.onrender.com` (prod)
 
 ## Auth
 

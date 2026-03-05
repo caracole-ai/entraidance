@@ -1,4 +1,4 @@
-# Design Brief — GR attitude Glassmorphism Redesign
+# Design Brief — Entraidance Glassmorphism Redesign
 
 ## Source Stitch HTML (reference)
 See `/tmp/stitch-besoins-source.html` for the full Stitch HTML.

@@ -39,7 +39,7 @@ export default function OAuthCallbackPage() {
           console.log('[OAuth] Login réussi, redirection...');
           toast({
             title: 'Connexion réussie !',
-            description: 'Bienvenue sur GR attitude',
+            description: 'Bienvenue sur Entraidance',
           });
           
           // Petit delay pour laisser le temps au state de se mettre à jour

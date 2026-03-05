@@ -1,10 +1,10 @@
-# GR-attitude Backend API
+# Entraidance Backend API
 
 [![NestJS](https://img.shields.io/badge/NestJS-11.0.1-ea2845)](https://nestjs.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](https://www.typescriptlang.org/)
 [![SQLite](https://img.shields.io/badge/SQLite-Production-003b57)](https://www.sqlite.org/)
 
-Backend API REST de la plateforme GR-attitude — Gestion des missions, offres, contributions et matching intelligent.
+Backend API REST de la plateforme Entraidance — Gestion des missions, offres, contributions et matching intelligent.
 
 ---
 
@@ -260,10 +260,10 @@ Voir [MIGRATIONS.md](./MIGRATIONS.md) pour guide complet.
 ### Render.com (Production)
 Le backend est auto-déployé sur Render à chaque push sur `master`.
 
-**URL** : https://gr-attitude-api.onrender.com
+**URL** : https://entraidance-api.onrender.com
 
 **Configuration** :
-- Auto-deploy depuis GitHub (fork `caracole-ai/gr-attitude`)
+- Auto-deploy depuis GitHub (fork `caracole-ai/entraidance`)
 - Build command : `cd backend && npm install && npm run build`
 - Start command : `cd backend && npm run start:prod`
 - Health check : `GET /health`
@@ -349,4 +349,4 @@ Projet privé — Tous droits réservés.
 
 **Dernière mise à jour** : 2026-03-01  
 **Version** : Production-Ready (SQLite + Migrations + Tests E2E)  
-**Auteur** : Équipe GR-attitude
+**Auteur** : Équipe Entraidance

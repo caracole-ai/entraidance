@@ -1,6 +1,6 @@
 # Rate Limiting Strategy
 
-GR-attitude uses **NestJS Throttler** to protect API endpoints from abuse and ensure fair resource allocation.
+Entraidance uses **NestJS Throttler** to protect API endpoints from abuse and ensure fair resource allocation.
 
 ## Configuration
 

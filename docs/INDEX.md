@@ -1,4 +1,4 @@
-# GR attitude - Documentation technique
+# Entraidance - Documentation technique
 
 > Index optimise pour navigation rapide. Chaque fichier couvre un domaine unique.
 > Lire ce fichier suffit pour savoir OU trouver l'info, puis ouvrir uniquement le fichier necessaire.

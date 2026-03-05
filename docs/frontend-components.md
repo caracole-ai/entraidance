@@ -30,7 +30,7 @@ Dir: `frontend/src/components/layout/`
 
 ### Footer
 - File: `Footer.tsx`
-- Copyright dynamique + "GR attitude. Tous droits réservés."
+- Copyright dynamique + "Entraidance. Tous droits réservés."
 
 ### MobileNav
 - File: `MobileNav.tsx`

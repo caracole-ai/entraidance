@@ -1,6 +1,6 @@
 # Performance Optimization Guide
 
-GR-attitude performance optimizations: database indexing, query optimization, and monitoring.
+Entraidance performance optimizations: database indexing, query optimization, and monitoring.
 
 ---
 

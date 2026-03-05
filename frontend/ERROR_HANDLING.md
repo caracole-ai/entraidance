@@ -1,6 +1,6 @@
 # Error Handling Guide — Frontend
 
-GR-attitude implements comprehensive error handling at multiple levels:
+Entraidance implements comprehensive error handling at multiple levels:
 
 ## Architecture
 
