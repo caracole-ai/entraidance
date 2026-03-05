@@ -100,7 +100,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2 text-sm text-slate-700 font-semibold">
                 <MapPin size={16} className="text-[#9333ea]" />
-                <span>Paris, France</span>
+                <span>Marseille, France</span>
               </li>
             </ul>
           </div>

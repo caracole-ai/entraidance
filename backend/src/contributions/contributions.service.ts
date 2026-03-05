@@ -58,6 +58,24 @@ export class ContributionsService {
       throw new NotFoundException('Mission not found');
     }
 
+    // Check if contribution already exists (toggle behavior)
+    const existing = await this.contributionsRepository.findOneBy({
+      userId,
+      missionId,
+      type: dto.type,
+    });
+
+    if (existing) {
+      // Toggle: if ACTIVE -> ANNULEE, if ANNULEE -> ACTIVE
+      if (existing.status === ContributionStatus.ACTIVE) {
+        existing.status = ContributionStatus.ANNULEE;
+      } else {
+        existing.status = ContributionStatus.ACTIVE;
+        existing.message = dto.message || existing.message;
+      }
+      return this.contributionsRepository.save(existing);
+    }
+
     const contribution = this.contributionsRepository.create({
       userId,
       missionId,
