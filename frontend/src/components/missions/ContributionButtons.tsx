@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useCreateContribution } from '@/hooks/useCreateContribution';
@@ -69,7 +69,15 @@ export function ContributionButtons({ missionId }: ContributionButtonsProps) {
   const [expandedType, setExpandedType] = useState<ContributionType | null>(null);
   const [message, setMessage] = useState('');
   const [hoveredType, setHoveredType] = useState<ContributionType | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const mutation = useCreateContribution();
+
+  // Focus automatique sur le textarea quand l'accordéon s'ouvre
+  useEffect(() => {
+    if (expandedType && textareaRef.current) {
+      setTimeout(() => textareaRef.current?.focus(), 100);
+    }
+  }, [expandedType]);
 
   const handleToggle = (type: ContributionType) => {
     if (expandedType === type) {
@@ -153,6 +161,7 @@ export function ContributionButtons({ missionId }: ContributionButtonsProps) {
                 >
                   <div className="flex flex-col gap-2 p-3 rounded-xl bg-white/60 backdrop-blur-sm border border-slate-200">
                     <Textarea
+                      ref={textareaRef}
                       placeholder={PLACEHOLDERS[type]}
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
@@ -166,7 +175,7 @@ export function ContributionButtons({ missionId }: ContributionButtonsProps) {
                         size="sm"
                         className="flex-1 text-white border-0 font-semibold"
                         style={{
-                          background: `linear-gradient(135deg, ${borderColor}, color-mix(in oklch, ${borderColor} 80%, black))`,
+                          background: borderColor,
                         }}
                       >
                         {mutation.isPending ? t('common.sending') : 'Envoyer'}

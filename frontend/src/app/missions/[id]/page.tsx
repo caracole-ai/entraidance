@@ -285,12 +285,12 @@ export default function MissionDetailPage({
                   {contributions.map((contribution, idx) => {
                     const initial = contribution.user?.displayName?.charAt(0).toUpperCase() ?? 'U';
                     const isEven = idx % 2 === 0;
-                    // Couleurs alignées sur les boutons de contribution
+                    // Couleurs aplats alignées sur les boutons de contribution
                     const bubbleColors: Record<string, string> = {
-                      participe: 'bg-gradient-to-br from-[#6366f1] to-[#4f46e5] text-white', // bleu violet
-                      propose: 'bg-gradient-to-br from-[#9333ea] to-[#7c3aed] text-white', // violet pourpre
-                      finance: 'bg-gradient-to-br from-[#14b8a6] to-[#0d9488] text-white', // teal
-                      conseille: 'bg-gradient-to-br from-[#eab308] to-[#ca8a04] text-white', // jaune/lime
+                      participe: 'bg-[#6366f1] text-white', // bleu violet
+                      propose: 'bg-[#9333ea] text-white', // violet pourpre
+                      finance: 'bg-[#14b8a6] text-white', // teal
+                      conseille: 'bg-[#eab308] text-white', // jaune
                     };
                     const bubbleColor = bubbleColors[contribution.type] ?? bubbleColors.participe;
                     const badgeColors: Record<string, string> = {
