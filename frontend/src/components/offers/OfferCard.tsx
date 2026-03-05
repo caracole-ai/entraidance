@@ -60,7 +60,7 @@ export function OfferCard({ offer }: OfferCardProps) {
 
   return (
     <Link href={`/offers/${offer.id}`} className="block group">
-      <div className="relative h-full glass-card-liquid rounded-[3rem] p-8 pt-16">
+      <div className="relative h-full min-h-[380px] glass-card-liquid rounded-[3rem] p-8 pt-16 flex flex-col">
         {/* Offer type badge - top left */}
         <div className="absolute top-3 left-3 z-10">
           <div className={`${OFFER_TYPE_COLORS[offer.offerType]} px-4 py-2 rounded-2xl text-xs font-black uppercase tracking-widest shadow-lg`}>
@@ -81,7 +81,7 @@ export function OfferCard({ offer }: OfferCardProps) {
         )}
 
         {/* Content */}
-        <div className="relative z-0 space-y-4">
+        <div className="relative z-0 flex flex-col flex-grow space-y-4">
           {/* Category label */}
           {offer.category && (
             <div>
@@ -118,6 +118,9 @@ export function OfferCard({ offer }: OfferCardProps) {
               <span>{timeAgo(offer.createdAt)}</span>
             </div>
           </div>
+
+          {/* Spacer to push footer to bottom */}
+          <div className="flex-grow" />
 
           {/* Divider */}
           <div className="h-px bg-gradient-to-r from-transparent via-slate-300/60 to-transparent" />
