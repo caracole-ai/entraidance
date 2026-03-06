@@ -1,27 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import { Pencil } from 'lucide-react';
+import { useState, useCallback } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { EditItemDialog, type SelectField, type InputField } from '@/components/shared/EditItemDialog';
 import { offersApi } from '@/lib/api';
 import {
   type IOffer,
@@ -41,7 +22,6 @@ interface EditOfferDialogProps {
 
 export function EditOfferDialog({ offer }: EditOfferDialogProps) {
   const queryClient = useQueryClient();
-  const [open, setOpen] = useState(false);
   const [title, setTitle] = useState(offer.title);
   const [description, setDescription] = useState(offer.description);
   const [offerType, setOfferType] = useState<OfferType>(offer.offerType);
@@ -58,7 +38,6 @@ export function EditOfferDialog({ offer }: EditOfferDialogProps) {
       queryClient.invalidateQueries({ queryKey: ['offer', offer.id] });
       queryClient.invalidateQueries({ queryKey: ['offers'] });
       toast.success(t('propositions.updated'));
-      setOpen(false);
     },
     onError: (error) => {
       const message = error instanceof Error ? error.message : 'Erreur';
@@ -85,8 +64,7 @@ export function EditOfferDialog({ offer }: EditOfferDialogProps) {
     });
   };
 
-  const handleOpenChange = (isOpen: boolean) => {
-    setOpen(isOpen);
+  const handleOpenChange = useCallback((isOpen: boolean) => {
     if (isOpen) {
       setTitle(offer.title);
       setDescription(offer.description);
@@ -97,122 +75,86 @@ export function EditOfferDialog({ offer }: EditOfferDialogProps) {
       setLocation(offer.location ?? '');
       setTags(offer.tags.join(', '));
     }
-  };
+  }, [offer]);
+
+  const selectFields: SelectField[] = [
+    {
+      id: 'offerType',
+      label: t('propositions.typeLabel'),
+      value: offerType,
+      onChange: (v) => setOfferType(v as OfferType),
+      options: Object.entries(OFFER_TYPE_LABELS).map(([k, l]) => ({ value: k, label: l })),
+    },
+    {
+      id: 'category',
+      label: 'Catégorie',
+      value: category || '__none__',
+      onChange: (v) => setCategory(v === '__none__' ? '' : v as MissionCategory),
+      options: Object.entries(CATEGORY_LABELS).map(([k, l]) => ({ value: k, label: l })),
+      allowNone: true,
+      placeholder: 'Aucune',
+    },
+    {
+      id: 'visibility',
+      label: 'Visibilité',
+      value: visibility || '__none__',
+      onChange: (v) => setVisibility(v === '__none__' ? '' : v as Visibility),
+      options: Object.entries(VISIBILITY_LABELS).map(([k, l]) => ({ value: k, label: l })),
+      allowNone: true,
+      placeholder: 'Par défaut',
+    },
+  ];
+
+  const inputFields: InputField[] = [
+    {
+      id: 'title',
+      label: 'Titre',
+      value: title,
+      onChange: setTitle,
+      required: true,
+    },
+    {
+      id: 'description',
+      label: 'Description',
+      value: description,
+      onChange: setDescription,
+      type: 'textarea',
+      rows: 4,
+      required: true,
+    },
+    {
+      id: 'availability',
+      label: 'Disponibilité',
+      value: availability,
+      onChange: setAvailability,
+      placeholder: 'Ex: weekends, soirées...',
+    },
+    {
+      id: 'location',
+      label: 'Localisation',
+      value: location,
+      onChange: setLocation,
+      placeholder: 'Paris, France',
+    },
+    {
+      id: 'tags',
+      label: 'Tags (séparés par virgules)',
+      value: tags,
+      onChange: setTags,
+      placeholder: 'aide, compétence, bénévole',
+    },
+  ];
 
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          <Pencil className="h-4 w-4 mr-2" />
-          Modifier
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>{t('propositions.edit.title')}</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="edit-offer-title">Titre</Label>
-            <Input
-              id="edit-offer-title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="edit-offer-description">Description</Label>
-            <Textarea
-              id="edit-offer-description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows={4}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label>{t('propositions.typeLabel')}</Label>
-            <Select value={offerType} onValueChange={(v) => setOfferType(v as OfferType)}>
-              <SelectTrigger className="w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {(Object.entries(OFFER_TYPE_LABELS) as [OfferType, string][]).map(([key, label]) => (
-                  <SelectItem key={key} value={key}>{label}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label>Categorie (optionnel)</Label>
-            <Select
-              value={category}
-              onValueChange={(v) => setCategory(v === '__none__' ? '' : v as MissionCategory)}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Aucune" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="__none__">Aucune</SelectItem>
-                {(Object.entries(CATEGORY_LABELS) as [MissionCategory, string][]).map(([key, label]) => (
-                  <SelectItem key={key} value={key}>{label}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="edit-offer-availability">Disponibilite (optionnel)</Label>
-            <Input
-              id="edit-offer-availability"
-              value={availability}
-              onChange={(e) => setAvailability(e.target.value)}
-              placeholder="Ex: weekends, soirees..."
-            />
-          </div>
-          <div className="space-y-2">
-            <Label>Visibilite (optionnel)</Label>
-            <Select
-              value={visibility}
-              onValueChange={(v) => setVisibility(v === '__none__' ? '' : v as Visibility)}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Par defaut" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="__none__">Par defaut</SelectItem>
-                {(Object.entries(VISIBILITY_LABELS) as [Visibility, string][]).map(([key, label]) => (
-                  <SelectItem key={key} value={key}>{label}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="edit-offer-location">Localisation (optionnel)</Label>
-            <Input
-              id="edit-offer-location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Paris, France"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="edit-offer-tags">Tags (separes par des virgules)</Label>
-            <Input
-              id="edit-offer-tags"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              placeholder="aide, competence, benevole"
-            />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>
-            {t('common.cancel')}
-          </Button>
-          <Button onClick={handleSubmit} disabled={updateOffer.isPending}>
-            {updateOffer.isPending ? t('common.saving') : t('common.save')}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <EditItemDialog
+      title={t('propositions.edit.title')}
+      itemTitle={offer.title}
+      category={category || null}
+      selectFields={selectFields}
+      inputFields={inputFields}
+      onSubmit={handleSubmit}
+      isPending={updateOffer.isPending}
+      onOpenChange={handleOpenChange}
+    />
   );
 }

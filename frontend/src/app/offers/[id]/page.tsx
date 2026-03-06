@@ -23,29 +23,7 @@ import { toast } from 'sonner';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/motion';
 import { DetailHero } from '@/components/detail/DetailHero';
-
-const OFFER_TYPE_COLORS: Record<OfferType, string> = {
-  don: 'bg-gradient-to-r from-blue-400 to-cyan-400 text-white',
-  competence: 'bg-gradient-to-r from-purple-400 to-violet-400 text-white',
-  materiel: 'bg-gradient-to-r from-orange-400 to-amber-400 text-white',
-  service: 'bg-gradient-to-r from-emerald-400 to-teal-400 text-white',
-  ecoute: 'bg-gradient-to-r from-pink-400 to-rose-400 text-white',
-};
-
-const CATEGORY_ACCENT: Record<MissionCategory, string> = {
-  demenagement: '#8b5cf6',
-  bricolage: '#f97316',
-  numerique: '#3b82f6',
-  administratif: '#06b6d4',
-  garde_enfants: '#ec4899',
-  transport: '#a855f7',
-  ecoute: '#f43f5e',
-  emploi: '#10b981',
-  alimentation: '#f59e0b',
-  animaux: '#84cc16',
-  education: '#eab308',
-  autre: '#6b7280',
-};
+import { OFFER_TYPE_COLORS, getCategoryAccent } from '@/components/shared/constants';
 
 export default function OfferDetailPage({
   params,
@@ -115,7 +93,7 @@ export default function OfferDetailPage({
 
   const isCreator = user?.id === offer.creatorId;
   const isOpen = offer.status === OfferStatus.OUVERTE || offer.status === OfferStatus.EN_COURS;
-  const categoryAccent = offer.category ? (CATEGORY_ACCENT[offer.category as MissionCategory] ?? '#10b981') : '#10b981';
+  const categoryAccent = getCategoryAccent(offer.category);
 
   // Build badges array for DetailHero
   const heroBadges = [

@@ -21,7 +21,9 @@ import {
   MissionStatus,
 } from '@/lib/types';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/motion';
+import { timeAgo } from '@/components/shared/constants';
 
+// Profile-specific soft colors (different from card gradients)
 const URGENCY_COLORS: Record<Urgency, string> = {
   faible: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
   moyen: 'bg-amber-50 text-amber-700 border border-amber-200',
@@ -35,20 +37,6 @@ const OFFER_TYPE_COLORS: Record<OfferType, string> = {
   service: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
   ecoute: 'bg-pink-50 text-pink-700 border border-pink-200',
 };
-
-function timeAgo(dateStr: string): string {
-  const now = new Date();
-  const date = new Date(dateStr);
-  const diffMs = now.getTime() - date.getTime();
-  const diffMin = Math.floor(diffMs / 60000);
-  if (diffMin < 1) return "A l'instant";
-  if (diffMin < 60) return `Il y a ${diffMin} min`;
-  const diffH = Math.floor(diffMin / 60);
-  if (diffH < 24) return `Il y a ${diffH}h`;
-  const diffD = Math.floor(diffH / 24);
-  if (diffD < 30) return `Il y a ${diffD}j`;
-  return `Il y a ${Math.floor(diffD / 30)} mois`;
-}
 
 function AnimatedNumber({ value }: { value: number }) {
   const [displayed, setDisplayed] = useState(0);

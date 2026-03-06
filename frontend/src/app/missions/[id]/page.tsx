@@ -28,47 +28,13 @@ import {
 } from '@/lib/types';
 import { FadeIn, StaggerItem } from '@/components/ui/motion';
 import { DetailHero } from '@/components/detail/DetailHero';
-
-const URGENCY_COLORS: Record<Urgency, string> = {
-  faible: 'bg-gradient-to-r from-emerald-400 to-teal-400 text-white',
-  moyen: 'bg-gradient-to-r from-amber-400 to-orange-400 text-white',
-  urgent: 'bg-gradient-to-r from-red-500 to-pink-500 text-white',
-};
-
-const CATEGORY_ACCENT: Record<MissionCategory, string> = {
-  demenagement: '#8b5cf6',
-  bricolage: '#f97316',
-  numerique: '#3b82f6',
-  administratif: '#06b6d4',
-  garde_enfants: '#ec4899',
-  transport: '#a855f7',
-  ecoute: '#f43f5e',
-  emploi: '#10b981',
-  alimentation: '#f59e0b',
-  animaux: '#84cc16',
-  education: '#eab308',
-  autre: '#6b7280',
-};
+import { URGENCY_COLORS, getCategoryAccent, timeAgo } from '@/components/shared/constants';
 
 function daysUntil(dateStr: string): number {
   const now = new Date();
   const target = new Date(dateStr);
   const diffMs = target.getTime() - now.getTime();
   return Math.max(0, Math.ceil(diffMs / (1000 * 60 * 60 * 24)));
-}
-
-function timeAgo(dateStr: string): string {
-  const now = new Date();
-  const date = new Date(dateStr);
-  const diffMs = now.getTime() - date.getTime();
-  const diffMin = Math.floor(diffMs / 60000);
-  if (diffMin < 1) return "À l'instant";
-  if (diffMin < 60) return `Il y a ${diffMin} min`;
-  const diffH = Math.floor(diffMin / 60);
-  if (diffH < 24) return `Il y a ${diffH}h`;
-  const diffD = Math.floor(diffH / 24);
-  if (diffD < 30) return `Il y a ${diffD}j`;
-  return `Il y a ${Math.floor(diffD / 30)} mois`;
 }
 
 export default function MissionDetailPage({
@@ -123,7 +89,7 @@ export default function MissionDetailPage({
   const isCreator = user?.id === mission.creatorId;
   const isOpen = mission.status === MissionStatus.OUVERTE || mission.status === MissionStatus.EN_COURS;
   const daysLeft = daysUntil(mission.expiresAt);
-  const categoryAccent = CATEGORY_ACCENT[mission.category] ?? '#6b7280';
+  const categoryAccent = getCategoryAccent(mission.category);
 
   // Build badges array for DetailHero
   const heroBadges = [

@@ -1,37 +1,9 @@
 'use client';
 
 import { Badge } from '@/components/ui/badge';
-import { CategoryIcon, CATEGORY_COLORS } from '@/components/icons/CategoryIcon';
+import { CategoryIcon } from '@/components/icons/CategoryIcon';
+import { getCategoryAccent, timeAgo } from '@/components/shared/constants';
 import type { MissionCategory } from '@/lib/types';
-
-const CATEGORY_ACCENT: Record<MissionCategory, string> = {
-  demenagement: '#8b5cf6',
-  bricolage: '#f97316',
-  numerique: '#3b82f6',
-  administratif: '#06b6d4',
-  garde_enfants: '#ec4899',
-  transport: '#a855f7',
-  ecoute: '#f43f5e',
-  emploi: '#10b981',
-  alimentation: '#f59e0b',
-  animaux: '#84cc16',
-  education: '#eab308',
-  autre: '#6b7280',
-};
-
-function timeAgo(dateStr: string): string {
-  const now = new Date();
-  const date = new Date(dateStr);
-  const diffMs = now.getTime() - date.getTime();
-  const diffMin = Math.floor(diffMs / 60000);
-  if (diffMin < 1) return "À l'instant";
-  if (diffMin < 60) return `Il y a ${diffMin} min`;
-  const diffH = Math.floor(diffMin / 60);
-  if (diffH < 24) return `Il y a ${diffH}h`;
-  const diffD = Math.floor(diffH / 24);
-  if (diffD < 30) return `Il y a ${diffD}j`;
-  return `Il y a ${Math.floor(diffD / 30)} mois`;
-}
 
 export interface DetailHeroBadge {
   label: string;
@@ -61,7 +33,7 @@ export function DetailHero({
   createdAt,
   creatorGradient = 'from-purple-400 to-indigo-500',
 }: DetailHeroProps) {
-  const categoryAccent = category ? (CATEGORY_ACCENT[category] ?? '#6b7280') : '#6b7280';
+  const categoryAccent = getCategoryAccent(category);
   const creatorInitial = creatorName?.charAt(0).toUpperCase() ?? 'U';
 
   return (

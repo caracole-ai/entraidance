@@ -4,20 +4,7 @@ import { Bell } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useNotifications } from '@/hooks/useNotifications';
 import { useMarkNotificationRead } from '@/hooks/useMarkNotificationRead';
-
-function timeAgo(dateStr: string): string {
-  const now = new Date();
-  const date = new Date(dateStr);
-  const diffMs = now.getTime() - date.getTime();
-  const diffMin = Math.floor(diffMs / 60000);
-  if (diffMin < 1) return "A l'instant";
-  if (diffMin < 60) return `Il y a ${diffMin} min`;
-  const diffH = Math.floor(diffMin / 60);
-  if (diffH < 24) return `Il y a ${diffH}h`;
-  const diffD = Math.floor(diffH / 24);
-  if (diffD < 30) return `Il y a ${diffD}j`;
-  return `Il y a ${Math.floor(diffD / 30)} mois`;
-}
+import { timeAgo } from '@/components/shared/constants';
 
 export default function NotificationsPage() {
   const { data: notifications, isLoading } = useNotifications();
