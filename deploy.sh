@@ -22,10 +22,12 @@ ssh $VPS << 'EOF'
   git pull origin main
   
   echo "📦 Backend..."
-  cd backend && npm install --production && npm run build && pm2 restart backend
+  cd backend && npm install && npm run build || { echo "❌ Backend build failed!"; exit 1; }
+  pm2 restart backend
   
   echo "📦 Frontend..."
-  cd ../frontend && npm install --production && npm run build && pm2 restart frontend
+  cd ../frontend && npm install && npm run build || { echo "❌ Frontend build failed!"; exit 1; }
+  pm2 restart frontend
   
   echo ""
   echo "Status:"

@@ -22,8 +22,8 @@ ssh $VPS << 'EOF'
   cd /opt/entraidance
   git pull origin main
   cd frontend
-  npm install --production
-  npm run build
+  npm install
+  npm run build || { echo "❌ Build failed!"; exit 1; }
   pm2 restart frontend
   echo ""
   pm2 logs frontend --lines 5 --nostream
