@@ -22,7 +22,7 @@ import {
 import { toast } from 'sonner';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/motion';
-import { CategoryIcon, CATEGORY_COLORS } from '@/components/icons/CategoryIcon';
+import { DetailHero } from '@/components/detail/DetailHero';
 
 const OFFER_TYPE_COLORS: Record<OfferType, string> = {
   don: 'bg-gradient-to-r from-blue-400 to-cyan-400 text-white',
@@ -46,20 +46,6 @@ const CATEGORY_ACCENT: Record<MissionCategory, string> = {
   education: '#eab308',
   autre: '#6b7280',
 };
-
-function timeAgo(dateStr: string): string {
-  const now = new Date();
-  const date = new Date(dateStr);
-  const diffMs = now.getTime() - date.getTime();
-  const diffMin = Math.floor(diffMs / 60000);
-  if (diffMin < 1) return "À l'instant";
-  if (diffMin < 60) return `Il y a ${diffMin} min`;
-  const diffH = Math.floor(diffMin / 60);
-  if (diffH < 24) return `Il y a ${diffH}h`;
-  const diffD = Math.floor(diffH / 24);
-  if (diffD < 30) return `Il y a ${diffD}j`;
-  return `Il y a ${Math.floor(diffD / 30)} mois`;
-}
 
 export default function OfferDetailPage({
   params,
@@ -130,72 +116,34 @@ export default function OfferDetailPage({
   const isCreator = user?.id === offer.creatorId;
   const isOpen = offer.status === OfferStatus.OUVERTE || offer.status === OfferStatus.EN_COURS;
   const categoryAccent = offer.category ? (CATEGORY_ACCENT[offer.category as MissionCategory] ?? '#10b981') : '#10b981';
-  const creatorInitial = offer.creator?.displayName?.charAt(0).toUpperCase() ?? 'U';
+
+  // Build badges array for DetailHero
+  const heroBadges = [
+    {
+      label: OFFER_TYPE_LABELS[offer.offerType],
+      color: OFFER_TYPE_COLORS[offer.offerType],
+      variant: 'gradient' as const,
+    },
+    ...((!isOpen) ? [{
+      label: offer.status === OfferStatus.CLOTUREE ? 'Clôturée' : 'Expirée',
+      variant: 'secondary' as const,
+    }] : []),
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-stitch pb-20">
       <div className="container mx-auto max-w-4xl px-6 pt-8 space-y-4">
-        {/* Hero card avec icône catégorie */}
+        {/* Hero - using shared component */}
         <FadeIn>
-          <div className="relative glass-hero p-4 md:p-6 rounded-[2rem]">
-            {/* Icône catégorie en cercle semi-transparent (top-right) */}
-            {offer.category && (
-              <div className="absolute -top-4 -right-4 z-10">
-                <div
-                  className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
-                  style={{ backgroundColor: `${categoryAccent}25` }}
-                >
-                  <CategoryIcon category={offer.category as MissionCategory} size={28} style={{ color: categoryAccent }} />
-                </div>
-              </div>
-            )}
-
-            {/* Badge type offre (top-left) */}
-            <div className="absolute top-3 left-3 z-10">
-              <div className={`${OFFER_TYPE_COLORS[offer.offerType]} px-4 py-2 rounded-2xl text-xs font-black uppercase tracking-widest shadow-lg`}>
-                {OFFER_TYPE_LABELS[offer.offerType]}
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="relative z-0 pt-4">
-              {/* Badges */}
-              <div className="flex items-center gap-2 flex-wrap mb-2">
-                {offer.category && (
-                  <span
-                    className="inline-block px-3 py-1 rounded-full text-xs font-black uppercase tracking-[0.15em]"
-                    style={{
-                      backgroundColor: `${categoryAccent}20`,
-                      color: categoryAccent,
-                    }}
-                  >
-                    {CATEGORY_LABELS[offer.category as MissionCategory]}
-                  </span>
-                )}
-                {!isOpen && (
-                  <Badge variant="secondary" className="text-xs font-bold uppercase tracking-wider">
-                    {offer.status === OfferStatus.CLOTUREE ? 'Clôturée' : 'Expirée'}
-                  </Badge>
-                )}
-              </div>
-
-              {/* Title */}
-              <h1 className="text-xl md:text-3xl font-black tracking-tight text-slate-900 leading-tight mb-2">
-                {offer.title}
-              </h1>
-
-              {/* Creator */}
-              <div className="flex items-center gap-3 text-sm">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white font-bold text-sm">
-                  {creatorInitial}
-                </div>
-                <div>
-                  <div className="font-bold text-slate-900">{offer.creator?.displayName}</div>
-                  <div className="text-slate-500 text-xs">{timeAgo(offer.createdAt)}</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <DetailHero
+            title={offer.title}
+            badges={heroBadges}
+            category={offer.category as MissionCategory}
+            categoryLabel={offer.category ? CATEGORY_LABELS[offer.category as MissionCategory] : undefined}
+            creatorName={offer.creator?.displayName}
+            createdAt={offer.createdAt}
+            creatorGradient="from-emerald-400 to-teal-500"
+          />
         </FadeIn>
 
         {/* Description */}
