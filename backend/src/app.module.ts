@@ -16,6 +16,7 @@ import { MatchingModule } from './matching/matching.module';
 import { CronsModule } from './crons/crons.module';
 import { EventsModule } from './events/events.module';
 import { SeedModule } from './seed/seed.module';
+import { AdminModule } from './admin/admin.module';
 import { AppController } from './app.controller';
 
 @Module({
@@ -49,6 +50,7 @@ import { AppController } from './app.controller';
     CronsModule,
     EventsModule,
     SeedModule,
+    AdminModule,
   ],
   controllers: [AppController],
 })

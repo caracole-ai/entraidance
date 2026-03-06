@@ -4,10 +4,8 @@ import './globals.css';
 import { QueryProvider } from '@/providers/query-provider';
 import { AuthProvider } from '@/providers/auth-provider';
 import { SocketProvider } from '@/providers/socket-provider';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
+import { ConditionalLayout } from '@/components/layout/ConditionalLayout';
 import { Toaster } from '@/components/ui/sonner';
-import { AuthGuard } from '@/components/auth/AuthGuard';
 
 const nunito = Nunito({
   variable: '--font-nunito',
@@ -67,12 +65,7 @@ export default function RootLayout({
         <QueryProvider>
           <AuthProvider>
             <SocketProvider>
-              <div className="flex min-h-screen flex-col">
-                <Header />
-                <main className="flex-1">{children}</main>
-                <Footer />
-              </div>
-              <AuthGuard />
+              <ConditionalLayout>{children}</ConditionalLayout>
               <Toaster />
             </SocketProvider>
           </AuthProvider>
