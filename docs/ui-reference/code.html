@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;family=Marck+Script&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#8b5cf6", // Brand Violet
+                        "mint": "#6ee7b7",
+                        "soft-orange": "#fb923c",
+                        "sky": "#38bdf8",
+                        "background-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"],
+                        "script": ["Marck Script", "cursive"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "3xl": "2.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .mesh-gradient {
+            background-color: #ffffff;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(273, 90%, 90%, 1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(25, 100%, 94%, 1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, hsla(180, 100%, 95%, 1) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, hsla(200, 100%, 95%, 1) 0px, transparent 50%);
+        }
+        .liquid-glass {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(139, 92, 246, 0.05);
+        }
+        .illustration-float {
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+        }
+    </style>
+</head>
+<body class="bg-background-light font-display text-slate-800 antialiased">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-slate-100 bg-white/80 backdrop-blur-md">
+<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+<div class="flex items-center gap-10">
+<div class="flex items-center gap-2">
+<div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white">
+<span class="material-symbols-outlined text-2xl">volunteer_activism</span>
+</div>
+<h2 class="text-2xl font-extrabold tracking-tight text-primary">Entraidance</h2>
+</div>
+<nav class="hidden items-center gap-8 md:flex">
+<a class="text-sm font-semibold text-slate-600 hover:text-primary transition-colors" href="#">Accueil</a>
+<a class="text-sm font-semibold text-primary" href="#">Besoins</a>
+<a class="text-sm font-semibold text-slate-600 hover:text-primary transition-colors" href="#">Offrir son aide</a>
+<a class="text-sm font-semibold text-slate-600 hover:text-primary transition-colors" href="#">Blog</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="h-10 w-64 rounded-full border-none bg-slate-100 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20" placeholder="Rechercher..." type="text"/>
+</div>
+<button class="h-10 rounded-full bg-primary px-6 text-sm font-bold text-white shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
+                    Connexion
+                </button>
+</div>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="mesh-gradient relative overflow-hidden py-20 px-6">
+<div class="mx-auto max-w-7xl text-center">
+<h1 class="mb-6 text-5xl font-black text-slate-900 md:text-7xl">
+                    Besoins d'<span class="font-script text-primary text-6xl md:text-8xl lowercase px-2">entraide</span>
+</h1>
+<p class="mx-auto max-w-2xl text-lg font-medium text-slate-600 leading-relaxed">
+                    Rejoignez notre communauté solidaire pour échanger services et savoir-faire avec bienveillance. Un petit coup de main, un grand sourire !
+                </p>
+<div class="mt-10 flex flex-wrap justify-center gap-4">
+<button class="flex h-14 items-center gap-2 rounded-full bg-primary px-8 text-lg font-bold text-white shadow-xl shadow-primary/30 hover:-translate-y-1 transition-transform">
+                        Comment ça marche ?
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="h-14 rounded-full bg-white px-8 text-lg font-bold text-primary shadow-sm ring-1 ring-slate-200 hover:bg-slate-50 transition-colors">
+                        Publier un besoin
+                    </button>
+</div>
+</div>
+</section>
+<div class="mx-auto max-w-7xl px-6 py-12">
+<!-- Filters -->
+<div class="mb-12 flex flex-wrap items-center gap-3">
+<button class="flex h-10 items-center gap-2 rounded-full bg-primary px-5 text-sm font-bold text-white">
+<span class="material-symbols-outlined text-lg">apps</span>
+                    Tous
+                </button>
+<button class="flex h-10 items-center gap-2 rounded-full bg-mint/15 px-5 text-sm font-bold text-mint hover:bg-mint/25 transition-colors">
+<span class="material-symbols-outlined text-lg">handshake</span>
+                    Services
+                </button>
+<button class="flex h-10 items-center gap-2 rounded-full bg-sky/15 px-5 text-sm font-bold text-sky hover:bg-sky/25 transition-colors">
+<span class="material-symbols-outlined text-lg">menu_book</span>
+                    Éducation
+                </button>
+<button class="flex h-10 items-center gap-2 rounded-full bg-soft-orange/15 px-5 text-sm font-bold text-soft-orange hover:bg-soft-orange/25 transition-colors">
+<span class="material-symbols-outlined text-lg">local_shipping</span>
+                    Transport
+                </button>
+<button class="flex h-10 items-center gap-2 rounded-full bg-primary/10 px-5 text-sm font-bold text-primary hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-lg">build</span>
+                    Bricolage
+                </button>
+<div class="ml-auto hidden items-center gap-2 text-sm font-medium text-slate-500 lg:flex">
+<span class="material-symbols-outlined text-lg">location_on</span>
+                    Autour de moi : <span class="font-bold text-primary">Lyon, FR</span>
+</div>
+</div>
+<!-- Needs Grid -->
+<div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+<!-- Card 1 -->
+<div class="liquid-glass group relative flex flex-col rounded-3xl p-8 transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10">
+<div class="absolute -top-6 -right-4 w-20 h-20 floating-illustration z-10 group-hover:-translate-y-2 opacity-80"><div class="relative flex items-center justify-center w-16 h-16 group-hover:-translate-y-2 transition-transform duration-300">
+<div class="absolute w-16 h-16 rounded-full bg-primary/10 animate-pulse"></div>
+<div class="absolute w-20 h-20 rounded-full border border-primary/5"></div>
+<svg class="relative w-12 h-12 drop-shadow-xl z-10" viewbox="0 0 128 128">
+<defs>
+<lineargradient id="bookGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#a78bfa"></stop>
+<stop offset="100%" style="stop-color:#7c3aed"></stop>
+</lineargradient>
+</defs>
+<rect fill="url(#bookGrad)" height="88" rx="12" width="108" x="10" y="20"></rect>
+<path d="M64 20 v88" stroke="rgba(255,255,255,0.3)" stroke-width="4"></path>
+<path d="M25 40 h30 M25 55 h30 M25 70 h30 M73 40 h30 M73 55 h30 M73 70 h30" opacity="0.6" stroke="white" stroke-linecap="round" stroke-width="4"></path>
+<circle cx="100" cy="90" fill="#fcd34d" r="12"></circle>
+</svg>
+</div></div>
+<div class="mb-4 flex items-center gap-3">
+<div class="h-10 w-10 overflow-hidden rounded-full border-2 border-white shadow-sm">
+<img class="h-full w-full object-cover" data-alt="Portrait of Julie, smiling woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPNYvcyoh2H2FQYG3Q8yeb7dbhFoBPwUUQ43THUuRn8EuAnOmOT2fovWYlWZMao0SubRKAD7To-bLVgjlyOy-FAs2AMhinzAqR5zctUttDvVvbmwc4xum_iD4q3v_X3jt85a8_6bMM40KdT0Eenetv_uyzzG7Gx4xrnWt6_BxejQNua5y-6G2v6jQN0xfcZ6z8SaqcfQDRvsVRcsUxRard7G2AtPdpZ4eBmRcZ_9ZViiMuRz3zAWHqid1jT3co7o_jG_RbMgj1vqmK"/>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900">Julie</p>
+<p class="text-xs text-slate-500">À 2km • Il y a 2h</p>
+</div>
+</div>
+<h3 class="mb-2 text-xl font-extrabold text-slate-900">Aide aux devoirs</h3>
+<p class="mb-6 text-sm leading-relaxed text-slate-600">
+                        Besoin urgent pour mon fils de 12 ans qui bloque sur les fractions en mathématiques. Un petit coup de pouce d'une heure ?
+                    </p>
+<div class="mt-auto flex items-center justify-between">
+<span class="rounded-full bg-mint/10 px-3 py-1 text-xs font-bold text-mint uppercase tracking-wider">Éducation</span>
+<button class="h-10 rounded-xl bg-primary px-5 text-sm font-bold text-white hover:bg-primary/90 transition-all">
+                            Voir le besoin
+                        </button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="liquid-glass group relative flex flex-col rounded-3xl p-8 transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10">
+<div class="absolute -top-6 -right-4 w-20 h-20 floating-illustration z-10 group-hover:-translate-y-2 opacity-80"><div class="relative flex items-center justify-center w-16 h-16 group-hover:-translate-y-2 transition-transform duration-300">
+<div class="absolute w-16 h-16 rounded-full bg-mint/10 animate-pulse"></div>
+<div class="absolute w-20 h-20 rounded-full border border-mint/5"></div>
+<svg class="relative w-12 h-12 drop-shadow-xl z-10" viewbox="0 0 128 128">
+<defs>
+<lineargradient id="plantGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#34d399"></stop>
+<stop offset="100%" style="stop-color:#059669"></stop>
+</lineargradient>
+</defs>
+<path d="M64 110 V60 M64 60 C40 40 20 60 20 60 C20 60 40 80 64 60 M64 60 C88 40 108 60 108 60 C108 60 88 80 64 60" fill="none" stroke="url(#plantGrad)" stroke-linecap="round" stroke-width="8"></path>
+<path d="M40 90 Q64 70 88 90" fill="none" stroke="url(#plantGrad)" stroke-linecap="round" stroke-width="6"></path>
+<rect fill="#d1d5db" height="30" rx="6" width="40" x="44" y="90"></rect>
+<rect fill="#9ca3af" height="8" rx="4" width="48" x="40" y="85"></rect>
+</svg>
+</div></div>
+<div class="mb-4 flex items-center gap-3">
+<div class="h-10 w-10 overflow-hidden rounded-full border-2 border-white shadow-sm">
+<img class="h-full w-full object-cover" data-alt="Portrait of Marc, friendly man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUqmS8jrE1vjnBfqQSjco9e7bWYLr36xQBNImXEtlB5AEsLj7mCdRlc2ZCc4tRHJ_KJKF8TLIfooYxk6sYpSDF13-Fe5d4zCvZ3PnMMOniDiwyuUCe8O-RjxZrJywEQcy0En-ax2eeJhUgLB6BtEjZ8CxlcHFqeyFdDI_Jr677xdjQJ3v6vD7WxZvxdNdJ3hpdSRtlfwxx29VazEltYmPoucXPewgj59jzgEuGbjo-0d8v0MIdwHdWtQ9Snfdcty5l4LtSgoY-2i2C"/>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900">Marc</p>
+<p class="text-xs text-slate-500">À 500m • Il y a 5h</p>
+</div>
+</div>
+<h3 class="mb-2 text-xl font-extrabold text-slate-900">Tonte de pelouse</h3>
+<p class="mb-6 text-sm leading-relaxed text-slate-600">
+                        Ma tondeuse est en panne et mon jardin ressemble à une jungle. Quelqu'un aurait un peu de temps ce weekend ?
+                    </p>
+<div class="mt-auto flex items-center justify-between">
+<span class="rounded-full bg-soft-orange/10 px-3 py-1 text-xs font-bold text-soft-orange uppercase tracking-wider">Jardinage</span>
+<button class="h-10 rounded-xl bg-primary px-5 text-sm font-bold text-white hover:bg-primary/90 transition-all">
+                            Voir le besoin
+                        </button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="liquid-glass group relative flex flex-col rounded-3xl p-8 transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10">
+<div class="absolute -top-6 -right-4 w-20 h-20 floating-illustration z-10 group-hover:-translate-y-2 opacity-80"><div class="relative flex items-center justify-center w-16 h-16 group-hover:-translate-y-2 transition-transform duration-300">
+<div class="absolute w-16 h-16 rounded-full bg-soft-orange/10 animate-pulse"></div>
+<div class="absolute w-20 h-20 rounded-full border border-soft-orange/5"></div>
+<svg class="relative w-12 h-12 drop-shadow-xl z-10" viewbox="0 0 128 128">
+<defs>
+<lineargradient id="basketGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#fb923c"></stop>
+<stop offset="100%" style="stop-color:#ea580c"></stop>
+</lineargradient>
+</defs>
+<path d="M34 50 Q64 10 94 50" fill="none" stroke="#94a3b8" stroke-linecap="round" stroke-width="6"></path>
+<rect fill="url(#basketGrad)" height="58" rx="10" width="88" x="20" y="50"></rect>
+<path d="M20 70 h88 M20 90 h88 M40 50 v58 M64 50 v58 M88 50 v58" stroke="rgba(0,0,0,0.1)" stroke-width="4"></path>
+</svg>
+</div></div>
+<div class="mb-4 flex items-center gap-3">
+<div class="h-10 w-10 overflow-hidden rounded-full border-2 border-white shadow-sm">
+<img class="h-full w-full object-cover" data-alt="Portrait of Sophie, kind woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAicPZpefxo4u_Jz4GRnvGEEM_sSwwAvMn9yFtOD96PM5xIn9ybgi0vjM2ebnAf_5nNBKxz8_EjEJlMevu5bwYCxkVaY0lABAwt-wcPxNvrrAoBPdADIEMYQfXUQvhTbQ3Rz3CIbeXURH7-ZRgxWEL9vFA5wk8O6LtRdB2-nfZuzF8FJUsZNzsxWi5RHAzOyz_H0ZKmsYE-FZbejorgzwo0lItoc7_lHKQ4TsEGS-SlutQqdNEA0FXa_efH3tMm-H3Q7qRBnT51szqR"/>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900">Sophie</p>
+<p class="text-xs text-slate-500">À 1.5km • Hier</p>
+</div>
+</div>
+<h3 class="mb-2 text-xl font-extrabold text-slate-900">Courses partagées</h3>
+<p class="mb-6 text-sm leading-relaxed text-slate-600">
+                        Je vais faire mes courses au marché samedi matin. Si une personne à mobilité réduite a besoin que je prenne quelque chose !
+                    </p>
+<div class="mt-auto flex items-center justify-between">
+<span class="rounded-full bg-sky/10 px-3 py-1 text-xs font-bold text-sky uppercase tracking-wider">Solidarité</span>
+<button class="h-10 rounded-xl bg-primary px-5 text-sm font-bold text-white hover:bg-primary/90 transition-all">
+                            Voir le besoin
+                        </button>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="liquid-glass group relative flex flex-col rounded-3xl p-8 transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10">
+<div class="absolute -top-6 -right-4 w-20 h-20 floating-illustration z-10 group-hover:-translate-y-2 opacity-80"><div class="relative flex items-center justify-center w-16 h-16 group-hover:-translate-y-2 transition-transform duration-300">
+<div class="absolute w-16 h-16 rounded-full bg-sky/10 animate-pulse"></div>
+<div class="absolute w-20 h-20 rounded-full border border-sky/5"></div>
+<svg class="relative w-12 h-12 drop-shadow-xl z-10" viewbox="0 0 128 128">
+<defs>
+<lineargradient id="carGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#60a5fa"></stop>
+<stop offset="100%" style="stop-color:#2563eb"></stop>
+</lineargradient>
+</defs>
+<path d="M20 70 L30 45 C32 40 38 38 42 38 H86 C90 38 96 40 98 45 L108 70 H115 C120 70 120 75 115 80 L110 95 H18 L13 80 C8 75 8 70 13 70 Z" fill="url(#carGrad)"></path>
+<circle cx="35" cy="95" fill="#1e293b" r="10" stroke="white" stroke-width="3"></circle>
+<circle cx="93" cy="95" fill="#1e293b" r="10" stroke="white" stroke-width="3"></circle>
+<rect fill="white" height="20" opacity="0.4" rx="4" width="52" x="38" y="46"></rect>
+</svg>
+</div></div>
+<div class="mb-4 flex items-center gap-3">
+<div class="h-10 w-10 overflow-hidden rounded-full border-2 border-white shadow-sm">
+<img class="h-full w-full object-cover" data-alt="Portrait of Lucas, young man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMsC24S-Ktqt9GrVHzziS6MYM6XyAML2w_5ZL9RCnubYgNMNpDeJ4saoYlQVzBG7hsR37XMxdKrs_B_EQ_9yQuXBkEfOp584yD3L5hflAqaHyjxUP-ofgyqgPqn0_Oos8fc1LRxsqwXw5Y32OlRVUKz608xsNsbueSsWieTHZEpgAnllbmMZilMeM4FX6VzSbIqVCmSskGZm9pr-ZX854OQp8wKYigIfzQBNH_2Bo8g3kVx4oPbdBBn6y9Mwdl7EM-4OM18qT3NMxX"/>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900">Lucas</p>
+<p class="text-xs text-slate-500">À 3km • Il y a 30min</p>
+</div>
+</div>
+<h3 class="mb-2 text-xl font-extrabold text-slate-900">Garde d'animaux</h3>
+<p class="mb-6 text-sm leading-relaxed text-slate-600">
+                        Je cherche une personne de confiance pour nourrir mon chat 'Plume' pendant mon absence de 3 jours la semaine prochaine.
+                    </p>
+<div class="mt-auto flex items-center justify-between">
+<span class="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary uppercase tracking-wider">Animaux</span>
+<button class="h-10 rounded-xl bg-primary px-5 text-sm font-bold text-white hover:bg-primary/90 transition-all">
+                            Voir le besoin
+                        </button>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="liquid-glass group relative flex flex-col rounded-3xl p-8 transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10">
+<div class="absolute -top-6 -right-4 w-20 h-20 floating-illustration z-10 group-hover:-translate-y-2 opacity-80"><div class="relative flex items-center justify-center w-16 h-16 group-hover:-translate-y-2 transition-transform duration-300">
+<div class="absolute w-16 h-16 rounded-full bg-primary/10 animate-pulse"></div>
+<div class="absolute w-20 h-20 rounded-full border border-primary/5"></div>
+<svg class="relative w-12 h-12 drop-shadow-xl z-10" viewbox="0 0 128 128">
+<defs>
+<lineargradient id="bookGrad2" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#a78bfa"></stop>
+<stop offset="100%" style="stop-color:#7c3aed"></stop>
+</lineargradient>
+</defs>
+<rect fill="url(#bookGrad2)" height="88" rx="12" width="108" x="10" y="20"></rect>
+<path d="M64 20 v88" stroke="rgba(255,255,255,0.3)" stroke-width="4"></path>
+<path d="M25 40 h30 M25 55 h30 M25 70 h30 M73 40 h30 M73 55 h30 M73 70 h30" opacity="0.6" stroke="white" stroke-linecap="round" stroke-width="4"></path>
+<circle cx="100" cy="90" fill="#fcd34d" r="12"></circle>
+</svg>
+</div></div>
+<div class="mb-4 flex items-center gap-3">
+<div class="h-10 w-10 overflow-hidden rounded-full border-2 border-white shadow-sm">
+<img class="h-full w-full object-cover" data-alt="Portrait of Emma, smiling woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgfbWXhtUuehzXUjXaGFP5uSTTxq9Z-08sScKcOM6u30fInYuKFu17lrHyflW106MV8JWu0eNWn9lMY4tuDa6Yfz0bv3vIt1pTao-BLO9pfWuUvFa7ZD7DC2eiE-dzG9xJKhTwJMiT7ZaY4LrqPtUx07wO6oBU0AGjhd6rqzltlvitmTGHwgSkLCrwtYqv7rZkSHEc-mThvdIQ7b9aoGIPQtDrOn2AhIzf9u2Q8faZqsZ6Rbng_dDQVNJC5_w_T9ZfHckwNWyUZl2E"/>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900">Emma</p>
+<p class="text-xs text-slate-500">À 4km • Il y a 10h</p>
+</div>
+</div>
+<h3 class="mb-2 text-xl font-extrabold text-slate-900">Cours d'informatique</h3>
+<p class="mb-6 text-sm leading-relaxed text-slate-600">
+                        Besoin d'aide pour configurer une tablette pour mes grands-parents afin qu'ils puissent nous appeler en vidéo.
+                    </p>
+<div class="mt-auto flex items-center justify-between">
+<span class="rounded-full bg-mint/10 px-3 py-1 text-xs font-bold text-mint uppercase tracking-wider">Séniors</span>
+<button class="h-10 rounded-xl bg-primary px-5 text-sm font-bold text-white hover:bg-primary/90 transition-all">
+                            Voir le besoin
+                        </button>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="liquid-glass group relative flex flex-col rounded-3xl p-8 transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10">
+<div class="absolute -top-6 -right-4 w-20 h-20 floating-illustration z-10 group-hover:-translate-y-2 opacity-80"><div class="relative flex items-center justify-center w-16 h-16 group-hover:-translate-y-2 transition-transform duration-300">
+<div class="absolute w-16 h-16 rounded-full bg-mint/10 animate-pulse"></div>
+<div class="absolute w-20 h-20 rounded-full border border-mint/5"></div>
+<svg class="relative w-12 h-12 drop-shadow-xl z-10" viewbox="0 0 128 128">
+<defs>
+<lineargradient id="plantGrad2" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#34d399"></stop>
+<stop offset="100%" style="stop-color:#059669"></stop>
+</lineargradient>
+</defs>
+<path d="M64 110 V60 M64 60 C40 40 20 60 20 60 C20 60 40 80 64 60 M64 60 C88 40 108 60 108 60 C108 60 88 80 64 60" fill="none" stroke="url(#plantGrad2)" stroke-linecap="round" stroke-width="8"></path>
+<path d="M40 90 Q64 70 88 90" fill="none" stroke="url(#plantGrad2)" stroke-linecap="round" stroke-width="6"></path>
+<rect fill="#d1d5db" height="30" rx="6" width="40" x="44" y="90"></rect>
+<rect fill="#9ca3af" height="8" rx="4" width="48" x="40" y="85"></rect>
+</svg>
+</div></div>
+<div class="mb-4 flex items-center gap-3">
+<div class="h-10 w-10 overflow-hidden rounded-full border-2 border-white shadow-sm">
+<img class="h-full w-full object-cover" data-alt="Portrait of Thomas, friendly man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8vT3Hh8Q9_PoFxzCx8rsQEB4dNFDdFaLqDDWNBbp6irXEkvvtvQs2a5ylF2bELpfNF_tsRI1M6N4a6Yt9f1Y435-Vh0iQ-92zEojC5QffRayaDLfOZ_nKFsC9fMEO_02zHAQkZbpXsDhWSQdHtq-CJJf5cPe40CdlR1o9EHIZjQVKtvnNzT2X-5iOND_CRtAW0c3A4JUJ5bPyTzNFCosAkcnEzNLhFOps63uC9SIaT0xdu-tGrcTWWkegRGLOQ0xnD74rDfca2K-E"/>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900">Thomas</p>
+<p class="text-xs text-slate-500">À 1km • Il y a 12h</p>
+</div>
+</div>
+<h3 class="mb-2 text-xl font-extrabold text-slate-900">Petit bricolage</h3>
+<p class="mb-6 text-sm leading-relaxed text-slate-600">
+                        Une étagère qui menace de tomber et une ampoule récalcitrante. Si un bricoleur passe par là, je paie le café !
+                    </p>
+<div class="mt-auto flex items-center justify-between">
+<span class="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary uppercase tracking-wider">Maison</span>
+<button class="h-10 rounded-xl bg-primary px-5 text-sm font-bold text-white hover:bg-primary/90 transition-all">
+                            Voir le besoin
+                        </button>
+</div>
+</div>
+</div>
+<!-- Pagination/Load more -->
+<div class="mt-16 text-center">
+<button class="inline-flex h-14 items-center gap-3 rounded-full bg-slate-100 px-10 text-lg font-bold text-slate-600 hover:bg-slate-200 transition-colors">
+                    Charger plus de besoins
+                    <span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="mt-20 border-t border-slate-100 bg-slate-50 py-16 px-6">
+<div class="mx-auto max-w-7xl">
+<div class="grid grid-cols-1 gap-12 md:grid-cols-4">
+<div class="col-span-1 md:col-span-1">
+<div class="mb-6 flex items-center gap-2">
+<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white">
+<span class="material-symbols-outlined text-lg">volunteer_activism</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight text-primary">Entraidance</h2>
+</div>
+<p class="text-sm leading-relaxed text-slate-500">
+                        La plateforme d'entraide locale pour une société plus humaine et solidaire.
+                    </p>
+</div>
+<div>
+<h4 class="mb-6 text-sm font-bold uppercase tracking-widest text-slate-900">Plateforme</h4>
+<ul class="space-y-4 text-sm font-medium text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Comment ça marche</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Rechercher un besoin</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Publier une annonce</a></li>
+</ul>
+</div>
+<div>
+<h4 class="mb-6 text-sm font-bold uppercase tracking-widest text-slate-900">Communauté</h4>
+<ul class="space-y-4 text-sm font-medium text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Charte de confiance</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Blog &amp; Actualités</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Événements locaux</a></li>
+</ul>
+</div>
+<div>
+<h4 class="mb-6 text-sm font-bold uppercase tracking-widest text-slate-900">Aide</h4>
+<ul class="space-y-4 text-sm font-medium text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Centre d'aide</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contactez-nous</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Mentions légales</a></li>
+</ul>
+</div>
+</div>
+<div class="mt-16 border-t border-slate-200 pt-8 text-center text-sm font-medium text-slate-400">
+                © 2024 Entraidance. Fait avec ❤️ pour un monde meilleur.
+            </div>
+</div>
+</footer>
+</body></html>
