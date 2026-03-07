@@ -20,7 +20,14 @@
       "Bash(npm:*)",
       "Bash(npx:*)",
       "Bash(curl:*)",
-      "Bash(openclaw:*)"
+      "Bash(openclaw:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(pip install:*)",
+      "Bash(pip3 install:*)",
+      "Bash(uvx:*)",
+      "Bash(brew install:*)",
+      "mcp__chrome-devtools__new_page",
+      "WebFetch(domain:stitch.withgoogle.com)"
     ]
   }
 }
