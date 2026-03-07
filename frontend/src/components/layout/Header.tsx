@@ -60,7 +60,7 @@ export function Header() {
               {t('common.appName')}
             </h1>
           </Link>
-          <nav className="hidden items-center gap-10 md:flex">
+          <nav className="hidden items-center gap-10 md:flex pt-2">
             {NAV_LINKS.map(({ href, label }) => (
               <NavLink key={href} href={href} label={label} pathname={pathname} />
             ))}
